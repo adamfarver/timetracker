@@ -18,7 +18,7 @@ module.exports = mongoose.model(
 			project: { type: ObjectId, required: false },
 			projectManager: { type: ObjectId, required: false },
 			sprint: { type: ObjectId, required: false },
-			claimed: { type: Boolean, required: false, default: false },
+			claimedBy: { type: ObjectId, required: false },
 			projectedTime: { type: Number, required: false },
 			actualUsedTime: { type: Array, required: false, default: [] },
 		},

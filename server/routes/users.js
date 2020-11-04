@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-const User = require('../models/User')
+const User = require('../../models/User')
+const { ObjectId } = mongoose.Types
 // All routes added together
 
 // User
@@ -31,13 +32,10 @@ router.get('/:id', async (req, res, next) => {
 // Create User
 router.post('/', async (req, res, next) => {
 	const { body } = req
-	console.log(req.baseUrl)
 	const project = new User(body)
 	if (mongoose.connection.readyState) {
 		await project.save().then(() => {
-			// TODO: Add Redirect
-			// Will Error Because doesn't exist
-			res.redirect('/dataadded')
+			res.set({ ok: 'true' }).status(200)
 			res.end()
 		})
 	} else {
@@ -49,6 +47,9 @@ router.post('/', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
 	const objId = req.params.id
 	const { body } = req
+	if (body.password === '') {
+		delete body.password
+	}
 	try {
 		await User.findOneAndUpdate({ _id: objId }, body)
 
@@ -66,7 +67,7 @@ router.delete('/:id', async (req, res, next) => {
 	const { body } = req
 	try {
 		const record = await User.findOneAndDelete({ _id: objId })
-		res.status(200)
+		res.set({ ok: 'true' }).status(200)
 		res.end()
 	} catch (error) {
 		res.status(404).send({ msg: 'Object not found.' }).end()

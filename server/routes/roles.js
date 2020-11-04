@@ -1,26 +1,26 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-const Time = require('../models/Time')
+const Role = require('../../models/Role')
 // All routes added together
 
-// Time
+// Role
 
-// Read All Times
+// Read All Roles
 router.get('/', async (req, res, next) => {
 	try {
-		const allTimes = await Time.find({})
-		res.json(allTimes).status(200)
+		const allRoles = await Role.find({})
+		res.json(allRoles).status(200)
 		res.end()
 	} catch (error) {
 		res.status(500).send({ msg: 'Server issues' }).end()
 	}
 })
 
-// Read Single Time
+// Read Single Role
 router.get('/:id', async (req, res, next) => {
 	try {
-		const record = await Time.findById(req.params.id)
+		const record = await Role.findById(req.params.id)
 		res.json(record).status(200)
 		res.end()
 	} catch (error) {
@@ -28,13 +28,13 @@ router.get('/:id', async (req, res, next) => {
 	}
 })
 
-// Create Time
+// Create Role
 router.post('/', async (req, res, next) => {
 	const { body } = req
-	const project = new Time(body)
+	const project = new Role(body)
 	if (mongoose.connection.readyState) {
 		await project.save().then(() => {
-			res.redirect('/dataadded')
+			res.set({ ok: 'true' }).status(200)
 			res.end()
 		})
 	} else {
@@ -42,14 +42,14 @@ router.post('/', async (req, res, next) => {
 	}
 })
 
-//Update Time
+//Update Role
 router.put('/:id', async (req, res, next) => {
 	const objId = req.params.id
 	const { body } = req
 	try {
-		await Time.findOneAndUpdate({ _id: objId }, body)
+		await Role.findOneAndUpdate({ _id: objId }, body)
 
-		const record = await Time.findById({ _id: objId })
+		const record = await Role.findById({ _id: objId })
 		res.json(record).status(200)
 		res.end()
 	} catch (error) {
@@ -57,13 +57,13 @@ router.put('/:id', async (req, res, next) => {
 	}
 })
 
-//Delete Time
+//Delete Role
 router.delete('/:id', async (req, res, next) => {
 	const objId = req.params.id
 	const { body } = req
 	try {
-		const record = await Time.findOneAndDelete({ _id: objId })
-		res.status(200)
+		const record = await Role.findOneAndDelete({ _id: objId })
+		res.set({ ok: 'true' }).status(200)
 		res.end()
 	} catch (error) {
 		res.status(404).send({ msg: 'Object not found.' }).end()

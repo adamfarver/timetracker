@@ -1,26 +1,26 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-const Role = require('../models/Role')
+const Task = require('../../models/Task')
 // All routes added together
 
-// Role
+// Task
 
-// Read All Roles
+// Read All Tasks
 router.get('/', async (req, res, next) => {
 	try {
-		const allRoles = await Role.find({})
-		res.json(allRoles).status(200)
+		const allTasks = await Task.find({})
+		res.json(allTasks).status(200)
 		res.end()
 	} catch (error) {
 		res.status(500).send({ msg: 'Server issues' }).end()
 	}
 })
 
-// Read Single Role
+// Read Single Task
 router.get('/:id', async (req, res, next) => {
 	try {
-		const record = await Role.findById(req.params.id)
+		const record = await Task.findById(req.params.id)
 		res.json(record).status(200)
 		res.end()
 	} catch (error) {
@@ -28,13 +28,13 @@ router.get('/:id', async (req, res, next) => {
 	}
 })
 
-// Create Role
+// Create Task
 router.post('/', async (req, res, next) => {
 	const { body } = req
-	const project = new Role(body)
+	const project = new Task(body)
 	if (mongoose.connection.readyState) {
 		await project.save().then(() => {
-			res.redirect('/dataadded')
+			res.set({ ok: 'true' }).status(200)
 			res.end()
 		})
 	} else {
@@ -42,14 +42,14 @@ router.post('/', async (req, res, next) => {
 	}
 })
 
-//Update Role
+//Update Task
 router.put('/:id', async (req, res, next) => {
 	const objId = req.params.id
 	const { body } = req
 	try {
-		await Role.findOneAndUpdate({ _id: objId }, body)
+		await Task.findOneAndUpdate({ _id: objId }, body)
 
-		const record = await Role.findById({ _id: objId })
+		const record = await Task.findById({ _id: objId })
 		res.json(record).status(200)
 		res.end()
 	} catch (error) {
@@ -57,13 +57,13 @@ router.put('/:id', async (req, res, next) => {
 	}
 })
 
-//Delete Role
+//Delete Task
 router.delete('/:id', async (req, res, next) => {
 	const objId = req.params.id
 	const { body } = req
 	try {
-		const record = await Role.findOneAndDelete({ _id: objId })
-		res.status(200)
+		const record = await Task.findOneAndDelete({ _id: objId })
+		res.set({ ok: 'true' }).status(200)
 		res.end()
 	} catch (error) {
 		res.status(404).send({ msg: 'Object not found.' }).end()

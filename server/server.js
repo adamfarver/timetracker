@@ -1,19 +1,19 @@
 /**
  * @format
  */
+// eslint-disable-next-line no-unused-vars
 const http = require('http')
 const mongoose = require('mongoose')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-let { port, mongoserver } = require('./config')
+let { port, mongoserver } = require('../config')
 const projects = require('./routes/projects')
 const users = require('./routes/users')
 const tasks = require('./routes/tasks')
 const roles = require('./routes/roles')
 const sprints = require('./routes/sprints')
 const times = require('./routes/times')
-
 // Connect to MongoDB
 async function dbConnect() {
 	await mongoose.connect(mongoserver, {

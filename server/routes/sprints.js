@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-const Sprint = require('../models/Sprint')
+const Sprint = require('../../models/Sprint')
 // All routes added together
 
 // Sprint
@@ -63,7 +63,7 @@ router.delete('/:id', async (req, res, next) => {
 	const { body } = req
 	try {
 		const record = await Sprint.findOneAndDelete({ _id: objId })
-		res.status(200)
+		res.set({ ok: 'true' }).status(200)
 		res.end()
 	} catch (error) {
 		res.status(404).send({ msg: 'Object not found.' }).end()

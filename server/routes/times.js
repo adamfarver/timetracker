@@ -1,26 +1,26 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-const Project = require('../models/Project')
+const Time = require('../../models/Time')
 // All routes added together
 
-// Project
+// Time
 
-// Read All Projects
+// Read All Times
 router.get('/', async (req, res, next) => {
 	try {
-		const allProjects = await Project.find({})
-		res.json(allProjects).status(200)
+		const allTimes = await Time.find({})
+		res.json(allTimes).status(200)
 		res.end()
 	} catch (error) {
 		res.status(500).send({ msg: 'Server issues' }).end()
 	}
 })
 
-// Read Single Project
+// Read Single Time
 router.get('/:id', async (req, res, next) => {
 	try {
-		const record = await Project.findById(req.params.id)
+		const record = await Time.findById(req.params.id)
 		res.json(record).status(200)
 		res.end()
 	} catch (error) {
@@ -28,10 +28,10 @@ router.get('/:id', async (req, res, next) => {
 	}
 })
 
-// Create Project
+// Create Time
 router.post('/', async (req, res, next) => {
 	const { body } = req
-	const project = new Project(body)
+	const project = new Time(body)
 	if (mongoose.connection.readyState) {
 		await project.save().then(() => {
 			res.redirect('/dataadded')
@@ -42,14 +42,14 @@ router.post('/', async (req, res, next) => {
 	}
 })
 
-//Update Project
+//Update Time
 router.put('/:id', async (req, res, next) => {
 	const objId = req.params.id
 	const { body } = req
 	try {
-		await Project.findOneAndUpdate({ _id: objId }, body)
+		await Time.findOneAndUpdate({ _id: objId }, body)
 
-		const record = await Project.findById({ _id: objId })
+		const record = await Time.findById({ _id: objId })
 		res.json(record).status(200)
 		res.end()
 	} catch (error) {
@@ -57,13 +57,13 @@ router.put('/:id', async (req, res, next) => {
 	}
 })
 
-//Delete Project
+//Delete Time
 router.delete('/:id', async (req, res, next) => {
 	const objId = req.params.id
 	const { body } = req
 	try {
-		const record = await Project.findOneAndDelete({ _id: objId })
-		res.status(200)
+		const record = await Time.findOneAndDelete({ _id: objId })
+		res.set({ ok: 'true' }).status(200)
 		res.end()
 	} catch (error) {
 		res.status(404).send({ msg: 'Object not found.' }).end()

@@ -1,26 +1,26 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-const Task = require('../models/Task')
+const Project = require('../../models/Project')
 // All routes added together
 
-// Task
+// Project
 
-// Read All Tasks
+// Read All Projects
 router.get('/', async (req, res, next) => {
 	try {
-		const allTasks = await Task.find({})
-		res.json(allTasks).status(200)
+		const allProjects = await Project.find({})
+		res.json(allProjects).status(200)
 		res.end()
 	} catch (error) {
 		res.status(500).send({ msg: 'Server issues' }).end()
 	}
 })
 
-// Read Single Task
+// Read Single Project
 router.get('/:id', async (req, res, next) => {
 	try {
-		const record = await Task.findById(req.params.id)
+		const record = await Project.findById(req.params.id)
 		res.json(record).status(200)
 		res.end()
 	} catch (error) {
@@ -28,15 +28,13 @@ router.get('/:id', async (req, res, next) => {
 	}
 })
 
-// Create Task
+// Create Project
 router.post('/', async (req, res, next) => {
 	const { body } = req
-	const project = new Task(body)
+	const project = new Project(body)
 	if (mongoose.connection.readyState) {
 		await project.save().then(() => {
-			// TODO: Add Redirect
-			// Will Error Because doesn't exist
-			res.redirect('/dataadded')
+			res.set({ ok: 'true' }).status(200)
 			res.end()
 		})
 	} else {
@@ -44,14 +42,14 @@ router.post('/', async (req, res, next) => {
 	}
 })
 
-//Update Task
+//Update Project
 router.put('/:id', async (req, res, next) => {
 	const objId = req.params.id
 	const { body } = req
 	try {
-		await Task.findOneAndUpdate({ _id: objId }, body)
+		await Project.findOneAndUpdate({ _id: objId }, body)
 
-		const record = await Task.findById({ _id: objId })
+		const record = await Project.findById({ _id: objId })
 		res.json(record).status(200)
 		res.end()
 	} catch (error) {
@@ -59,13 +57,13 @@ router.put('/:id', async (req, res, next) => {
 	}
 })
 
-//Delete Task
+//Delete Project
 router.delete('/:id', async (req, res, next) => {
 	const objId = req.params.id
 	const { body } = req
 	try {
-		const record = await Task.findOneAndDelete({ _id: objId })
-		res.status(200)
+		const record = await Project.findOneAndDelete({ _id: objId })
+		res.set({ ok: 'true' }).status(200)
 		res.end()
 	} catch (error) {
 		res.status(404).send({ msg: 'Object not found.' }).end()

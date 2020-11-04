@@ -14,6 +14,7 @@ module.exports = mongoose.model(
 			email: { type: String, required: false },
 			phone: { type: String, required: false },
 			role: { type: ObjectId, required: false },
+			password: { type: String, required: false },
 		},
 		{ timestamps: { createdAt: 'created_at', modifiedAt: 'modified_at' } }
 	)
