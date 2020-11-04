@@ -11,4 +11,6 @@ Full-stack app designed for multiple users to track time spent on projects.
 
 ## Front-End
 
-- To Be Added: React
+- React
+- GraphJS
+- RXJS
