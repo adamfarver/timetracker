@@ -3,11 +3,21 @@ import { Link } from 'react-router-dom'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 
-import { projectService, alertService } from '@/_services'
+import { projectService, userService, alertService } from '@/_services'
 
 function AddEdit({ history, match }) {
 	const { id } = match.params
 	const isAddMode = !id
+	const [managers, setManagers] = useState({})
+
+	useEffect(() => {
+		userService.getWithRole().then((users) => {
+			const filteredManagers = users.filter(
+				(user) => user.role.roleName === 'Manager'
+			)
+			setManagers(filteredManagers)
+		})
+	}, [])
 
 	const initialValues = {
 		projectName: '',
@@ -297,7 +307,11 @@ function AddEdit({ history, match }) {
 										}
 									>
 										<option value="No One">No One</option>
-										<option value="No One">No One</option>
+										{Object.keys(managers).map((key) => (
+											<option key={managers[key]._id} value={managers[key]._id}>
+												{managers[key].firstName} {managers[key].lastName}
+											</option>
+										))}
 									</Field>
 									<ErrorMessage
 										name="projectManager"
@@ -321,7 +335,11 @@ function AddEdit({ history, match }) {
 									>
 										{' '}
 										<option value="No One">No One</option>
-										<option value="No One">No One</option>
+										{Object.keys(managers).map((key) => (
+											<option key={managers[key]._id} value={managers[key]._id}>
+												{managers[key].firstName} {managers[key].lastName}
+											</option>
+										))}
 									</Field>
 									<ErrorMessage
 										name="teamLead"

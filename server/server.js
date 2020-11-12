@@ -7,7 +7,7 @@ const mongoose = require('mongoose')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-let { port, mongoserver } = require('../config')
+let { port, mongoserver, localMongoServer } = require('../config')
 const projects = require('./routes/projects')
 const users = require('./routes/users')
 const tasks = require('./routes/tasks')
@@ -16,7 +16,7 @@ const sprints = require('./routes/sprints')
 const times = require('./routes/times')
 // Connect to MongoDB
 async function dbConnect() {
-	await mongoose.connect(mongoserver, {
+	await mongoose.connect(localMongoServer, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		autoIndex: false,
@@ -27,7 +27,9 @@ async function dbConnect() {
 		console.log('DB Connected')
 	}
 }
+
 dbConnect()
+
 setInterval(() => {
 	if (!mongoose.connection.readyState) {
 		console.log('No DB connected. Trying to reconnect now.')

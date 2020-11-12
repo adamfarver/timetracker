@@ -10,7 +10,32 @@ const { ObjectId } = mongoose.Types
 // Read All Users
 router.get('/', async (req, res, next) => {
 	try {
-		const allUsers = await User.find({})
+		let allUsers
+		if (req.query.r == 0) {
+			allUsers = await User.aggregate([
+				{
+					$lookup: {
+						from: 'roles',
+						foreignField: '_id',
+						localField: 'role',
+						as: 'role',
+					},
+				},
+				{ $unwind: '$role' },
+				{
+					$project: {
+						_id: 1,
+						firstName: 1,
+						lastName: 1,
+						email: 1,
+						role: { _id: 1, roleName: 1 },
+					},
+				},
+			])
+		} else {
+			allUsers = await User.find({})
+		}
+
 		res.json(allUsers).status(200)
 		res.end()
 	} catch (error) {

@@ -9,7 +9,25 @@ const Project = require('../../models/Project')
 // Read All Projects
 router.get('/', async (req, res, next) => {
 	try {
-		const allProjects = await Project.find({})
+		const allProjects = await Project.aggregate([
+			{
+				$lookup: {
+					from: 'users',
+					foreignField: '_id',
+					localField: 'projectManager',
+					as: 'projectManager',
+				},
+			},
+			{ $unwind: '$projectManager' },
+			{
+				$project: {
+					_id: 1,
+					projectName: 1,
+					ownerCompany: 1,
+					projectManager: { _id: 1, firstName: 1, lastName: 1 },
+				},
+			},
+		])
 		res.json(allProjects).status(200)
 		res.end()
 	} catch (error) {
@@ -32,6 +50,9 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
 	const { body } = req
 	const project = new Project(body)
+	project.projectManager = mongoose.Types.ObjectId(body.projectManager)
+	project.teamLead = mongoose.Types.ObjectId(body.teamLead)
+	console.log(project)
 	if (mongoose.connection.readyState) {
 		await project.save().then(() => {
 			res.set({ ok: 'true' }).status(200)

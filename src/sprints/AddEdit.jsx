@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-
+import { BreadcrumbContext } from '../_components/BreadcrumbContext'
 import { sprintService, alertService } from '@/_services'
+import { Breadcrumb } from '../_components/Breadcrumb'
 
 function AddEdit({ history, match }) {
+	const [project, setProject] = useContext(BreadcrumbContext)
 	const { id } = match.params
 	const isAddMode = !id
 
@@ -36,17 +38,18 @@ function AddEdit({ history, match }) {
 	}
 
 	function createSprint(fields, setSubmitting) {
-		console.dir(fields)
-		//	sprintService
-		//		.create(fields)
-		//		.then(() => {
-		//			alertService.success('Sprint added', { keepAfterRouteChange: true })
-		//			history.push('.')
-		//		})
-		//		.catch(() => {
-		//			setSubmitting(false)
-		//			alertService.error(error)
-		//		})
+		fields.project = project._id
+		console.log(fields)
+		// sprintService
+		// 	.create(fields)
+		// 	.then(() => {
+		// 		alertService.success('Sprint added', { keepAfterRouteChange: true })
+		// 		history.back()
+		// 	})
+		// 	.catch(() => {
+		// 		setSubmitting(false)
+		// 		alertService.error(error)
+		// 	})
 	}
 
 	function updateSprint(id, fields, setSubmitting) {
@@ -54,7 +57,7 @@ function AddEdit({ history, match }) {
 			.update(id, fields)
 			.then(() => {
 				alertService.success('Sprint updated', { keepAfterRouteChange: true })
-				history.push('..')
+				history.back()
 			})
 			.catch((error) => {
 				setSubmitting(false)
@@ -96,72 +99,75 @@ function AddEdit({ history, match }) {
 				}, [])
 
 				return (
-					<Form>
-						<h1>{isAddMode ? 'Add Sprint' : 'Edit Sprint'}</h1>
-						<div className="form-row align-items-end">
-							<div className="form-group col-md-6">
-								<label htmlFor="sprintType">Sprint Type</label>
-								<Field
-									name="sprintType"
-									as="select"
-									className={
-										'form-control custom-select' +
-										(errors.sprintType && touched.sprintType
-											? ' is-invalid'
-											: '')
-									}
-								>
-									<option value="">None</option>
-									<option value="code">Code</option>
-									<option value="design">Design</option>
-								</Field>
-							</div>
-							<div className="form-group col-md-6 text-danger pb-2">
-								<ErrorMessage name="sprintType" />
-							</div>
-						</div>
-						<div className="form-row align-items-end ">
-							<div className="form-group col-md-2">
-								<label htmlFor="dateStart">Start Date</label>
-								<Field
-									name="dateStart"
-									className="form-control"
-									type="date"
-									min={getToday()}
-								/>
-							</div>
-							<div className="form-group col-md-2">
-								<label htmlFor="dateEnd	">End Date</label>
-								<Field
-									name="dateEnd"
-									className="form-control"
-									type="date"
-									min={getToday()}
-								/>
-							</div>
-							{(errors.dateStart && touched.dateStart) ||
-							(errors.dateEnd && touched.dateEnd) ? (
-								<div className="text-danger col-md-5 pb-2">
-									<p>Both start and end dates are required.</p>
+					<>
+						<Breadcrumb />
+						<Form>
+							<h1>{isAddMode ? 'Add Sprint' : 'Edit Sprint'}</h1>
+							<div className="form-row align-items-end">
+								<div className="form-group col-md-6">
+									<label htmlFor="sprintType">Sprint Type</label>
+									<Field
+										name="sprintType"
+										as="select"
+										className={
+											'form-control custom-select' +
+											(errors.sprintType && touched.sprintType
+												? ' is-invalid'
+												: '')
+										}
+									>
+										<option value="">None</option>
+										<option value="code">Code</option>
+										<option value="design">Design</option>
+									</Field>
 								</div>
-							) : null}
-						</div>
-						<div className="form-group">
-							<button
-								type="submit"
-								disabled={isSubmitting}
-								className="btn btn-primary"
-							>
-								{isSubmitting && (
-									<span className="spinner-border spinner-border-sm mr-1"></span>
-								)}
-								Save
-							</button>
-							<Link to={isAddMode ? '.' : '..'} className="btn btn-link">
-								Cancel
-							</Link>
-						</div>
-					</Form>
+								<div className="form-group col-md-6 text-danger pb-2">
+									<ErrorMessage name="sprintType" />
+								</div>
+							</div>
+							<div className="form-row align-items-end ">
+								<div className="form-group col-md-2">
+									<label htmlFor="dateStart">Start Date</label>
+									<Field
+										name="dateStart"
+										className="form-control"
+										type="date"
+										min={getToday()}
+									/>
+								</div>
+								<div className="form-group col-md-2">
+									<label htmlFor="dateEnd	">End Date</label>
+									<Field
+										name="dateEnd"
+										className="form-control"
+										type="date"
+										min={getToday()}
+									/>
+								</div>
+								{(errors.dateStart && touched.dateStart) ||
+								(errors.dateEnd && touched.dateEnd) ? (
+									<div className="text-danger col-md-5 pb-2">
+										<p>Both start and end dates are required.</p>
+									</div>
+								) : null}
+							</div>
+							<div className="form-group">
+								<button
+									type="submit"
+									disabled={isSubmitting}
+									className="btn btn-primary"
+								>
+									{isSubmitting && (
+										<span className="spinner-border spinner-border-sm mr-1"></span>
+									)}
+									Save
+								</button>
+								<Link to={isAddMode ? '.' : '..'} className="btn btn-link">
+									Cancel
+								</Link>
+							</div>
+						</Form>
+					</>
 				)
 			}}
 		</Formik>

@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
-
+import { Breadcrumb } from '../_components/Breadcrumb'
+import { BreadcrumbContext } from '../_components/BreadcrumbContext'
 import { projectService, alertService } from '@/_services'
 
 function List({ match }) {
 	const { path } = match
 	const [projects, setprojects] = useState(null)
+	const [project, setProject] = useContext(BreadcrumbContext)
+	localStorage.removeItem('current_project')
 
 	useEffect(() => {
 		projectService.getAll().then((data) => {
 			setprojects(data)
+			setProject({})
 		})
 	}, [])
 
@@ -23,6 +27,7 @@ function List({ match }) {
 
 	return (
 		<div>
+			<Breadcrumb />
 			<h1>Projects</h1>
 			<Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">
 				Add Projects
@@ -46,7 +51,10 @@ function List({ match }) {
 									</Link>
 								</td>
 								<td>{project.ownerCompany}</td>
-								<td>{project.projectManager}</td>
+								<td>
+									{project.projectManager.firstName}{' '}
+									{project.projectManager.lastName}
+								</td>
 								<td style={{ whiteSpace: 'nowrap' }}>
 									<Link
 										to={`${path}/edit/${project._id}`}

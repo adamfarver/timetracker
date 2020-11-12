@@ -8,7 +8,7 @@ function List({ match }) {
 	const [users, setUsers] = useState(null)
 
 	useEffect(() => {
-		userService.getAll().then((x) => {
+		userService.getWithRole().then((x) => {
 			setUsers(x)
 		})
 	}, [])
@@ -42,7 +42,7 @@ function List({ match }) {
 									{user.firstName} {user.lastName}
 								</td>
 								<td>{user.email}</td>
-								<td>{user.role}</td>
+								<td>{user.role.roleName}</td>
 								<td style={{ whiteSpace: 'nowrap' }}>
 									<Link
 										to={`${path}/edit/${user._id}`}

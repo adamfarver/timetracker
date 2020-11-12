@@ -12,10 +12,10 @@ module.exports = mongoose.model(
 			ownerEmail: { type: String, required: false },
 			ownerName: { type: String, required: false },
 			ownerPhone: { type: String, required: false },
-			projectManager: { type: String, required: false },
+			projectManager: { type: ObjectId, required: false },
 			projectName: { type: String, required: false },
 
-			teamLead: { type: String, required: false },
+			teamLead: { type: ObjectId, required: false },
 			// userCreated: { type: ObjectId, required: false },
 			// userModified: { type: ObjectId, required: false },
 		},

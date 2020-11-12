@@ -6,6 +6,7 @@ const baseUrl = `${config.apiUrl}/user`
 export const userService = {
 	getAll,
 	getById,
+	getWithRole,
 	create,
 	update,
 	delete: _delete,
@@ -17,6 +18,9 @@ function getAll() {
 
 function getById(id) {
 	return fetchWrapper.get(`${baseUrl}/${id}`)
+}
+function getWithRole() {
+	return fetchWrapper.get(`${baseUrl}/?r=0`)
 }
 
 function create(params) {
