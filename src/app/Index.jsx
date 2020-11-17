@@ -9,13 +9,13 @@ import { Sprints } from '@/sprints'
 import { Tasks } from '@/tasks'
 import { Times } from '@/times'
 import { Users } from '@/users'
-import { BreadcrumbProvider } from '../_components/BreadcrumbContext'
+import { AppProvider } from '../_components/AppContext'
 function App() {
 	const { pathname } = useLocation()
 
 	return (
 		<div className="app-container bg-light">
-			<BreadcrumbProvider>
+			<AppProvider>
 				<Nav />
 				<Alert />
 				<div className="container pt-4 pb-4">
@@ -31,7 +31,7 @@ function App() {
 						<Redirect from="*" to="/" />
 					</Switch>
 				</div>
-			</BreadcrumbProvider>
+			</AppProvider>
 		</div>
 	)
 }

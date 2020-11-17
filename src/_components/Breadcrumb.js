@@ -1,27 +1,17 @@
 import React, { useContext } from 'react'
-import { BreadcrumbContext } from './BreadcrumbContext'
-export function Breadcrumb() {
-	const [project, setProject] = useContext(BreadcrumbContext)
-	const [sprint, setSprint] = useContext(BreadcrumbContext)
+import { Breadcrumb } from 'react-bootstrap'
+import { AppContext } from './AppContext'
+export function Breadcrumbs() {
+	const [project, setProject] = useContext(AppContext)
+	const [sprint, setSprint] = useContext(AppContext)
 	return (
-		<div>
-			<nav aria-label="breadcrumb">
-				<ol className="breadcrumb">
-					<li
-						className={
-							'breadcrumb-item' + (project.projectName ? ' ' : ' active')
-						}
-						aria-current="page"
-					>
-						<a href="/projects">Home</a>
-					</li>
-					{project ? (
-						<li className="breadcrumb-item">
-							<a href="#">{project.projectName}</a>
-						</li>
-					) : null}
-				</ol>
-			</nav>
-		</div>
+		<Breadcrumb>
+			<Breadcrumb.Item href="/projects">Project List</Breadcrumb.Item>
+			{sprint.number ? (
+				<Breadcrumb.Item href="https://getbootstrap.com/docs/4.0/components/breadcrumb/">
+					Library
+				</Breadcrumb.Item>
+			) : null}
+		</Breadcrumb>
 	)
 }

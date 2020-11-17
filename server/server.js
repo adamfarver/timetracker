@@ -16,7 +16,7 @@ const sprints = require('./routes/sprints')
 const times = require('./routes/times')
 // Connect to MongoDB
 async function dbConnect() {
-	await mongoose.connect(localMongoServer, {
+	await mongoose.connect(mongoserver, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		autoIndex: false,

@@ -2,19 +2,27 @@ import React, { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import { BreadcrumbContext } from '../_components/BreadcrumbContext'
+import { AppContext } from '../_components/AppContext'
 import { sprintService, alertService } from '@/_services'
-import { Breadcrumb } from '../_components/Breadcrumb'
+import { Breadcrumbs } from '../_components/Breadcrumb'
 
 function AddEdit({ history, match }) {
-	const [project, setProject] = useContext(BreadcrumbContext)
+	const [project, setProject, sprint, setSprint, user, setUser] = useContext(
+		AppContext
+	)
 	const { id } = match.params
 	const isAddMode = !id
 
 	const initialValues = {
+		sprint: '',
+		completed: false,
+		userCreated: user[0]._id,
+		userModified: user[0]._id,
 		sprintType: '',
+		active: false,
 		dateStart: '',
 		dateEnd: '',
+		project: project,
 	}
 
 	const getToday = function todayDate() {
@@ -39,17 +47,16 @@ function AddEdit({ history, match }) {
 
 	function createSprint(fields, setSubmitting) {
 		fields.project = project._id
-		console.log(fields)
-		// sprintService
-		// 	.create(fields)
-		// 	.then(() => {
-		// 		alertService.success('Sprint added', { keepAfterRouteChange: true })
-		// 		history.back()
-		// 	})
-		// 	.catch(() => {
-		// 		setSubmitting(false)
-		// 		alertService.error(error)
-		// 	})
+		sprintService
+			.create(fields)
+			.then(() => {
+				alertService.success('Sprint added', { keepAfterRouteChange: true })
+				history.goBack()
+			})
+			.catch((error) => {
+				setSubmitting(false)
+				alertService.error(error)
+			})
 	}
 
 	function updateSprint(id, fields, setSubmitting) {
@@ -57,7 +64,7 @@ function AddEdit({ history, match }) {
 			.update(id, fields)
 			.then(() => {
 				alertService.success('Sprint updated', { keepAfterRouteChange: true })
-				history.back()
+				history.goBack()
 			})
 			.catch((error) => {
 				setSubmitting(false)
@@ -78,6 +85,7 @@ function AddEdit({ history, match }) {
 					if (!isAddMode) {
 						// get sprint and set form fields
 						sprintService.getById(id).then((sprint) => {
+							console.log(sprint)
 							const fields = [
 								'sprint',
 								'completed',
@@ -85,14 +93,18 @@ function AddEdit({ history, match }) {
 								'userModified',
 								'sprintType',
 								'active',
-								'projectmanager',
 								'dateStart',
 								'dateEnd',
 								'project',
 							]
-							fields.forEach((field) =>
+							fields.forEach((field) => {
+								// Fix Date issues
+								sprint.dateStart = sprint.dateStart.slice(0, 10)
+								sprint.dateEnd = sprint.dateEnd.slice(0, 10)
+								// Makes sure the current user is put in userModified field.
+								sprint.userModified = user[0]._id
 								setFieldValue(field, sprint[field], false)
-							)
+							})
 							setSprint(sprint)
 						})
 					}
@@ -100,7 +112,7 @@ function AddEdit({ history, match }) {
 
 				return (
 					<>
-						<Breadcrumb />
+						<Breadcrumbs />
 						<Form>
 							<h1>{isAddMode ? 'Add Sprint' : 'Edit Sprint'}</h1>
 							<div className="form-row align-items-end">

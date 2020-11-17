@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { Breadcrumb } from '../_components/Breadcrumb'
-import { BreadcrumbContext } from '../_components/BreadcrumbContext'
+import { Breadcrumbs } from '../_components/Breadcrumb'
+import { AppContext } from '../_components/AppContext'
 import { projectService, alertService } from '@/_services'
 
 function List({ match }) {
 	const { path } = match
 	const [projects, setprojects] = useState(null)
-	const [project, setProject] = useContext(BreadcrumbContext)
+	const [project, setProject] = useContext(AppContext)
 	localStorage.removeItem('current_project')
 
 	useEffect(() => {
@@ -27,7 +27,13 @@ function List({ match }) {
 
 	return (
 		<div>
-			<Breadcrumb />
+			{project.name ? (
+				<div className="row">
+					<div className="col-12">
+						<Breadcrumbs />
+					</div>
+				</div>
+			) : null}
 			<h1>Projects</h1>
 			<Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">
 				Add Projects
@@ -46,7 +52,10 @@ function List({ match }) {
 						projects.map((project) => (
 							<tr key={project._id}>
 								<td>
-									<Link to={'/projects/' + project._id}>
+									<Link
+										to={'/projects/' + project._id}
+										onClick={() => setProject(project)}
+									>
 										{project.projectName}
 									</Link>
 								</td>

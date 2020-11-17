@@ -31,10 +31,12 @@ router.get('/:id', async (req, res, next) => {
 // Create Sprint
 router.post('/', async (req, res, next) => {
 	const { body } = req
+
 	const project = new Sprint(body)
+	console.log(project)
 	if (mongoose.connection.readyState) {
 		await project.save().then(() => {
-			res.redirect('/dataadded')
+			res.set({ ok: 'true' }).status(200)
 			res.end()
 		})
 	} else {

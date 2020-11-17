@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { AppContext } from '../_components/AppContext'
+import { Table, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 import { userService, alertService } from '@/_services'
 
-function List({ match }) {
+function List({ history, match }) {
 	const { path } = match
 	const [users, setUsers] = useState(null)
+	const [project, setProject, sprint, setSprint, user, setUser] = useContext(
+		AppContext
+	)
 
 	useEffect(() => {
 		userService.getWithRole().then((x) => {
@@ -18,6 +24,17 @@ function List({ match }) {
 			setUsers((users) => users.filter((user) => user._id !== id))
 		})
 	}
+	function selectUser(id) {
+		let selectedUser = users.filter((user) => user._id === id)
+		selectedUser[0].isSelected = true
+		console.log(selectedUser)
+		setUser(selectedUser)
+		alertService.success(
+			`Current User: ${selectedUser[0].firstName} ${selectedUser[0].lastName}`,
+			{ keepAfterRouteChange: true }
+		)
+		history.push('/projects')
+	}
 
 	return (
 		<div>
@@ -25,7 +42,7 @@ function List({ match }) {
 			<Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">
 				Add User
 			</Link>
-			<table className="table table-striped">
+			<Table striped>
 				<thead>
 					<tr>
 						<th style={{ width: '30%' }}>Name</th>
@@ -44,13 +61,27 @@ function List({ match }) {
 								<td>{user.email}</td>
 								<td>{user.role.roleName}</td>
 								<td style={{ whiteSpace: 'nowrap' }}>
+									<Button
+										size="sm"
+										onClick={() => selectUser(user._id)}
+										className="btn btn-success mr-1"
+									>
+										{user.isSelected ? (
+											<span>
+												<FontAwesomeIcon icon="check" />
+											</span>
+										) : (
+											<span>Select</span>
+										)}
+									</Button>
 									<Link
 										to={`${path}/edit/${user._id}`}
 										className="btn btn-sm btn-primary mr-1"
 									>
 										Edit
 									</Link>
-									<button
+									<Button
+										size="sm"
 										onClick={() => deleteUser(user._id)}
 										className="btn btn-sm btn-danger btn-delete-user"
 										disabled={user.isDeleting}
@@ -60,7 +91,7 @@ function List({ match }) {
 										) : (
 											<span>Delete</span>
 										)}
-									</button>
+									</Button>
 								</td>
 							</tr>
 						))}
@@ -79,7 +110,7 @@ function List({ match }) {
 						</tr>
 					)}
 				</tbody>
-			</table>
+			</Table>
 		</div>
 	)
 }

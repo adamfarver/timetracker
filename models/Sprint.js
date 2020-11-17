@@ -14,7 +14,6 @@ module.exports = mongoose.model(
 			userModified: { type: ObjectId, required: false },
 			sprintType: { type: String, required: false },
 			active: { type: Boolean, required: false },
-			projectManager: { type: ObjectId, required: false },
 			dateStart: { type: Date, required: false },
 			dateEnd: { type: Date, required: false },
 			project: { type: ObjectId, required: false },

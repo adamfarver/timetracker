@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const Project = require('../../models/Project')
+const { ObjectId } = mongoose.Types
 // All routes added together
 
 // Project
@@ -50,9 +51,9 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
 	const { body } = req
 	const project = new Project(body)
-	project.projectManager = mongoose.Types.ObjectId(body.projectManager)
-	project.teamLead = mongoose.Types.ObjectId(body.teamLead)
-	console.log(project)
+	// project.projectManager = ObjectId(body.projectManager)
+	// project.teamLead = ObjectId(body.teamLead)
+	// console.log(project)
 	if (mongoose.connection.readyState) {
 		await project.save().then(() => {
 			res.set({ ok: 'true' }).status(200)
