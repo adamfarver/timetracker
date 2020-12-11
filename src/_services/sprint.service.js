@@ -9,6 +9,8 @@ export const sprintService = {
 	create,
 	update,
 	delete: _delete,
+	filterByProjectId,
+	getSprintNumber,
 }
 
 function getAll() {
@@ -18,6 +20,13 @@ function getAll() {
 
 function getById(id) {
 	return fetchWrapper.get(`${baseUrl}/${id}`)
+}
+function filterByProjectId(id) {
+	return fetchWrapper.get(`${baseUrl}/list/${id}`)
+}
+
+function getSprintNumber(id) {
+	return fetchWrapper.get(`${baseUrl}/number/${id}`)
 }
 
 function create(params) {

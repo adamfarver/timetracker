@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch, Redirect, useLocation } from 'react-router-dom'
 
-import { Nav, Alert } from '@/_components'
+import { NavComponent, Alert } from '@/_components'
 import { Home } from '@/home'
 import { Projects } from '@/projects'
 import { Roles } from '@/roles'
@@ -16,7 +16,7 @@ function App() {
 	return (
 		<div className="app-container bg-light">
 			<AppProvider>
-				<Nav />
+				<NavComponent />
 				<Alert />
 				<div className="container pt-4 pb-4">
 					<Switch>

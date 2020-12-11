@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom'
 import { Breadcrumbs } from '../_components/Breadcrumb'
 import { AppContext } from '../_components/AppContext'
 import { projectService, alertService } from '@/_services'
+import { Table, Button } from 'react-bootstrap'
 
 function List({ match }) {
 	const { path } = match
-	const [projects, setprojects] = useState(null)
+	const [projects, setprojects] = useState([])
 	const [project, setProject] = useContext(AppContext)
 	localStorage.removeItem('current_project')
+	localStorage.removeItem('current_sprint')
 
 	useEffect(() => {
 		projectService.getAll().then((data) => {
@@ -26,7 +28,7 @@ function List({ match }) {
 	}
 
 	return (
-		<div>
+		<>
 			{project.name ? (
 				<div className="row">
 					<div className="col-12">
@@ -38,13 +40,13 @@ function List({ match }) {
 			<Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">
 				Add Projects
 			</Link>
-			<table className="table table-striped">
+			<Table className="Table Table-striped">
 				<thead>
 					<tr>
 						<th className="col-4">Project Name</th>
 						<th className="col-3">Client</th>
 						<th className="col-3">Project Manager</th>
-						<th className="col-2 mr-auto"></th>
+						<th className="col-2 mr-auto">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -71,7 +73,7 @@ function List({ match }) {
 									>
 										Edit
 									</Link>
-									<button
+									<Button
 										onClick={() => deleteproject(project._id)}
 										className="btn btn-sm btn-danger btn-delete-project"
 										disabled={project.isDeleting}
@@ -81,7 +83,7 @@ function List({ match }) {
 										) : (
 											<span>Delete</span>
 										)}
-									</button>
+									</Button>
 								</td>
 							</tr>
 						))}
@@ -100,8 +102,8 @@ function List({ match }) {
 						</tr>
 					)}
 				</tbody>
-			</table>
-		</div>
+			</Table>
+		</>
 	)
 }
 

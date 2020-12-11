@@ -2,9 +2,14 @@ import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { render } from 'react-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlus, faCheck } from '@fortawesome/free-solid-svg-icons'
+import {
+	faPlus,
+	faCheck,
+	faEdit,
+	faUserCircle,
+} from '@fortawesome/free-solid-svg-icons'
 
-library.add(faPlus, faCheck)
+library.add(faPlus, faCheck, faEdit, faUserCircle)
 
 import { App } from './app'
 

@@ -1,6 +1,6 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
-
+const webpack = require('webpack')
 module.exports = {
 	mode: 'development',
 	module: {
@@ -29,9 +29,19 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: './src/index.html',
 		}),
+		new webpack.SourceMapDevToolPlugin({
+			filename: 'sourcemaps/[file].map',
+			publicPath: 'http://localhost:8080/',
+			fileContext: 'public',
+		}),
 	],
 	devServer: {
 		historyApiFallback: true,
+	},
+	devtool: false,
+	output: {
+		path: path.join(__dirname, 'dist'),
+		filename: `./[name].js`,
 	},
 	externals: {
 		// global app config object

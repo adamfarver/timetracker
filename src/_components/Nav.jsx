@@ -1,34 +1,27 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-
-function Nav() {
+import React, { useContext } from 'react'
+import { AppContext } from './AppContext'
+import { Navbar, Nav } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+function NavComponent() {
+	const [project, setProject, sprint, setSprint, user, setUser] = useContext(
+		AppContext
+	)
 	return (
-		<nav className="navbar navbar-expand navbar-dark bg-dark">
-			<div className="navbar-nav">
-				<NavLink exact to="/" className="nav-item nav-link">
-					Home
-				</NavLink>
-				<NavLink to="/users" className="nav-item nav-link">
-					Users
-				</NavLink>
-				<NavLink to="/projects" className="nav-item nav-link">
-					Projects
-				</NavLink>
-				<NavLink to="/roles" className="nav-item nav-link">
-					Roles
-				</NavLink>
-				<NavLink to="/sprints" className="nav-item nav-link">
-					Sprints
-				</NavLink>
-				<NavLink to="/tasks" className="nav-item nav-link">
-					Tasks
-				</NavLink>
-				<NavLink to="/times" className="nav-item nav-link">
-					Times
-				</NavLink>
-			</div>
-		</nav>
+		<Navbar bg="dark" expand="lg" variant="dark">
+			<Navbar.Brand href="/">Time Tracker</Navbar.Brand>
+			<Navbar.Toggle aria-controls="basic-navbar-nav" />
+			<Navbar.Collapse id="basic-navbar-nav">
+				<Nav className="ml-auto">
+					<Nav.Link href="#home">Home</Nav.Link>
+					<Nav.Link href="#link">Link</Nav.Link>
+					<Nav.Link href="#link">
+						<FontAwesomeIcon icon="user-circle" />
+						{` ${user.firstName}`}
+					</Nav.Link>
+				</Nav>
+			</Navbar.Collapse>
+		</Navbar>
 	)
 }
 
-export { Nav }
+export { NavComponent }

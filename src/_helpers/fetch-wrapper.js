@@ -24,7 +24,10 @@ function post(url, body) {
 function put(url, body) {
 	const requestOptions = {
 		method: 'PUT',
-		headers: { 'Content-Type': 'application/json' },
+		headers: {
+			'Content-Type': 'application/json',
+			'Access-Control-Allow-Origin': '*',
+		},
 		body: JSON.stringify(body),
 	}
 	return fetch(url, requestOptions).then(handleResponse)

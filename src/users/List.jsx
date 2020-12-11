@@ -27,10 +27,12 @@ function List({ history, match }) {
 	function selectUser(id) {
 		let selectedUser = users.filter((user) => user._id === id)
 		selectedUser[0].isSelected = true
-		console.log(selectedUser)
+		selectedUser = selectedUser[0]
+
+		localStorage.setItem('current_user', JSON.stringify(selectedUser))
 		setUser(selectedUser)
 		alertService.success(
-			`Current User: ${selectedUser[0].firstName} ${selectedUser[0].lastName}`,
+			`Current User: ${selectedUser.firstName} ${selectedUser.lastName}`,
 			{ keepAfterRouteChange: true }
 		)
 		history.push('/projects')
@@ -42,11 +44,12 @@ function List({ history, match }) {
 			<Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">
 				Add User
 			</Link>
-			<Table striped>
+			<Table responsive striped>
 				<thead>
 					<tr>
 						<th style={{ width: '30%' }}>Name</th>
 						<th style={{ width: '30%' }}>Email</th>
+
 						<th style={{ width: '30%' }}>Role</th>
 						<th style={{ width: '10%' }}></th>
 					</tr>

@@ -6,6 +6,7 @@ const baseUrl = `${config.apiUrl}/task`
 export const taskService = {
 	getAll,
 	getById,
+	getByProjectId,
 	create,
 	update,
 	delete: _delete,
@@ -17,6 +18,10 @@ function getAll() {
 
 function getById(id) {
 	return fetchWrapper.get(`${baseUrl}/${id}`)
+}
+
+function getByProjectId(id) {
+	return fetchWrapper.get(`${baseUrl}/allprojecttasks/${id}`)
 }
 
 function create(params) {

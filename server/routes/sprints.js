@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const Sprint = require('../../models/Sprint')
+const { ObjectId } = mongoose.Types
 // All routes added together
 
 // Sprint
@@ -16,7 +17,16 @@ router.get('/', async (req, res, next) => {
 		res.status(500).send({ msg: 'Server issues' }).end()
 	}
 })
-
+// Read All Sprints, filtered by Project.
+router.get('/list/:id', async (req, res, next) => {
+	try {
+		const allSprints = await Sprint.find({ project: req.params.id })
+		res.json(allSprints).status(200)
+		res.end()
+	} catch (error) {
+		res.status(500).send({ msg: 'Server issues' }).end()
+	}
+})
 // Read Single Sprint
 router.get('/:id', async (req, res, next) => {
 	try {
@@ -28,12 +38,27 @@ router.get('/:id', async (req, res, next) => {
 	}
 })
 
+// Aggregate number of sprint types in current project
+router.get('/number/:id', async (req, res, next) => {
+	try {
+		const record = await Sprint.aggregate([
+			{ $match: { project: ObjectId(req.params.id) } },
+			{
+				$group: { _id: '$sprintType', sprintType: { $sum: 1 } },
+			},
+		])
+		res.json(record).status(200)
+		res.end()
+	} catch (error) {
+		console.log(error)
+		res.status(404).send({ msg: 'Resource not found.' }).end()
+	}
+})
 // Create Sprint
 router.post('/', async (req, res, next) => {
 	const { body } = req
 
 	const project = new Sprint(body)
-	console.log(project)
 	if (mongoose.connection.readyState) {
 		await project.save().then(() => {
 			res.set({ ok: 'true' }).status(200)

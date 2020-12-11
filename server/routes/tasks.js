@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const Task = require('../../models/Task')
+const { makeSparseArrays, makeDayArrays } = require('../_helpers/makeArrays')
+const { ObjectId } = mongoose.Types
 // All routes added together
 
 // Task
@@ -27,11 +29,52 @@ router.get('/:id', async (req, res, next) => {
 		res.status(404).send({ msg: 'Resource not found.' }).end()
 	}
 })
+// Get project tasks
+router.get('/allprojecttasks/:id', async (req, res, next) => {
+	try {
+		const records = await Task.find({ project: ObjectId(`${req.params.id}`) })
+		res.json(records).status(200)
+		res.end()
+	} catch (error) {
+		console.log(error)
+	}
+})
+
+// Get tasks by sprint
+
+router.get('/expectedtime/:id', async (req, res, next) => {
+	try {
+		let projectedTime = await Task.aggregate([
+			{ $match: { sprint: ObjectId(`${req.params.id}`) } },
+			{ $group: { _id: 0, projectedTime: { $sum: '$projectedTime' } } },
+		])
+		projectedTime = makeSparseArrays(projectedTime[0].projectedTime, 5)
+
+		const dateStart = new Date('2020-12-07T00:00:00.000Z')
+		const dateEnd = new Date('2020-12-11T00:00:00.000Z')
+		makeDayArrays(dateStart, dateEnd)
+		let records = {}
+		records.datasets = [
+			{
+				label: 'Projected Pace',
+				borderColor: '#333333',
+				data: projectedTime,
+				fill: 'origin',
+			},
+		]
+		res.json(records).status(200)
+		res.end()
+	} catch (error) {
+		console.log(error)
+	}
+})
 
 // Create Task
 router.post('/', async (req, res, next) => {
 	const { body } = req
+	console.log('body', body)
 	const project = new Task(body)
+
 	if (mongoose.connection.readyState) {
 		await project.save().then(() => {
 			res.set({ ok: 'true' }).status(200)
@@ -46,10 +89,9 @@ router.post('/', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
 	const objId = req.params.id
 	const { body } = req
+	console.log(req.body)
 	try {
-		await Task.findOneAndUpdate({ _id: objId }, body)
-
-		const record = await Task.findById({ _id: objId })
+		const record = await Task.findOneAndUpdate({ _id: objId }, body)
 		res.json(record).status(200)
 		res.end()
 	} catch (error) {

@@ -1,19 +1,51 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { AppContext } from '../_components/AppContext'
 import { Link } from 'react-router-dom'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
+import { Form as BSForm, Button, Col } from 'react-bootstrap'
 import * as Yup from 'yup'
+import { dateSlice } from '../_helpers/humanDateFormatter'
 
-import { taskService, alertService } from '@/_services'
+import { taskService, sprintService, alertService } from '@/_services'
 
 function AddEdit({ history, match }) {
+	const [project, setProject, sprint, setSprint, user, setUser] = useContext(
+		AppContext
+	)
+	const [sprintList, setSprintList] = useState([])
 	const { id } = match.params
 	const isAddMode = !id
 
+	useEffect(() => {
+		try {
+			sprintService
+				.filterByProjectId(project._id)
+				.then((data) => data.filter((sprint) => sprint.completed === false))
+				.then((list) =>
+					list.map((item) => {
+						item.dateStart = dateSlice(item.dateStart)
+						item.dateEnd = dateSlice(item.dateStart)
+						return item
+					})
+				)
+				.then((list) => setSprintList(list))
+		} catch (error) {
+			console.log(error)
+		}
+	}, [])
+
 	const initialValues = {
 		taskName: '',
+		dateCompleted: '',
 		completed: false,
+		userCreated: '',
+		userModified: user._id,
 		additionalInfo: '',
 		active: true,
+		project: project._id,
+		sprint: '',
+		claimedBy: '',
+		projectedTime: '',
 	}
 
 	const validationSchema = Yup.object().shape({})
@@ -28,13 +60,17 @@ function AddEdit({ history, match }) {
 	}
 
 	function createTask(fields, setSubmitting) {
+		fields.userCreated = user._id
+		const emptyKeys = Object.keys(fields).filter((key) => fields[key] === '')
+		emptyKeys.map((key) => delete fields[key])
+		console.log(fields)
 		taskService
 			.create(fields)
 			.then(() => {
 				alertService.success('Task added', { keepAfterRouteChange: true })
 				history.goBack()
 			})
-			.catch(() => {
+			.catch((error) => {
 				setSubmitting(false)
 				alertService.error(error)
 			})
@@ -79,7 +115,6 @@ function AddEdit({ history, match }) {
 								'sprint',
 								'claimedBy',
 								'projectedTime',
-								'actualUsedTime',
 							]
 							fields.forEach((field) =>
 								setFieldValue(field, task[field], false)
@@ -91,91 +126,130 @@ function AddEdit({ history, match }) {
 
 				return (
 					<Form>
-						<h1>{isAddMode ? 'Add Task' : 'Edit Task'}</h1>
-						<div className="form-row align-items-end">
-							<div className="col-md-8">
-								<div className="form-group">
-									<label htmlFor="taskName">Task Name</label>
+						<BSForm.Row className="m-0">
+							<h1>{isAddMode ? 'Add Task' : 'Edit Task'}</h1>
+						</BSForm.Row>
+						<BSForm.Row className="align-items-center">
+							<Col md={4}>
+								<BSForm.Group>
+									<BSForm.Label htmlFor="taskName">Task Name</BSForm.Label>
 									<Field
 										name="taskName"
-										id="taskName"
+										id="projectName"
 										type="text"
 										className={
 											'form-control' +
-											(errors.taskName && touched.taskName ? ' is-invalid' : '')
-										}
-									/>
-									<ErrorMessage
-										name="taskName"
-										component="div"
-										className="invalid-feedback"
-									/>
-								</div>
-							</div>
-							<div className="col-md-2 mb-4">
-								<div className="form-check-inline col-md">
-									<Field
-										name="active"
-										type="checkbox"
-										id="active"
-										className={
-											'form-check-input' +
-											(errors.active && touched.active ? ' is-invalid' : '')
-										}
-									/>
-									<label htmlFor="active" className="form-check-label">
-										Active
-									</label>
-								</div>
-							</div>
-							<div className="col-md-2 mb-4">
-								<div className="form-check-inline col-md">
-									<Field
-										name="completed"
-										type="checkbox"
-										id="completed"
-										className={
-											'form-check-input' +
-											(errors.completed && touched.completed
+											(errors.projectName && touched.projectName
 												? ' is-invalid'
 												: '')
 										}
 									/>
-									<label htmlFor="completed" className="form-check-label">
-										Completed
-									</label>
-								</div>
-							</div>
-						</div>
-						<div className="form-row">
-							<div className="form-group col-md">
-								<label htmlFor="additionalInfo">Addtional Info</label>
-								<Field
-									name="additionalInfo"
-									as="textarea"
-									rows="3"
-									id="addtionalInfo"
-									className="form-control"
-								/>
-							</div>
-						</div>
-						<div className="form-row">
-							<div className="form-group col">
-								<button
-									type="submit"
-									disabled={isSubmitting}
-									className="btn btn-primary"
-								>
+								</BSForm.Group>
+								<BSForm.Group className=" text-danger">
+									<ErrorMessage name="taskName" />
+								</BSForm.Group>
+							</Col>
+							<Col md={1} className="pt-md-4">
+								<Field type="checkbox" name="active" />
+								<BSForm.Label htmlFor="active" className="ml-1">
+									Active
+								</BSForm.Label>
+							</Col>
+							<Col>
+								<BSForm.Group controlId="sprint">
+									<BSForm.Label>Sprint</BSForm.Label>
+									<Field
+										as="select"
+										name="sprint"
+										className={
+											'custom-select' +
+											(errors.sprint && touched.sprint ? ' is-invalid' : '')
+										}
+									>
+										<option>Choose...</option>
+										{Object.keys(sprintList).map((key) => (
+											<option
+												key={sprintList[key]._id}
+												value={sprintList[key]._id}
+											>
+												{`${sprintList[key].sprintType} ${sprintList[key].sprint} => ${sprintList[key].dateStart} - ${sprintList[key].dateEnd}`}
+											</option>
+										))}
+									</Field>
+								</BSForm.Group>
+							</Col>
+
+							<Col md={2} className="pt-md-4">
+								<Field type="checkbox" name="completed" />
+								<BSForm.Label htmlFor="completed" className="ml-1">
+									Complete
+								</BSForm.Label>
+							</Col>
+						</BSForm.Row>
+						<BSForm.Row>
+							<Col>
+								<BSForm.Group>
+									<BSForm.Label htmlFor="additionalInfo">
+										Additional Info
+									</BSForm.Label>
+									<Field
+										as="textarea"
+										rows="3"
+										name="additionalInfo"
+										id="addtionalInfo"
+										type="textarea"
+										className={
+											'form-control' +
+											(errors.additionalInfo && touched.additionalInfo
+												? ' is-invalid'
+												: '')
+										}
+									/>
+								</BSForm.Group>
+							</Col>
+						</BSForm.Row>
+						<BSForm.Row>
+							<Col xl={2}>
+								<BSForm.Group>
+									<BSForm.Label htmlFor="projectedTime">
+										Projected Time
+									</BSForm.Label>
+									<Field
+										name="projectedTime"
+										type="number"
+										step=".25"
+										min=".25"
+										id="projectedTime"
+										className={
+											'form-control' +
+											(errors.projectName && touched.projectName
+												? ' is-invalid'
+												: '')
+										}
+									/>
+								</BSForm.Group>
+							</Col>
+						</BSForm.Row>
+						<BSForm.Row className="align-items-between">
+							<Col>
+								<Button type="submit" disabled={isSubmitting} variant="primary">
 									{isSubmitting && (
 										<span className="spinner-border spinner-border-sm mr-1"></span>
 									)}
 									Save
-								</button>
-								<Link to={isAddMode ? '.' : '..'} className="btn btn-link">
+								</Button>
+								<Link to={`/projects/${project._id}`} className="btn btn-link">
 									Cancel
 								</Link>
-							</div>
-						</div>
+							</Col>
+							{!isAddMode ? (
+								<Col>
+									<Button variant="danger" onClick={() => deleteTask(id)}>
+										Delete
+									</Button>
+								</Col>
+							) : null}
+						</BSForm.Row>
 					</Form>
 				)
 			}}

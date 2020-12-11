@@ -20,7 +20,6 @@ module.exports = mongoose.model(
 			sprint: { type: ObjectId, required: false },
 			claimedBy: { type: ObjectId, required: false },
 			projectedTime: { type: Number, required: false },
-			actualUsedTime: { type: Array, required: false, default: [] },
 		},
 		{ timestamps: { createdAt: 'created_at', modifiedAt: 'modified_at' } }
 	)

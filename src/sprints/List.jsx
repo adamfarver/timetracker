@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-
+import { Table } from 'react-bootstrap'
 import { sprintService, alertService } from '@/_services'
 
 function List({ match }) {
@@ -25,7 +25,7 @@ function List({ match }) {
 			<Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">
 				Add Sprint
 			</Link>
-			<table className="table table-striped">
+			<Table className="table table-striped hover">
 				<thead>
 					<tr>
 						<th style={{ width: '30%' }}>Name</th>
@@ -79,7 +79,7 @@ function List({ match }) {
 						</tr>
 					)}
 				</tbody>
-			</table>
+			</Table>
 		</div>
 	)
 }

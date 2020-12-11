@@ -5,8 +5,11 @@ import * as Yup from 'yup'
 import { AppContext } from '../_components/AppContext'
 import { sprintService, alertService } from '@/_services'
 import { Breadcrumbs } from '../_components/Breadcrumb'
-
+import { dateSlice } from '../_helpers/humanDateFormatter'
+import { Form as BSForm, Button, Col } from 'react-bootstrap'
+import moment from 'moment'
 function AddEdit({ history, match }) {
+	const [sprintNumber, setSprintNumber] = useState({})
 	const [project, setProject, sprint, setSprint, user, setUser] = useContext(
 		AppContext
 	)
@@ -14,10 +17,10 @@ function AddEdit({ history, match }) {
 	const isAddMode = !id
 
 	const initialValues = {
-		sprint: '',
+		sprint: 1,
 		completed: false,
-		userCreated: user[0]._id,
-		userModified: user[0]._id,
+		userCreated: user._id,
+		userModified: user._id,
 		sprintType: '',
 		active: false,
 		dateStart: '',
@@ -27,7 +30,7 @@ function AddEdit({ history, match }) {
 
 	const getToday = function todayDate() {
 		const now = new Date()
-		const today = now.toJSON().slice(0, 10)
+		const today = moment(now, 'YYYY-MM-DDTHH:mm:ss.SSS').format('YYYY-MM-DD')
 		return today
 	}
 	const validationSchema = Yup.object().shape({
@@ -47,10 +50,18 @@ function AddEdit({ history, match }) {
 
 	function createSprint(fields, setSubmitting) {
 		fields.project = project._id
+		const filteredSprintNumber = sprintNumber.filter(
+			(obj) => obj._id === fields.sprintType
+		)
+		if (filteredSprintNumber.length >= 1) {
+			fields.sprint = filteredSprintNumber[0].sprintType + 1
+		}
 		sprintService
 			.create(fields)
 			.then(() => {
 				alertService.success('Sprint added', { keepAfterRouteChange: true })
+				localStorage.setItem('current_sprint', JSON.stringify(fields))
+				setSprint(fields)
 				history.goBack()
 			})
 			.catch((error) => {
@@ -72,6 +83,18 @@ function AddEdit({ history, match }) {
 			})
 	}
 
+	function deleteSprint(id) {
+		sprintService
+			.delete(id)
+			.then(() => {
+				alertService.success('Sprint Deleted', { keepAfterRouteChange: true })
+				history.goBack()
+			})
+			.catch((error) => {
+				setSubmitting(false)
+				alertService.error(error)
+			})
+	}
 	return (
 		<Formik
 			initialValues={initialValues}
@@ -85,8 +108,7 @@ function AddEdit({ history, match }) {
 					if (!isAddMode) {
 						// get sprint and set form fields
 						sprintService.getById(id).then((sprint) => {
-							console.log(sprint)
-							const fields = [
+							let fields = [
 								'sprint',
 								'completed',
 								'userCreated',
@@ -97,15 +119,19 @@ function AddEdit({ history, match }) {
 								'dateEnd',
 								'project',
 							]
+
+							sprint.dateStart = dateSlice(sprint.dateStart)
+							sprint.dateEnd = dateSlice(sprint.dateEnd)
 							fields.forEach((field) => {
-								// Fix Date issues
-								sprint.dateStart = sprint.dateStart.slice(0, 10)
-								sprint.dateEnd = sprint.dateEnd.slice(0, 10)
 								// Makes sure the current user is put in userModified field.
-								sprint.userModified = user[0]._id
+								sprint.userModified = user._id
 								setFieldValue(field, sprint[field], false)
 							})
 							setSprint(sprint)
+						})
+					} else {
+						sprintService.getSprintNumber(project._id).then((data) => {
+							setSprintNumber(data)
 						})
 					}
 				}, [])
@@ -114,70 +140,98 @@ function AddEdit({ history, match }) {
 					<>
 						<Breadcrumbs />
 						<Form>
-							<h1>{isAddMode ? 'Add Sprint' : 'Edit Sprint'}</h1>
-							<div className="form-row align-items-end">
-								<div className="form-group col-md-6">
-									<label htmlFor="sprintType">Sprint Type</label>
-									<Field
-										name="sprintType"
-										as="select"
-										className={
-											'form-control custom-select' +
-											(errors.sprintType && touched.sprintType
-												? ' is-invalid'
-												: '')
-										}
+							<BSForm.Row className="m-0">
+								<h1>{isAddMode ? 'Add Sprint' : 'Edit Sprint'}</h1>
+							</BSForm.Row>
+							<BSForm.Row className="align-items-center">
+								<Col md={6}>
+									<BSForm.Group>
+										<BSForm.Label htmlFor="sprintType">
+											Sprint Type
+										</BSForm.Label>
+										<Field
+											name="sprintType"
+											as="select"
+											className={
+												'form-control custom-select' +
+												(errors.sprintType && touched.sprintType
+													? ' is-invalid'
+													: '')
+											}
+										>
+											<option value="">None</option>
+											<option value="code">Code</option>
+											<option value="design">Design</option>
+										</Field>
+									</BSForm.Group>
+									<BSForm.Group className=" text-danger">
+										<ErrorMessage name="sprintType" />
+									</BSForm.Group>
+								</Col>
+								<Col md={2} className="pt-md-4">
+									<Field type="checkbox" name="active" />
+									<BSForm.Label htmlFor="active" className="ml-1">
+										Active
+									</BSForm.Label>
+								</Col>
+								<Col md={2} className="pt-md-4">
+									<Field type="checkbox" name="completed" />
+									<BSForm.Label htmlFor="completed" className="ml-1">
+										Complete
+									</BSForm.Label>
+								</Col>
+							</BSForm.Row>
+							<BSForm.Row className="align-items-end ">
+								<Col md={2}>
+									<BSForm.Group>
+										<BSForm.Label htmlFor="dateStart">Start Date</BSForm.Label>
+										<Field
+											name="dateStart"
+											className="form-control"
+											type="date"
+											min={getToday()}
+										/>
+									</BSForm.Group>
+								</Col>
+								<Col md={2}>
+									<BSForm.Group>
+										<BSForm.Label htmlFor="dateEnd">End Date</BSForm.Label>
+										<Field
+											name="dateEnd"
+											className="form-control"
+											type="date"
+											min={getToday()}
+										/>
+									</BSForm.Group>
+								</Col>
+							</BSForm.Row>
+							<BSForm.Row className="align-items-between">
+								<Col>
+									<Button
+										type="submit"
+										disabled={isSubmitting}
+										variant="primary"
 									>
-										<option value="">None</option>
-										<option value="code">Code</option>
-										<option value="design">Design</option>
-									</Field>
-								</div>
-								<div className="form-group col-md-6 text-danger pb-2">
-									<ErrorMessage name="sprintType" />
-								</div>
-							</div>
-							<div className="form-row align-items-end ">
-								<div className="form-group col-md-2">
-									<label htmlFor="dateStart">Start Date</label>
-									<Field
-										name="dateStart"
-										className="form-control"
-										type="date"
-										min={getToday()}
-									/>
-								</div>
-								<div className="form-group col-md-2">
-									<label htmlFor="dateEnd	">End Date</label>
-									<Field
-										name="dateEnd"
-										className="form-control"
-										type="date"
-										min={getToday()}
-									/>
-								</div>
-								{(errors.dateStart && touched.dateStart) ||
-								(errors.dateEnd && touched.dateEnd) ? (
-									<div className="text-danger col-md-5 pb-2">
-										<p>Both start and end dates are required.</p>
-									</div>
+										{isSubmitting && (
+											<span className="spinner-border spinner-border-sm mr-1"></span>
+										)}
+										Save
+									</Button>
+									<Link
+										to={`/projects/${project._id}`}
+										className="btn btn-link"
+									>
+										Cancel
+									</Link>
+								</Col>
+								{!isAddMode ? (
+									<Col>
+										<Button variant="danger" onClick={() => deleteSprint(id)}>
+											Delete
+										</Button>
+									</Col>
 								) : null}
-							</div>
-							<div className="form-group">
-								<button
-									type="submit"
-									disabled={isSubmitting}
-									className="btn btn-primary"
-								>
-									{isSubmitting && (
-										<span className="spinner-border spinner-border-sm mr-1"></span>
-									)}
-									Save
-								</button>
-								<Link to={isAddMode ? '.' : '..'} className="btn btn-link">
-									Cancel
-								</Link>
-							</div>
+							</BSForm.Row>
 						</Form>
 					</>
 				)

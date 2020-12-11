@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
+import { Form as BSForm, Button, Col } from 'react-bootstrap'
 import * as Yup from 'yup'
 
 import { projectService, userService, alertService } from '@/_services'
@@ -114,10 +115,13 @@ function AddEdit({ history, match }) {
 				return (
 					<Form>
 						<h1>{isAddMode ? 'Add Project' : 'Edit Project'}</h1>
-						<div className="row align-items-center">
-							<div className="col-md-8">
-								<div className="form-group">
-									<label htmlFor="projectName">Project Name</label>
+						<BSForm.Row className="align-items-center">
+							<Col md={8}>
+								<BSForm.Group>
+									<BSForm.Label htmlFor="projectName">
+										Project Name
+									</BSForm.Label>
+
 									<Field
 										name="projectName"
 										id="projectName"
@@ -134,10 +138,10 @@ function AddEdit({ history, match }) {
 										component="div"
 										className="invalid-feedback"
 									/>
-								</div>
-							</div>
-							<div className="col-md-2 ">
-								<div className="form-check-inline col-md">
+								</BSForm.Group>
+							</Col>
+							<Col md={2}>
+								<BSForm.Group className="form-check-inline mt-md-4">
 									<Field
 										name="active"
 										type="checkbox"
@@ -147,34 +151,35 @@ function AddEdit({ history, match }) {
 											(errors.active && touched.active ? ' is-invalid' : '')
 										}
 									/>
-									<label htmlFor="active" className="form-check-label">
+									<BSForm.Label htmlFor="active" className="form-check-label">
 										Active
-									</label>
-								</div>
-							</div>
-							<div className="col-md-2">
-								<div className="form-check-inline col-md">
+									</BSForm.Label>
+								</BSForm.Group>
+							</Col>
+							<Col md={2}>
+								<BSForm.Group className="form-check-inline mt-md-4">
 									<Field
-										name="completed"
+										name="complete"
 										type="checkbox"
 										id="completed"
 										className={
 											'form-check-input' +
-											(errors.completed && touched.completed
-												? ' is-invalid'
-												: '')
+											(errors.active && touched.active ? ' is-invalid' : '')
 										}
 									/>
-									<label htmlFor="completed" className="form-check-label">
+									<BSForm.Label htmlFor="complete" className="form-check-label">
 										Completed
-									</label>
-								</div>
-							</div>
-						</div>
-						<div className="row">
-							<div className="col">
-								<div className="form-group">
-									<label htmlFor="additionalInfo">Additional Info</label>
+									</BSForm.Label>
+								</BSForm.Group>
+							</Col>
+						</BSForm.Row>
+
+						<BSForm.Row>
+							<Col>
+								<BSForm.Group>
+									<BSForm.Label htmlFor="additionalInfo">
+										Additional Info
+									</BSForm.Label>
 									<Field
 										as="textarea"
 										rows="3"
@@ -188,21 +193,18 @@ function AddEdit({ history, match }) {
 												: '')
 										}
 									/>
-									<ErrorMessage
-										name="additionalInfo"
-										component="div"
-										className="invalid-feedback"
-									/>
-								</div>
-							</div>
-						</div>
-						<div className="row m-0">
-							<h3 className="text-muted">Client</h3>
-						</div>
-						<div className="row">
-							<div className="col-md-6">
-								<div className="form-group">
-									<label htmlFor="ownerName">Owner Name</label>
+								</BSForm.Group>
+							</Col>
+						</BSForm.Row>
+						<BSForm.Row>
+							<Col>
+								<h3 className="text-muted">Client</h3>
+							</Col>
+						</BSForm.Row>
+						<BSForm.Row>
+							<Col md>
+								<BSForm.Group>
+									<BSForm.Label htmlFor="ownerName">Owner Name</BSForm.Label>
 									<Field
 										name="ownerName"
 										id="ownerName"
@@ -219,11 +221,13 @@ function AddEdit({ history, match }) {
 										component="div"
 										className="invalid-feedback"
 									/>
-								</div>
-							</div>
-							<div className="col-md-6">
-								<div className="form-group">
-									<label htmlFor="ownerName">Owner Company</label>
+								</BSForm.Group>
+							</Col>
+							<Col md>
+								<BSForm.Group>
+									<BSForm.Label htmlFor="ownerCompany">
+										Owner Company
+									</BSForm.Label>
 									<Field
 										name="ownerCompany"
 										id="ownerCompany"
@@ -240,13 +244,13 @@ function AddEdit({ history, match }) {
 										component="div"
 										className="invalid-feedback"
 									/>
-								</div>
-							</div>
-						</div>
-						<div className="row">
-							<div className="col-md">
-								<div className="form-group">
-									<label htmlFor="ownerPhone">Owner Phone</label>
+								</BSForm.Group>
+							</Col>
+						</BSForm.Row>
+						<BSForm.Row>
+							<Col md>
+								<BSForm.Group>
+									<BSForm.Label htmlFor="ownerPhone">Owner Phone</BSForm.Label>
 									<Field
 										name="ownerPhone"
 										id="ownerPhone"
@@ -263,15 +267,15 @@ function AddEdit({ history, match }) {
 										component="div"
 										className="invalid-feedback"
 									/>
-								</div>
-							</div>
-							<div className="col-md">
-								<div className="form-group">
-									<label htmlFor="ownerName">Owner Email</label>
+								</BSForm.Group>
+							</Col>
+							<Col md>
+								<BSForm.Group>
+									<BSForm.Label htmlFor="ownerEmail">Owner Email</BSForm.Label>
 									<Field
 										name="ownerEmail"
 										id="ownerEmail"
-										type="email"
+										type="text"
 										className={
 											'form-control' +
 											(errors.ownerEmail && touched.ownerEmail
@@ -284,16 +288,20 @@ function AddEdit({ history, match }) {
 										component="div"
 										className="invalid-feedback"
 									/>
-								</div>
-							</div>
-						</div>
-						<div className="row m-0">
-							<h3 className="text-muted">Team</h3>
-						</div>
-						<div className="row">
-							<div className="col-md">
-								<div className="form-group">
-									<label htmlFor="projectManager">Project Manager</label>
+								</BSForm.Group>
+							</Col>
+						</BSForm.Row>
+						<BSForm.Row>
+							<Col>
+								<h3 className="text-muted">Team</h3>
+							</Col>
+						</BSForm.Row>
+						<BSForm.Row>
+							<Col md>
+								<BSForm.Group>
+									<BSForm.Label htmlFor="projectManager">
+										Project Manager
+									</BSForm.Label>
 									<Field
 										as="select"
 										name="projectManager"
@@ -318,8 +326,40 @@ function AddEdit({ history, match }) {
 										component="div"
 										className="invalid-feedback"
 									/>
-								</div>
-							</div>
+								</BSForm.Group>
+							</Col>
+
+							<Col md>
+								<BSForm.Group>
+									<BSForm.Label htmlfor="teamLead">Team Lead</BSForm.Label>
+									<Field
+										as="select"
+										name="teamLead"
+										id="teamlead"
+										type="select"
+										className={
+											'custom-select' +
+											(errors.teamLead && touched.teamLead ? ' is-invalid' : '')
+										}
+									>
+										{' '}
+										<option value="No One">No One</option>
+										{Object.keys(managers).map((key) => (
+											<option key={managers[key]._id} value={managers[key]._id}>
+												{managers[key].firstName} {managers[key].lastName}
+											</option>
+										))}
+									</Field>
+									<ErrorMessage
+										name="teamLead"
+										component="div"
+										className="invalid-feedback"
+									/>
+								</BSForm.Group>
+							</Col>
+						</BSForm.Row>
+						{/* 
+						<div className="row">
 							<div className="col-md">
 								<div className="form-group">
 									<label htmlFor="teamLead">Team Lead</label>
@@ -348,23 +388,26 @@ function AddEdit({ history, match }) {
 									/>
 								</div>
 							</div>
-						</div>
-
-						<div className="form-group">
-							<button
-								type="submit"
-								disabled={isSubmitting}
-								className="btn btn-primary"
-							>
-								{isSubmitting && (
-									<span className="spinner-border spinner-border-sm mr-1"></span>
-								)}
-								Save
-							</button>
-							<Link to={isAddMode ? '.' : '..'} className="btn btn-link">
-								Cancel
-							</Link>
-						</div>
+						</div> */}
+						<BSForm.Row>
+							<Col>
+								<BSForm.Group>
+									<Button
+										type="submit"
+										disabled={isSubmitting}
+										className="btn btn-primary"
+									>
+										{isSubmitting && (
+											<span className="spinner-border spinner-border-sm mr-1"></span>
+										)}
+										Save
+									</Button>
+									<Link to={isAddMode ? '.' : '..'} className="btn btn-link">
+										Cancel
+									</Link>
+								</BSForm.Group>
+							</Col>
+						</BSForm.Row>
 					</Form>
 				)
 			}}

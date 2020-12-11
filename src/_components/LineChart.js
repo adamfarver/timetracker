@@ -1,9 +1,9 @@
 import { Line } from 'react-chartjs-2'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../styles.less'
 
 export default function LineChart() {
-	const chartdata = {
+	const [chartData, setChartData] = useState({
 		labels: ['21', '22', '23', '24', '25', '27', '28'],
 		datasets: [
 			{
@@ -20,13 +20,17 @@ export default function LineChart() {
 				lineTension: 0,
 			},
 		],
-	}
+	})
+	useEffect(() => {
+		setChartData({})
+	}, [])
+
 	return (
 		<div className={'chartcontainer'}>
 			<Line
 				height={344}
 				width={500}
-				data={chartdata}
+				data={chartData}
 				options={{
 					legend: {
 						position: 'bottom',
