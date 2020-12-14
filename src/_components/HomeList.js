@@ -1,19 +1,38 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Badge, Button } from 'react-bootstrap'
 import ListGroup from 'react-bootstrap/ListGroup'
 import { Link } from 'react-router-dom'
-import { taskService } from '@/_services'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { AppContext } from '../_components/AppContext'
 export function HomeList(props) {
-	let { project, sprint, name, max, taskList, user } = props
+	let { name, max, taskList } = props
 
+	const [
+		project,
+		setProject,
+		sprint,
+		setSprint,
+		user,
+		setUser,
+		task,
+		setTask,
+	] = useContext(AppContext)
 	while (max < taskList.length) {
 		taskList.pop()
 	}
-	function claimItem(task, user) {
-		task.claimedBy = user._id
-		taskService.update(task._id, task).then(() => console.log('updated task'))
+	// This will most likely go into the individual task view.
+
+	// function claimItem(task, user) {
+	// 	task.claimedBy = user._id
+	// 	taskService.update(task._id, task).then(() => console.log('updated task'))
+	// }
+
+	function taskSetting(task) {
+		setTask(task)
+
+		localStorage.setItem('current_task', JSON.stringify(task))
 	}
+
 	return (
 		<>
 			<ListGroup as="ul">
@@ -37,16 +56,12 @@ export function HomeList(props) {
 								key={task._id}
 								className="d-flex justify-content-between"
 							>
-								{task.taskName}{' '}
-								{name == 'Available Tasks' && (
-									<Button
-										variant="info"
-										size="sm"
-										onClick={() => claimItem(task, user)}
-									>
-										Claim
-									</Button>
-								)}
+								<Link
+									to={`/tasks/view/${task._id}`}
+									onClick={() => taskSetting(task)}
+								>
+									{task.taskName}{' '}
+								</Link>
 							</ListGroup.Item>
 						)
 					})}

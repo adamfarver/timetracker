@@ -3,66 +3,24 @@ import { Link } from 'react-router-dom'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 
-import { userService, alertService } from '@/_services'
+import { timeService, alertService } from '@/_services'
 
 function AddEdit({ history, match }) {
 	const { id } = match.params
-	const isAddMode = !id
 
-	const initialValues = {
-		title: '',
-		firstName: '',
-		lastName: '',
-		email: '',
-		role: '',
-		password: '',
-		confirmPassword: '',
-	}
+	const initialValues = {}
 
-	const validationSchema = Yup.object().shape({
-		title: Yup.string().required('Title is required'),
-		firstName: Yup.string().required('First Name is required'),
-		lastName: Yup.string().required('Last Name is required'),
-		email: Yup.string().email('Email is invalid').required('Email is required'),
-		role: Yup.string().required('Role is required'),
-		password: Yup.string()
-			.concat(isAddMode ? Yup.string().required('Password is required') : null)
-			.min(6, 'Password must be at least 6 characters'),
-		confirmPassword: Yup.string()
-			.when('password', (password, schema) => {
-				if (password || isAddMode)
-					return schema.required('Confirm Password is required')
-			})
-			.oneOf([Yup.ref('password')], 'Passwords must match'),
-	})
+	const validationSchema = Yup.object().shape({})
 
 	function onSubmit(fields, { setStatus, setSubmitting }) {
 		setStatus()
-		if (isAddMode) {
-			createUser(fields, setSubmitting)
-		} else {
-			updateUser(id, fields, setSubmitting)
-		}
 	}
 
-	function createUser(fields, setSubmitting) {
-		userService
-			.create(fields)
-			.then(() => {
-				alertService.success('User added', { keepAfterRouteChange: true })
-				history.push('.')
-			})
-			.catch(() => {
-				setSubmitting(false)
-				alertService.error(error)
-			})
-	}
-
-	function updateUser(id, fields, setSubmitting) {
-		userService
+	function updateTime(id, fields, setSubmitting) {
+		timeService
 			.update(id, fields)
 			.then(() => {
-				alertService.success('User updated', { keepAfterRouteChange: true })
+				alertService.success('Time updated', { keepAfterRouteChange: true })
 				history.push('..')
 			})
 			.catch((error) => {
@@ -78,25 +36,25 @@ function AddEdit({ history, match }) {
 			onSubmit={onSubmit}
 		>
 			{({ errors, touched, isSubmitting, setFieldValue }) => {
-				const [user, setUser] = useState({})
+				const [time, settime] = useState({})
 				const [showPassword, setShowPassword] = useState(false)
 
 				useEffect(() => {
 					if (!isAddMode) {
-						// get user and set form fields
-						userService.getById(id).then((user) => {
+						// get time and set form fields
+						timeService.getById(id).then((time) => {
 							const fields = ['title', 'firstName', 'lastName', 'email', 'role']
 							fields.forEach((field) =>
-								setFieldValue(field, user[field], false)
+								setFieldValue(field, time[field], false)
 							)
-							setUser(user)
+							settime(time)
 						})
 					}
 				}, [])
 
 				return (
 					<Form>
-						<h1>{isAddMode ? 'Add User' : 'Edit User'}</h1>
+						<h1>{isAddMode ? 'Add time' : 'Edit time'}</h1>
 						<div className="form-row">
 							<div className="form-group col">
 								<label>Title</label>
@@ -181,7 +139,7 @@ function AddEdit({ history, match }) {
 									}
 								>
 									<option value=""></option>
-									<option value="User">User</option>
+									<option value="time">time</option>
 									<option value="Admin">Admin</option>
 								</Field>
 								<ErrorMessage
@@ -214,7 +172,7 @@ function AddEdit({ history, match }) {
 												</a>
 											</span>
 										) : (
-											<span> - {user.password}</span>
+											<span> - {time.password}</span>
 										))}
 								</label>
 								<Field

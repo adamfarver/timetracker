@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const Sprint = require('../../models/Sprint')
+const Task = require('../../models/Task')
+const { makeSparseArrays, makeDayArrays } = require('../_helpers/makeArrays')
 const { ObjectId } = mongoose.Types
 // All routes added together
 
@@ -38,6 +40,30 @@ router.get('/:id', async (req, res, next) => {
 	}
 })
 
+router.get('/sprintgraph/:id', async (req, res, next) => {
+	const records = {}
+	try {
+		let projectedTime = await Task.aggregate([
+			{ $match: { sprint: ObjectId(`${req.params.id}`) } },
+			{ $group: { _id: 0, projectedTime: { $sum: '$projectedTime' } } },
+		])
+		projectedTime = makeSparseArrays(projectedTime[0].projectedTime, 5)
+		const sprintInfo = await Sprint.findOne({ _id: req.params.id })
+		records.labels = makeDayArrays(sprintInfo.dateStart, sprintInfo.dateEnd)
+		records.datasets = [
+			{
+				label: 'Projected Pace',
+				borderColor: '#333333',
+				data: projectedTime,
+				fill: 'origin',
+			},
+		]
+		res.json(records).status(200)
+		res.end()
+	} catch (error) {
+		console.log(error)
+	}
+})
 // Aggregate number of sprint types in current project
 router.get('/number/:id', async (req, res, next) => {
 	try {

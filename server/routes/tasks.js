@@ -1,3 +1,4 @@
+const { faUserSecret } = require('@fortawesome/free-solid-svg-icons')
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
@@ -21,8 +22,22 @@ router.get('/', async (req, res, next) => {
 
 // Read Single Task
 router.get('/:id', async (req, res, next) => {
+	console.log(req.params.id)
 	try {
-		const record = await Task.findById(req.params.id)
+		// const record = await Task.findById(req.params.id)
+		const record = await Task.aggregate([
+			{
+				$match: { _id: ObjectId(`${req.params.id}`) },
+			},
+			{
+				$lookup: {
+					from: 'users',
+					localField: 'projectManager',
+					foreignField: '_id',
+					as: 'projectManager',
+				},
+			},
+		])
 		res.json(record).status(200)
 		res.end()
 	} catch (error) {
@@ -33,35 +48,6 @@ router.get('/:id', async (req, res, next) => {
 router.get('/allprojecttasks/:id', async (req, res, next) => {
 	try {
 		const records = await Task.find({ project: ObjectId(`${req.params.id}`) })
-		res.json(records).status(200)
-		res.end()
-	} catch (error) {
-		console.log(error)
-	}
-})
-
-// Get tasks by sprint
-
-router.get('/expectedtime/:id', async (req, res, next) => {
-	try {
-		let projectedTime = await Task.aggregate([
-			{ $match: { sprint: ObjectId(`${req.params.id}`) } },
-			{ $group: { _id: 0, projectedTime: { $sum: '$projectedTime' } } },
-		])
-		projectedTime = makeSparseArrays(projectedTime[0].projectedTime, 5)
-
-		const dateStart = new Date('2020-12-07T00:00:00.000Z')
-		const dateEnd = new Date('2020-12-11T00:00:00.000Z')
-		makeDayArrays(dateStart, dateEnd)
-		let records = {}
-		records.datasets = [
-			{
-				label: 'Projected Pace',
-				borderColor: '#333333',
-				data: projectedTime,
-				fill: 'origin',
-			},
-		]
 		res.json(records).status(200)
 		res.end()
 	} catch (error) {

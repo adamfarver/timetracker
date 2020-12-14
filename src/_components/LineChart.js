@@ -1,26 +1,13 @@
 import { Line } from 'react-chartjs-2'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { AppContext } from '../_components/AppContext'
 import '../styles.less'
 
 export default function LineChart() {
-	const [chartData, setChartData] = useState({
-		labels: ['21', '22', '23', '24', '25', '27', '28'],
-		datasets: [
-			{
-				label: 'Projected Pace',
-				borderColor: '#333333',
-				data: [500, , , , , , 0],
-				fill: 'origin',
-			},
-			{
-				label: 'Used Hours',
-				borderColor: '#ff0000',
-				data: [500, 425, 389, 311, 253, 128, 74],
-				fill: false,
-				lineTension: 0,
-			},
-		],
-	})
+	const [chartData, setChartData] = useState({})
+	const [project, setProject, sprint, setSprint, user, setUser] = useContext(
+		AppContext
+	)
 	useEffect(() => {
 		setChartData({})
 	}, [])

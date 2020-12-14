@@ -13,7 +13,7 @@ function NavComponent() {
 			<Navbar.Collapse id="basic-navbar-nav">
 				<Nav className="ml-auto">
 					<Nav.Link href="#home">Home</Nav.Link>
-					<Nav.Link href="#link">Link</Nav.Link>
+					<Nav.Link href="/projects">Projects</Nav.Link>
 					<Nav.Link href="#link">
 						<FontAwesomeIcon icon="user-circle" />
 						{` ${user.firstName}`}

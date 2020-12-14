@@ -73,7 +73,6 @@ function Home({ history, match }) {
 			setSprint({ _id: e.target.value })
 		}
 	}
-
 	return (
 		<Container>
 			{project ? (

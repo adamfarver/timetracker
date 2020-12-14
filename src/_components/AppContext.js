@@ -10,6 +10,8 @@ export function AppProvider(props) {
 	let localUser = localStorage.getItem('current_user')
 	localUser = JSON.parse(localUser)
 
+	let localTask = localStorage.getItem('current_task')
+	localTask = JSON.parse(localTask)
 	const [project, setProject] = useState(localProject || { _id: '', name: '' })
 	const [sprint, setSprint] = useState(localSprint || { _id: '', number: '' })
 	const [user, setUser] = useState(
@@ -19,9 +21,19 @@ export function AppProvider(props) {
 			isSelected: false,
 		}
 	)
+	const [task, setTask] = useState(localTask || { _id: '' })
 	return (
 		<AppContext.Provider
-			value={[project, setProject, sprint, setSprint, user, setUser]}
+			value={[
+				project,
+				setProject,
+				sprint,
+				setSprint,
+				user,
+				setUser,
+				task,
+				setTask,
+			]}
 		>
 			{props.children}
 		</AppContext.Provider>
