@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import { List } from './List'
 import { AddEdit } from './AddEdit'
 
-function Users({ match }) {
+function Times({ match }) {
 	const { path } = match
 
 	return (
@@ -16,4 +16,4 @@ function Users({ match }) {
 	)
 }
 
-export { Users }
+export { Times }

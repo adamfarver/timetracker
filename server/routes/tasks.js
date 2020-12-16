@@ -38,6 +38,7 @@ router.get('/:id', async (req, res, next) => {
 				},
 			},
 		])
+		console.log(typeof record)
 		res.json(record).status(200)
 		res.end()
 	} catch (error) {

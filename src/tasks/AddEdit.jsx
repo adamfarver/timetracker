@@ -63,7 +63,6 @@ function AddEdit({ history, match }) {
 		fields.userCreated = user._id
 		const emptyKeys = Object.keys(fields).filter((key) => fields[key] === '')
 		emptyKeys.map((key) => delete fields[key])
-		console.log(fields)
 		taskService
 			.create(fields)
 			.then(() => {
@@ -135,7 +134,7 @@ function AddEdit({ history, match }) {
 									<BSForm.Label htmlFor="taskName">Task Name</BSForm.Label>
 									<Field
 										name="taskName"
-										id="projectName"
+										id="taskName"
 										type="text"
 										className={
 											'form-control' +
