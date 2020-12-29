@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-
+import { Container, Row, Col } from 'react-bootstrap'
 import { taskService, alertService } from '@/_services'
 
-function List({ match }) {
+export function BackLogList({ match }) {
+	const { id } = match.params
 	const { path } = match
-	const [tasks, settasks] = useState(null)
+	console.log(match)
+	const [tasks, settasks] = useState([])
 
 	useEffect(() => {
-		taskService.getAll().then((x) => {
-			settasks(x)
+		taskService.getByProjectId(id).then((res) => {
+			const filteredTaskList = res.filter(
+				(task) => !task.active && !task.completed
+			)
+
+			console.log(filteredTaskList)
+			settasks(filteredTaskList)
 		})
 	}, [])
 
@@ -20,27 +27,29 @@ function List({ match }) {
 	}
 
 	return (
-		<div>
-			<h1>Tasks</h1>
+		<Container>
+			<h1>Backlog Tasks</h1>
 			<Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">
 				Add Task
 			</Link>
 			<table className="table table-striped">
 				<thead>
 					<tr>
-						<th style={{ width: '30%' }}>Name</th>
+						<th style={{ width: '30%' }}>Task</th>
 						<th style={{ width: '30%' }}>Allotted Time</th>
-						<th style={{ width: '30%' }}>Used Time</th>
-						<th style={{ width: '10%' }}></th>
+						<th style={{ width: '30%' }}>Future Column</th>
+						<th style={{ width: '10%' }}>Label</th>
 					</tr>
 				</thead>
 				<tbody>
 					{tasks &&
 						tasks.map((task) => (
 							<tr key={task._id}>
-								<td>{task.taskName}</td>
+								<td>
+									<Link to={`/tasks/view/${task._id}`}>{task.taskName}</Link>
+								</td>
 								<td>{task.projectedTime}</td>
-								<td>{task.actualUsedTime}</td>
+								<td>Something goes here.</td>
 								<td style={{ whiteSpace: 'nowrap' }}>
 									<Link
 										to={`${path}/edit/${task._id}`}
@@ -78,8 +87,6 @@ function List({ match }) {
 					)}
 				</tbody>
 			</table>
-		</div>
+		</Container>
 	)
 }
-
-export { List }

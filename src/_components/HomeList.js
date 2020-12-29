@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { Badge, Button } from 'react-bootstrap'
+import React, { useContext } from 'react'
 import ListGroup from 'react-bootstrap/ListGroup'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -17,19 +16,13 @@ export function HomeList(props) {
 		task,
 		setTask,
 	] = useContext(AppContext)
+
 	while (max < taskList.length) {
 		taskList.pop()
 	}
-	// This will most likely go into the individual task view.
-
-	// function claimItem(task, user) {
-	// 	task.claimedBy = user._id
-	// 	taskService.update(task._id, task).then(() => console.log('updated task'))
-	// }
 
 	function taskSetting(task) {
 		setTask(task)
-
 		localStorage.setItem('current_task', JSON.stringify(task))
 	}
 
@@ -62,10 +55,17 @@ export function HomeList(props) {
 								>
 									{task.taskName}{' '}
 								</Link>
+								{task.claimedBy ? (
+									<span>
+										{task.claimedBy.firstName} {task.claimedBy.lastName}
+									</span>
+								) : null}
 							</ListGroup.Item>
 						)
 					})}
-				<ListGroup.Item as="li">View More</ListGroup.Item>
+				<ListGroup.Item as="li">
+					<Link to={`/tasks/${project._id}`}>View More</Link>
+				</ListGroup.Item>
 			</ListGroup>
 		</>
 	)
