@@ -11,8 +11,13 @@ import { usDateFormat } from '../_helpers/humanDateFormatter'
 
 function Home({ history, match }) {
 	const { id } = match.params
-	const [taskList, setTasklist] = useState([])
-	const [sprintList, setSprintList] = useState([])
+	const [taskList, setTasklist] = useState({
+		completedTasks: [],
+		backlogTasks: [],
+		availableTasks: [],
+		inProcessTasks: [],
+	})
+	const [sprintList, setSprintList] = useState('')
 	const [project, setProject, sprint, setSprint, user, setUser] = useContext(
 		AppContext
 	)
@@ -47,21 +52,19 @@ function Home({ history, match }) {
 	}, [])
 	// Get All Tasks For Sprint
 	useEffect(() => {
-		taskService
-			.getByProjectId(project._id)
-			.then((res) => {
-				const completedTasks = res.filter((task) => task.completed)
-				const availableTasks = res.filter(
-					(task) => task.active && !task.completed
-				)
-				const backlogTasks = res.filter(
-					(task) => !task.active && !task.completed
-				)
-				res = { completedTasks, backlogTasks, availableTasks }
-				return res
-			})
-			.then((res) => setTasklist(res))
-	}, [])
+		taskService.getByProjectId(id).then((res) => {
+			const completedTasks = res.filter((task) => task.completed)
+			const availableTasks = res.filter(
+				(task) => task.active && !task.completed && !task.claimedBy
+			)
+			const backlogTasks = res.filter((task) => !task.active && !task.completed)
+			const inProcessTasks = res.filter(
+				(task) => task.active && !task.completed && task.claimedBy
+			)
+			res = { completedTasks, backlogTasks, availableTasks, inProcessTasks }
+			setTasklist(res)
+		})
+	}, [sprint, setSprint])
 
 	function handleSprintChange(e) {
 		setSprint(e.target.value)
@@ -120,12 +123,10 @@ function Home({ history, match }) {
 				)}
 			</Row>
 			<Row>
-				<Col>
+				<Col md={8}>
 					<LineChart />
 				</Col>
-			</Row>
-			<Row>
-				<Col md={4} className="mt-4 order-0">
+				<Col md={4} className=" order-1">
 					{sprint._id ? (
 						<HomeList
 							name="Available Tasks"
@@ -133,6 +134,20 @@ function Home({ history, match }) {
 							project={project}
 							sprint={sprint}
 							taskList={taskList.availableTasks}
+							user={user}
+						/>
+					) : null}
+				</Col>
+			</Row>
+			<Row>
+				<Col md={4} className="mt-4 ">
+					{sprint._id ? (
+						<HomeList
+							name="In-Process Tasks"
+							max={5}
+							project={project}
+							sprint={sprint}
+							taskList={taskList.inProcessTasks}
 							user={user}
 						/>
 					) : null}

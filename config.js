@@ -1,6 +1,6 @@
 const dotenv = require('dotenv')
 dotenv.config({
-	path: '../.env',
+	path: '.env',
 })
 module.exports = {
 	endpoint: process.env.REACT_APP_API_URL,

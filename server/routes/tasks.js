@@ -1,9 +1,7 @@
-const { faUserSecret } = require('@fortawesome/free-solid-svg-icons')
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const Task = require('../../models/Task')
-const { makeSparseArrays, makeDayArrays } = require('../_helpers/makeArrays')
 const { ObjectId } = mongoose.Types
 // All routes added together
 
@@ -22,7 +20,6 @@ router.get('/', async (req, res, next) => {
 
 // Read Single Task
 router.get('/:id', async (req, res, next) => {
-	console.log(req.params.id)
 	try {
 		// const record = await Task.findById(req.params.id)
 		const record = await Task.aggregate([
@@ -38,8 +35,8 @@ router.get('/:id', async (req, res, next) => {
 				},
 			},
 		])
-		console.log(typeof record)
-		res.json(record).status(200)
+		const parsedResponse = record[0]
+		res.json(parsedResponse).status(200)
 		res.end()
 	} catch (error) {
 		res.status(404).send({ msg: 'Resource not found.' }).end()
@@ -47,8 +44,25 @@ router.get('/:id', async (req, res, next) => {
 })
 // Get project tasks
 router.get('/allprojecttasks/:id', async (req, res, next) => {
+	console.log(`Getting all tasks for ${req.params.id}`)
 	try {
-		const records = await Task.find({ project: ObjectId(`${req.params.id}`) })
+		// const records = await Task.find({ project: ObjectId(`${req.params.id}`) })
+		const records = await Task.aggregate([
+			{
+				$match: { project: ObjectId(`${req.params.id}`) },
+			},
+			{
+				$lookup: {
+					from: 'users',
+					localField: 'claimedBy',
+					foreignField: '_id',
+					as: 'claimedBy',
+				},
+			},
+			{
+				$unwind: { path: '$claimedBy', preserveNullAndEmptyArrays: true },
+			},
+		])
 		res.json(records).status(200)
 		res.end()
 	} catch (error) {
@@ -59,7 +73,6 @@ router.get('/allprojecttasks/:id', async (req, res, next) => {
 // Create Task
 router.post('/', async (req, res, next) => {
 	const { body } = req
-	console.log('body', body)
 	const project = new Task(body)
 
 	if (mongoose.connection.readyState) {
@@ -76,7 +89,6 @@ router.post('/', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
 	const objId = req.params.id
 	const { body } = req
-	console.log(req.body)
 	try {
 		const record = await Task.findOneAndUpdate({ _id: objId }, body)
 		res.json(record).status(200)

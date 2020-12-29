@@ -14,7 +14,7 @@ function NavComponent() {
 				<Nav className="ml-auto">
 					<Nav.Link href="#home">Home</Nav.Link>
 					<Nav.Link href="/projects">Projects</Nav.Link>
-					<Nav.Link href="#link">
+					<Nav.Link href="/users">
 						<FontAwesomeIcon icon="user-circle" />
 						{` ${user.firstName}`}
 					</Nav.Link>
