@@ -53,18 +53,30 @@ function Home({ history, match }) {
 	// Get All Tasks For Sprint
 	useEffect(() => {
 		taskService.getByProjectId(id).then((res) => {
-			const completedTasks = res.filter((task) => task.completed)
-			const availableTasks = res.filter(
-				(task) => task.active && !task.completed && !task.claimedBy
+			const completedTasks = res.filter(
+				(task) => task.completed && task.sprint === sprint._id
 			)
-			const backlogTasks = res.filter((task) => !task.active && !task.completed)
+			const availableTasks = res.filter(
+				(task) =>
+					task.active &&
+					!task.completed &&
+					!task.claimedBy &&
+					task.sprint === sprint._id
+			)
+			const backlogTasks = res.filter(
+				(task) => !task.active && !task.completed && task.sprint === sprint._id
+			)
 			const inProcessTasks = res.filter(
-				(task) => task.active && !task.completed && task.claimedBy
+				(task) =>
+					task.active &&
+					!task.completed &&
+					task.claimedBy &&
+					task.sprint === sprint._id
 			)
 			res = { completedTasks, backlogTasks, availableTasks, inProcessTasks }
 			setTasklist(res)
 		})
-	}, [sprint, setSprint])
+	}, [sprint])
 
 	function handleSprintChange(e) {
 		setSprint(e.target.value)

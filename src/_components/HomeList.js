@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { AppContext } from '../_components/AppContext'
 export function HomeList(props) {
 	let { name, max, taskList } = props
-
 	const [
 		project,
 		setProject,
@@ -63,9 +62,11 @@ export function HomeList(props) {
 							</ListGroup.Item>
 						)
 					})}
-				<ListGroup.Item as="li">
-					<Link to={`/tasks/${project._id}`}>View More</Link>
-				</ListGroup.Item>
+				{taskList.length < max ? null : (
+					<ListGroup.Item as="li">
+						<Link to={`/tasks/${project._id}`}>View More</Link>
+					</ListGroup.Item>
+				)}
 			</ListGroup>
 		</>
 	)

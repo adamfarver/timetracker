@@ -89,12 +89,20 @@ router.post('/', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
 	const objId = req.params.id
 	const { body } = req
+	console.log('This is the request body: \n', body, '\n')
 	try {
-		const record = await Task.findOneAndUpdate({ _id: objId }, body)
+		const record = await Task.findOneAndUpdate(
+			{ _id: ObjectId(`${objId}`) },
+			body,
+			{
+				new: true,
+			}
+		)
+		console.log('This is the returned record:\n', record, '\n')
 		res.json(record).status(200)
 		res.end()
 	} catch (error) {
-		res.status(404).send({ msg: 'Resource not found.' }).end()
+		res.status(404).send({ msg: error }).end()
 	}
 })
 

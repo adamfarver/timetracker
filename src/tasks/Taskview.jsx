@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../_components/AppContext'
 import { Breadcrumbs } from '../_components/Breadcrumb'
 import { Container, Row, Col, Button } from 'react-bootstrap'
@@ -17,12 +17,25 @@ export function TaskView({ history, match }) {
 		setTask,
 	] = useContext(AppContext)
 
+	const [claimed, setClaimed] = useState(false)
 	useEffect(() => {
-		taskService.getById(id).then((individualTask) => setTask(individualTask))
+		taskService.getById(id).then((individualTask) => {
+			setTask(individualTask)
+		})
 	}, [])
 
-	function claimItem(task, user) {
-		task.claimedBy = user._id
+	function claimItem(e, task, user) {
+		if (e.target.innerHTML === 'Claim') {
+			task.claimedBy = user._id
+			setTask(task)
+			setClaimed(!claimed)
+			console.log(task.claimedBy)
+		} else {
+			task.claimedBy = null
+			setTask(task)
+			setClaimed(!claimed)
+			console.log(task.claimedBy)
+		}
 		try {
 			taskService
 				.update(task._id, task)
@@ -61,14 +74,25 @@ export function TaskView({ history, match }) {
 						<p>{task.projectedTime} hours</p>
 					</Col>
 					<Col>
-						<Button
-							variant="success"
-							onClick={() => {
-								claimItem(task, user)
-							}}
-						>
-							Claim
-						</Button>
+						{task.claimedBy ? (
+							<Button
+								variant="danger"
+								onClick={(event) => {
+									claimItem(event, task, user)
+								}}
+							>
+								Release
+							</Button>
+						) : (
+							<Button
+								variant="success"
+								onClick={(event) => {
+									claimItem(event, task, user)
+								}}
+							>
+								Claim
+							</Button>
+						)}
 					</Col>
 				</Row>
 				<Row>
