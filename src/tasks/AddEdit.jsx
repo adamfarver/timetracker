@@ -237,7 +237,7 @@ function AddEdit({ history, match }) {
 									)}
 									Save
 								</Button>
-								<Link to={`/projects/${project._id}`} className="btn btn-link">
+								<Link to={`/tasks/view/${id}`} className="btn btn-link">
 									Cancel
 								</Link>
 							</Col>

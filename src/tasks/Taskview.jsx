@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Link } from 'react-router-dom'
 import { AppContext } from '../_components/AppContext'
 import { Breadcrumbs } from '../_components/Breadcrumb'
 import { Container, Row, Col, Button } from 'react-bootstrap'
@@ -57,11 +59,22 @@ export function TaskView({ history, match }) {
 				</Row>
 				<Row>
 					<Col>
-						<h1>{task.taskName}</h1>
+						<div className="d-flex align-items-center">
+							<h1>{task.taskName}</h1>
+							{user.role.rolename === 'Manager' ||
+								('Admin' && (
+									<Col md>
+										<Link to={`/tasks/edit/${id}`}>
+											<FontAwesomeIcon icon="edit" className={'mr-1'} />
+											Edit Task
+										</Link>
+									</Col>
+								))}
+						</div>
 					</Col>
 				</Row>
 				<Row>
-					<Col>
+					<Col md={3}>
 						{task.active ? (
 							<p>
 								<b>Status:</b> ACTIVE
@@ -69,11 +82,11 @@ export function TaskView({ history, match }) {
 						) : null}
 					</Col>
 
-					<Col>
+					<Col md={3}>
 						<b>Projected Time:</b>
 						<p>{task.projectedTime} hours</p>
 					</Col>
-					<Col>
+					<Col md={3}>
 						{task.claimedBy ? (
 							<Button
 								variant="danger"
