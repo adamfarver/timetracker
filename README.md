@@ -14,4 +14,5 @@ Full-stack app designed for multiple users to track time spent on projects. I've
 - React
 - GraphJS
 - RXJS
-- react-bootstrap
+- React Bootstrap
+- React FontAwesome
