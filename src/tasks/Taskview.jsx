@@ -5,6 +5,7 @@ import { AppContext } from '../_components/AppContext'
 import { Breadcrumbs } from '../_components/Breadcrumb'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import { taskService, alertService } from '@/_services'
+import { AddEdit } from '../times/AddEdit'
 
 export function TaskView({ history, match }) {
 	const { id } = match.params
@@ -113,6 +114,13 @@ export function TaskView({ history, match }) {
 				</Row>
 				<Row>
 					<Col>{task.additionalInfo && <p>{task.additionalInfo}</p>}</Col>
+				</Row>
+				<Row>
+					{task.claimedBy && (
+						<Col md={4}>
+							<AddEdit match={match} history={history} />
+						</Col>
+					)}
 				</Row>
 			</Container>
 		</>

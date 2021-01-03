@@ -44,7 +44,6 @@ function AddEdit({ history, match }) {
 				useEffect(() => {
 					// get time and set form fields
 					taskService.getById(id).then((time) => {
-						time = time[0]
 						const fields = ['actualUsedTime']
 						fields.forEach((field) => setFieldValue(field, time[field], false))
 
