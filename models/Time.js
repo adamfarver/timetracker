@@ -11,6 +11,7 @@ module.exports = mongoose.model(
 			taskId: { type: ObjectId, required: false },
 			timeUsed: { type: Number, required: false },
 			userId: { type: ObjectId, required: false },
+			sprint: { type: ObjectId, required: false },
 		},
 		{ timestamps: { createdAt: 'created_at', modifiedAt: 'modified_at' } }
 	)

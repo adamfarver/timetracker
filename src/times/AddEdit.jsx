@@ -1,16 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Form as BSForm, Row, Col, Button } from 'react-bootstrap'
 
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 
-import { taskService, alertService } from '@/_services'
+import { timeService, alertService } from '@/_services'
+import { AppContext } from '../_components/AppContext'
 
 function AddEdit({ history, match }) {
 	const { id } = match.params
-
-	const initialValues = { actualUsedTime: '0' }
+	const [
+		project,
+		setProject,
+		sprint,
+		setSprint,
+		user,
+		setUser,
+		task,
+		setTask,
+	] = useContext(AppContext)
+	const initialValues = { timeUsed: 0 }
 
 	const validationSchema = Yup.object().shape({})
 
@@ -21,7 +31,10 @@ function AddEdit({ history, match }) {
 	}
 
 	function updateTime(id, fields, setSubmitting) {
-		taskService
+		fields.userId = user._id
+		fields.sprint = sprint._id
+		fields.taskId = task._id
+		timeService
 			.update(id, fields)
 			.then(() => {
 				alertService.success('Time updated', { keepAfterRouteChange: true })
@@ -43,8 +56,8 @@ function AddEdit({ history, match }) {
 
 				useEffect(() => {
 					// get time and set form fields
-					taskService.getById(id).then((time) => {
-						const fields = ['actualUsedTime']
+					timeService.getById(id).then((time) => {
+						const fields = ['timeUsed']
 						fields.forEach((field) => setFieldValue(field, time[field], false))
 
 						setTime(time)
@@ -61,12 +74,10 @@ function AddEdit({ history, match }) {
 						<Row>
 							<Col>
 								<BSForm.Group>
-									<BSForm.Label htmlFor="actualUsedTime">
-										Used Time
-									</BSForm.Label>
+									<BSForm.Label htmlFor="timeUsed">Used Time</BSForm.Label>
 									<Field
-										name="actualUsedTime"
-										id="actualUsedTime"
+										name="timeUsed"
+										id="timeUsed"
 										type="number"
 										min="0"
 										step=".5"

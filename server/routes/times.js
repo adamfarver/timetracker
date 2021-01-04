@@ -47,7 +47,7 @@ router.put('/:id', async (req, res, next) => {
 	const objId = req.params.id
 	const { body } = req
 	try {
-		await Time.findOneAndUpdate({ _id: objId }, body)
+		await Time.findOneAndUpdate({ _id: objId }, body, { upsert: true })
 
 		const record = await Time.findById({ _id: objId })
 		res.json(record).status(200)
