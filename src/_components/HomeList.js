@@ -15,6 +15,7 @@ export function HomeList(props) {
 		task,
 		setTask,
 	] = useContext(AppContext)
+	const parsedName = name.split(' ')[0].toLowerCase()
 
 	while (max < taskList.length) {
 		taskList.pop()
@@ -48,12 +49,14 @@ export function HomeList(props) {
 								key={task._id}
 								className="d-flex justify-content-between"
 							>
-								<Link
-									to={`/tasks/view/${task._id}`}
-									onClick={() => taskSetting(task)}
-								>
-									{task.taskName}{' '}
-								</Link>
+								<div className="truncate15">
+									<Link
+										to={`/tasks/view/${task._id}`}
+										onClick={() => taskSetting(task)}
+									>
+										{task.taskName}
+									</Link>
+								</div>
 								{task.claimedBy ? (
 									<span>
 										{task.claimedBy.firstName} {task.claimedBy.lastName}
@@ -64,7 +67,7 @@ export function HomeList(props) {
 					})}
 				{taskList.length < max ? null : (
 					<ListGroup.Item as="li">
-						<Link to={`/tasks/${project._id}`}>View More</Link>
+						<Link to={`/tasks/${project._id}/${parsedName}`}>View More</Link>
 					</ListGroup.Item>
 				)}
 			</ListGroup>

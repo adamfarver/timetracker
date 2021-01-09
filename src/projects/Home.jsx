@@ -85,7 +85,9 @@ function Home({ history, match }) {
 		} else if (e.target.value === 'Choose...') {
 			setSprint({})
 		} else {
-			setSprint({ _id: e.target.value })
+			let data = { _id: `${e.target.value}` }
+			setSprint(data)
+			localStorage.setItem('current_sprint', JSON.stringify(data))
 		}
 	}
 	return (

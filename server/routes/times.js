@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const Time = require('../../models/Time')
+const Task = require('../../models/Task')
 // All routes added together
 
 // Time
@@ -48,7 +49,10 @@ router.put('/:id', async (req, res, next) => {
 	const { body } = req
 	try {
 		await Time.findOneAndUpdate({ _id: objId }, body, { upsert: true })
-
+		await Task.findOneAndUpdate(
+			{ _id: body.taskId },
+			{ actualUsedTime: body.timeUsed }
+		)
 		const record = await Time.findById({ _id: objId })
 		res.json(record).status(200)
 		res.end()

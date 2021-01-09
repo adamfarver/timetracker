@@ -63,7 +63,7 @@ export function TaskView({ history, match }) {
 						<div className="d-flex align-items-center">
 							<h1>{task.taskName}</h1>
 							{user.role.rolename === 'Manager' ||
-								('Admin' && (
+								('Admin' && !task.completed && (
 									<Col md>
 										<Link to={`/tasks/edit/${id}`}>
 											<FontAwesomeIcon icon="edit" className={'mr-1'} />
@@ -76,45 +76,53 @@ export function TaskView({ history, match }) {
 				</Row>
 				<Row>
 					<Col md={3}>
-						{task.active ? (
-							<p>
-								<b>Status:</b> ACTIVE
-							</p>
-						) : null}
+						<b>Active:</b>
+						<p>{task.active ? 'Yes' : 'No'}</p>
 					</Col>
 
+					<Col md={3}>
+						<b>Completed:</b>
+						<p>{task.completed ? 'Yes' : 'No'}</p>
+					</Col>
 					<Col md={3}>
 						<b>Projected Time:</b>
 						<p>{task.projectedTime} hours</p>
 					</Col>
 					<Col md={3}>
-						{task.claimedBy ? (
-							<Button
-								variant="danger"
-								onClick={(event) => {
-									claimItem(event, task, user)
-								}}
-							>
-								Release
-							</Button>
-						) : (
-							<Button
-								variant="success"
-								onClick={(event) => {
-									claimItem(event, task, user)
-								}}
-							>
-								Claim
-							</Button>
-						)}
+						{!task.completed ? (
+							task.claimedBy ? (
+								<Button
+									variant="danger"
+									onClick={(event) => {
+										claimItem(event, task, user)
+									}}
+								>
+									Release
+								</Button>
+							) : (
+								<Button
+									variant="success"
+									onClick={(event) => {
+										claimItem(event, task, user)
+									}}
+								>
+									Claim
+								</Button>
+							)
+						) : null}
 					</Col>
 				</Row>
 				<Row>
-					<Col>{task.additionalInfo && <b>Additional Info:</b>}</Col>
+					<Col>
+						<b>Additional Info:</b>
+						{task.additionalInfo ? (
+							<p>{task.additionalInfo} hours</p>
+						) : (
+							<p>None</p>
+						)}
+					</Col>
 				</Row>
-				<Row>
-					<Col>{task.additionalInfo && <p>{task.additionalInfo}</p>}</Col>
-				</Row>
+
 				<Row>
 					{task.claimedBy && (
 						<Col md={4}>
