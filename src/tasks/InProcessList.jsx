@@ -1,42 +1,43 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { AppContext } from '../_components/AppContext'
 import { Link } from 'react-router-dom'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Button, Table } from 'react-bootstrap'
 import { taskService, alertService } from '@/_services'
 
 export function InProcessList({ match }) {
 	const { id } = match.params
 	const { path } = match
-	console.log(match)
 	const [tasks, settasks] = useState([])
+	const [
+		project,
+		setProject,
+		sprint,
+		setSprint,
+		user,
+		setUser,
+		task,
+		setTask,
+	] = useContext(AppContext)
 
 	useEffect(() => {
 		taskService.getByProjectId(id).then((res) => {
 			const filteredTaskList = res.filter((task) => task.claimedBy)
 
-			console.log(filteredTaskList)
 			settasks(filteredTaskList)
 		})
 	}, [])
 
-	function deletetask(id) {
-		taskService.delete(id).then(() => {
-			settasks((tasks) => tasks.filter((task) => task._id !== id))
-		})
-	}
-
 	return (
 		<Container>
 			<h1>In-Process Tasks</h1>
-			<Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">
-				Add Task
-			</Link>
-			<table className="table table-striped">
+
+			<Table striped hover responsive="md">
 				<thead>
 					<tr>
-						<th style={{ width: '30%' }}>Task</th>
-						<th style={{ width: '30%' }}>Allotted Time</th>
-						<th style={{ width: '30%' }}>Claimed By</th>
-						<th style={{ width: '10%' }}></th>
+						<th>Task</th>
+						<th>Additional Info</th>
+						<th>Claimed By</th>
+						<th>Expected Time</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -44,30 +45,18 @@ export function InProcessList({ match }) {
 						tasks.map((task) => (
 							<tr key={task._id}>
 								<td>
-									<Link to={`/tasks/view/${task._id}`}>{task.taskName}</Link>
+									<div className="truncate15">
+										<Link to={`/tasks/view/${task._id}`}>{task.taskName}</Link>
+									</div>
 								</td>
-								<td>{task.projectedTime}</td>
 								<td>
-									{`${task.claimedBy.firstName} ${task.claimedBy.lastName}`}
+									<div className="truncate30">{task.additionalInfo}</div>
+								</td>
+								<td>
+									{task.claimedBy.firstName} {task.claimedBy.lastName}
 								</td>
 								<td style={{ whiteSpace: 'nowrap' }}>
-									<Link
-										to={`${path}/edit/${task._id}`}
-										className="btn btn-sm btn-primary mr-1"
-									>
-										Edit
-									</Link>
-									<button
-										onClick={() => deletetask(task._id)}
-										className="btn btn-sm btn-danger btn-delete-task"
-										disabled={task.isDeleting}
-									>
-										{task.isDeleting ? (
-											<span className="spinner-border spinner-border-sm"></span>
-										) : (
-											<span>Delete</span>
-										)}
-									</button>
+									{task.projectedTime} hrs
 								</td>
 							</tr>
 						))}
@@ -86,7 +75,7 @@ export function InProcessList({ match }) {
 						</tr>
 					)}
 				</tbody>
-			</table>
+			</Table>
 		</Container>
 	)
 }

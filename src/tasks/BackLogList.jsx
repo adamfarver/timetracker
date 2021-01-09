@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Table, Button } from 'react-bootstrap'
 import { taskService, alertService } from '@/_services'
 
 export function BackLogList({ match }) {
 	const { id } = match.params
 	const { path } = match
-	console.log(match)
 	const [tasks, settasks] = useState([])
 
 	useEffect(() => {
@@ -15,7 +14,6 @@ export function BackLogList({ match }) {
 				(task) => !task.active && !task.completed
 			)
 
-			console.log(filteredTaskList)
 			settasks(filteredTaskList)
 		})
 	}, [])
@@ -29,16 +27,16 @@ export function BackLogList({ match }) {
 	return (
 		<Container>
 			<h1>Backlog Tasks</h1>
-			<Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">
+			<Link to={`/tasks/add`} className="btn btn-sm btn-success mb-2">
 				Add Task
 			</Link>
-			<table className="table table-striped">
+			<Table className="table table-striped">
 				<thead>
 					<tr>
-						<th style={{ width: '30%' }}>Task</th>
-						<th style={{ width: '30%' }}>Allotted Time</th>
-						<th style={{ width: '30%' }}>Future Column</th>
-						<th style={{ width: '10%' }}>Label</th>
+						<th>Task</th>
+						<th>Addtional Info</th>
+						<th>Estimated Time</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -46,13 +44,17 @@ export function BackLogList({ match }) {
 						tasks.map((task) => (
 							<tr key={task._id}>
 								<td>
-									<Link to={`/tasks/view/${task._id}`}>{task.taskName}</Link>
+									<div className="truncate15">
+										<Link to={`/tasks/view/${task._id}`}>{task.taskName}</Link>
+									</div>
 								</td>
-								<td>{task.projectedTime}</td>
-								<td>Something goes here.</td>
+								<td>
+									<div className="truncate30">{task.additionalInfo}</div>
+								</td>
+								<td>{task.projectedTime} hrs.</td>
 								<td style={{ whiteSpace: 'nowrap' }}>
 									<Link
-										to={`${path}/edit/${task._id}`}
+										to={`/tasks/edit/${task._id}`}
 										className="btn btn-sm btn-primary mr-1"
 									>
 										Edit
@@ -86,7 +88,7 @@ export function BackLogList({ match }) {
 						</tr>
 					)}
 				</tbody>
-			</table>
+			</Table>
 		</Container>
 	)
 }

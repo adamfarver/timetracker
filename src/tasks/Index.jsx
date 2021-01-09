@@ -16,7 +16,7 @@ export function Tasks({ match }) {
 			<Route path={`${path}/add`} component={AddEdit} />
 			<Route path={`${path}/edit/:id`} component={AddEdit} />
 			<Route path={`${path}/view/:id`} component={TaskView} />
-			<Route path={`${path}/:id/inprocess`} component={InProcessList} />
+			<Route path={`${path}/:id/in-process`} component={InProcessList} />
 			<Route path={`${path}/:id/available`} component={AvailableList} />
 			<Route path={`${path}/:id/completed`} component={CompletedList} />
 			<Route path={`${path}/:id/backlog`} component={BackLogList} />

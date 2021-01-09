@@ -58,6 +58,9 @@ function AddEdit({ history, match }) {
 					// get time and set form fields
 					timeService.getById(id).then((time) => {
 						const fields = ['timeUsed']
+						if (!time.timeUsed) {
+							time.timeUsed = 0
+						}
 						fields.forEach((field) => setFieldValue(field, time[field], false))
 
 						setTime(time)

@@ -43,10 +43,10 @@ function List({ match }) {
 			<Table className="Table Table-striped">
 				<thead>
 					<tr>
-						<th className="col-4">Project Name</th>
-						<th className="col-3">Client</th>
-						<th className="col-3">Project Manager</th>
-						<th className="col-2 mr-auto">Actions</th>
+						<th>Project Name</th>
+						<th>Client</th>
+						<th>Project Manager</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
