@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { AppContext } from '../_components/AppContext'
 import { Link } from 'react-router-dom'
-import { Container, Table } from 'react-bootstrap'
+import { Container, Table, Row, Col } from 'react-bootstrap'
 import { taskService, alertService } from '@/_services'
+import { Breadcrumbs } from '../_components/Breadcrumbs'
 
 export function CompletedList({ match }) {
 	const { id } = match.params
@@ -31,7 +32,16 @@ export function CompletedList({ match }) {
 
 	return (
 		<Container>
-			<h1>Completed Tasks</h1>
+			<Row>
+				<Col>
+					<Breadcrumbs />
+				</Col>
+			</Row>
+			<Row className={'mb-3'}>
+				<Col>
+					<h1>Completed Tasks</h1>
+				</Col>
+			</Row>
 			<Table striped hover responsive="md">
 				<thead>
 					<tr>

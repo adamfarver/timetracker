@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { AppContext } from '../_components/AppContext'
 import { Link } from 'react-router-dom'
-import { Container, Button, Table } from 'react-bootstrap'
+import { Container, Button, Table, Row, Col } from 'react-bootstrap'
+import { Breadcrumbs } from '../_components/Breadcrumbs'
 import { taskService, alertService } from '@/_services'
 
 export function InProcessList({ match }) {
@@ -29,7 +30,16 @@ export function InProcessList({ match }) {
 
 	return (
 		<Container>
-			<h1>In-Process Tasks</h1>
+			<Row>
+				<Col>
+					<Breadcrumbs />
+				</Col>
+			</Row>
+			<Row className={'mb-3'}>
+				<Col>
+					<h1>In-Process Tasks</h1>
+				</Col>
+			</Row>
 
 			<Table striped hover responsive="md">
 				<thead>

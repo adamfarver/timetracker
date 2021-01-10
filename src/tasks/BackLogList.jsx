@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Container, Table, Button } from 'react-bootstrap'
+import { Container, Table, Button, Row, Col } from 'react-bootstrap'
+import { Breadcrumbs } from '../_components/Breadcrumbs'
 import { taskService, alertService } from '@/_services'
 
 export function BackLogList({ match }) {
@@ -26,7 +27,16 @@ export function BackLogList({ match }) {
 
 	return (
 		<Container>
-			<h1>Backlog Tasks</h1>
+			<Row>
+				<Col>
+					<Breadcrumbs />
+				</Col>
+			</Row>
+			<Row className={'mb-3'}>
+				<Col>
+					<h1>Backlog Tasks</h1>
+				</Col>
+			</Row>
 			<Link to={`/tasks/add`} className="btn btn-sm btn-success mb-2">
 				Add Task
 			</Link>
