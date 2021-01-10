@@ -14,7 +14,7 @@ function App() {
 	const { pathname } = useLocation()
 
 	return (
-		<div className="app-container bg-light">
+		<div className="app-container ">
 			<AppProvider>
 				<NavComponent />
 				<Alert />
