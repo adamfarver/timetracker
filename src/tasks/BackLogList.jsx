@@ -40,7 +40,7 @@ export function BackLogList({ match }) {
 			<Link to={`/tasks/add`} className="btn btn-sm btn-success mb-2">
 				Add Task
 			</Link>
-			<Table className="table table-striped">
+			<Table responsive="md" hover striped>
 				<thead>
 					<tr>
 						<th>Task</th>

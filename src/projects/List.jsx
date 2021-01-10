@@ -45,11 +45,17 @@ function List({ match }) {
 					<Breadcrumbs />
 				</Col>
 			</Row>
-			<h1>Projects</h1>
-			<Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">
-				Add Projects
-			</Link>
-			<Table className="Table Table-striped">
+			<Row className="d-flex align-items-center justify-content-end mb-3">
+				<Col>
+					<h1>Projects</h1>
+				</Col>
+				<Col className="d-flex justify-content-end">
+					<Link to={`${path}/add`} className="btn btn-sm btn-success ">
+						Add Projects
+					</Link>
+				</Col>
+			</Row>
+			<Table striped hover responsive>
 				<thead>
 					<tr>
 						<th>Project Name</th>
