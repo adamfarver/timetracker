@@ -32,14 +32,16 @@ export function BackLogList({ match }) {
 					<Breadcrumbs />
 				</Col>
 			</Row>
-			<Row className={'mb-3'}>
+			<Row className={'mb-3 d-flex align-items-center'}>
 				<Col>
 					<h1>Backlog Tasks</h1>
 				</Col>
+				<Col className="d-flex justify-content-end">
+					<Link to={`/tasks/add`} className="btn btn-sm btn-success mb-2">
+						Add Task
+					</Link>
+				</Col>
 			</Row>
-			<Link to={`/tasks/add`} className="btn btn-sm btn-success mb-2">
-				Add Task
-			</Link>
 			<Table responsive="md" hover striped>
 				<thead>
 					<tr>
