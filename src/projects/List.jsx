@@ -1,21 +1,32 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { Breadcrumbs } from '../_components/Breadcrumb'
 import { AppContext } from '../_components/AppContext'
 import { projectService, alertService } from '@/_services'
-import { Table, Button } from 'react-bootstrap'
+import { Table, Button, Container, Row, Col } from 'react-bootstrap'
+import { Breadcrumbs } from '../_components/Breadcrumbs'
 
 function List({ match }) {
 	const { path } = match
 	const [projects, setprojects] = useState([])
-	const [project, setProject] = useContext(AppContext)
+	const [
+		project,
+		setProject,
+		sprint,
+		setSprint,
+		user,
+		setUser,
+		task,
+		setTask,
+	] = useContext(AppContext)
 	localStorage.removeItem('current_project')
 	localStorage.removeItem('current_sprint')
-
+	localStorage.removeItem('current_task')
 	useEffect(() => {
 		projectService.getAll().then((data) => {
 			setprojects(data)
 			setProject({})
+			setSprint({})
+			setTask({})
 		})
 	}, [])
 
@@ -28,14 +39,12 @@ function List({ match }) {
 	}
 
 	return (
-		<>
-			{project.name ? (
-				<div className="row">
-					<div className="col-12">
-						<Breadcrumbs />
-					</div>
-				</div>
-			) : null}
+		<Container>
+			<Row>
+				<Col>
+					<Breadcrumbs />
+				</Col>
+			</Row>
 			<h1>Projects</h1>
 			<Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">
 				Add Projects
@@ -103,7 +112,7 @@ function List({ match }) {
 					)}
 				</tbody>
 			</Table>
-		</>
+		</Container>
 	)
 }
 
