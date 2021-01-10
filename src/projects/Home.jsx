@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { AppContext } from '../_components/AppContext'
-import { Breadcrumbs } from '../_components/Breadcrumb'
+import { Breadcrumbs } from '../_components/Breadcrumbs'
 import { projectService, sprintService, taskService } from '@/_services'
 import LineChart from '../_components/LineChart'
 import { Form, Container, Row, Col } from 'react-bootstrap'
@@ -18,20 +18,30 @@ function Home({ history, match }) {
 		inProcessTasks: [],
 	})
 	const [sprintList, setSprintList] = useState('')
-	const [project, setProject, sprint, setSprint, user, setUser] = useContext(
-		AppContext
-	)
+	const [
+		project,
+		setProject,
+		sprint,
+		setSprint,
+		user,
+		setUser,
+		task,
+		setTask,
+	] = useContext(AppContext)
 
 	// Setting Project ID in state/localStorage and removing sprint data
 	useEffect(() => {
 		projectService.getById(id).then((data) => {
+			console.log(data)
 			const { _id, projectName } = data
 			const parsedData = { _id, projectName }
 			setProject(parsedData)
 			const stringifiedData = JSON.stringify(parsedData)
 			localStorage.setItem('current_project', stringifiedData)
 			localStorage.removeItem('current_sprint')
-			setSprint(false)
+			setSprint({})
+			localStorage.removeItem('current_task')
+			setTask({})
 		})
 	}, [])
 
@@ -85,20 +95,22 @@ function Home({ history, match }) {
 		} else if (e.target.value === 'Choose...') {
 			setSprint({})
 		} else {
-			let data = { _id: `${e.target.value}` }
+			console.log(e.target.selectedOptions[0].innerText)
+			let data = {
+				_id: `${e.target.value}`,
+				name: `${e.target.selectedOptions[0].innerText}`,
+			}
 			setSprint(data)
 			localStorage.setItem('current_sprint', JSON.stringify(data))
 		}
 	}
 	return (
 		<Container>
-			{project ? (
-				<Row>
-					<Col>
-						<Breadcrumbs />
-					</Col>
-				</Row>
-			) : null}
+			<Row>
+				<Col>
+					<Breadcrumbs />
+				</Col>
+			</Row>
 			<Row>
 				<Col>
 					<h1>{project.projectName}</h1>
@@ -117,7 +129,7 @@ function Home({ history, match }) {
 								onChange={handleSprintChange}
 							>
 								<option>Choose...</option>
-								{Object.keys(sprintList).map((key) => (
+								{Object.keys(sprintList).map((key, index) => (
 									<option key={sprintList[key]._id} value={sprintList[key]._id}>
 										{`${sprintList[key].sprintType} ${sprintList[key].sprint} => ${sprintList[key].dateStart} - ${sprintList[key].dateEnd}`}
 									</option>
