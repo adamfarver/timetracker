@@ -1,0 +1,306 @@
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) {
+	.navbar {
+		background-color: #13286c;
+		padding: 20px;
+	}
+	.slider {
+		height: 1200px;
+		text-align: center;
+
+		img {
+			margin-top: 80px;
+			margin-bottom: 50px;
+		}
+	}
+
+	.about {
+		padding-bottom: 90px;
+		.box {
+			margin-bottom: 30px;
+		}
+	}
+
+	.company {
+		text-align: center;
+
+		.text-1 {
+			margin-bottom: 50px;
+		}
+		.text-2 {
+			margin-top: 50px;
+		}
+	}
+
+	.digital {
+		text-align: center;
+		.image {
+			display: none;
+		}
+	}
+
+	.counter {
+		padding-bottom: 80px;
+		.item {
+			margin-bottom: 40px;
+			padding-left: 40px;
+		}
+	}
+
+	.better {
+		padding: 0;
+		padding-top: 120px;
+		padding-bottom: 90px;
+		.content {
+			position: relative;
+			padding: 0;
+			margin: 0;
+			.box {
+				margin-bottom: 30px;
+			}
+		}
+	}
+
+	.testimonials {
+		padding: 0 !important;
+		.carousel-item {
+			padding: 0 !important;
+		}
+		.control {
+			display: none;
+		}
+		.carousel-inner {
+			padding: 70px 30px !important;
+		}
+	}
+
+	.customers {
+		.heading {
+			h2 {
+				margin-bottom: 50px;
+			}
+		}
+	}
+
+	.footer {
+		text-align: center;
+
+		.who {
+			padding: 0;
+			margin-bottom: 40px;
+		}
+
+		.links {
+			margin-bottom: 40px;
+		}
+	}
+}
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) {
+	.navbar {
+		background: #13286c;
+		padding: 20px;
+	}
+	.slider {
+		height: 1200px;
+		text-align: center;
+
+		img {
+			margin-top: 80px;
+			margin-bottom: 50px;
+		}
+	}
+
+	.about {
+		padding-bottom: 90px;
+		.box {
+			margin-bottom: 30px;
+		}
+	}
+
+	.company {
+		text-align: center;
+
+		.text-1 {
+			margin-bottom: 50px;
+		}
+		.text-2 {
+			margin-top: 50px;
+		}
+	}
+
+	.digital {
+		text-align: center;
+		.image {
+			display: none;
+		}
+	}
+
+	.counter {
+		padding-bottom: 80px;
+		.item {
+			margin-bottom: 40px;
+			padding-left: 40px;
+		}
+	}
+
+	.better {
+		padding: 0;
+		padding-top: 120px;
+		padding-bottom: 90px;
+		.content {
+			position: relative;
+			padding: 0;
+			margin: 0;
+			.box {
+				margin-bottom: 30px;
+			}
+		}
+	}
+
+	.testimonials {
+		padding: 0 !important;
+		.carousel-item {
+			padding: 0 !important;
+		}
+		.control {
+			display: none;
+		}
+		.carousel-inner {
+			padding: 70px 30px !important;
+		}
+	}
+
+	.customers {
+		.heading {
+			h2 {
+				margin-bottom: 50px;
+			}
+		}
+	}
+
+	.footer {
+		text-align: center;
+
+		.who {
+			padding: 0;
+			margin-bottom: 40px;
+		}
+
+		.links {
+			margin-bottom: 40px;
+		}
+	}
+}
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {
+	.navbar {
+		background: #13286c;
+		padding: 20px;
+	}
+	.slider {
+		height: 1200px;
+		text-align: center;
+
+		img {
+			margin-top: 80px;
+			margin-bottom: 50px;
+		}
+	}
+	.about {
+		padding-bottom: 90px;
+		.box {
+			margin-bottom: 30px;
+		}
+	}
+
+	.company {
+		text-align: center;
+
+		.text-1 {
+			margin-bottom: 50px;
+		}
+		.text-2 {
+			margin-top: 50px;
+		}
+	}
+
+	.digital {
+		text-align: center;
+		.image {
+			display: none;
+		}
+	}
+
+	.better {
+		padding: 0;
+		padding-top: 120px;
+		padding-bottom: 90px;
+		.content {
+			position: relative;
+			padding: 0;
+			margin: 0;
+			.box {
+				margin-bottom: 30px;
+			}
+		}
+	}
+
+	.testimonials {
+		padding: 0 !important;
+		.carousel-item {
+			padding: 0 !important;
+		}
+		.control {
+			display: none;
+		}
+		.carousel-inner {
+			padding: 70px 30px !important;
+		}
+	}
+
+	.customers {
+		.heading {
+			h2 {
+				margin-bottom: 50px;
+			}
+		}
+	}
+
+	.footer {
+		.social {
+			.icon {
+				margin-bottom: 5px;
+			}
+		}
+		.who {
+			padding: 0;
+		}
+	}
+}
+
+// Large devices (desktops, less than 1200px)
+@media (max-width: 1199.98px) {
+	.digital {
+		text-align: center;
+		.image {
+			display: none;
+		}
+	}
+
+	.better {
+		padding: 0;
+		padding-top: 120px;
+		padding-bottom: 90px;
+		.content {
+			position: relative;
+			padding: 0;
+			margin: 0;
+			.box {
+				margin-bottom: 30px;
+			}
+		}
+	}
+}

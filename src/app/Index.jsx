@@ -18,19 +18,18 @@ function App() {
 			<AppProvider>
 				<NavComponent />
 				<Alert />
-				<div className="container pt-4 pb-4">
-					<Switch>
-						<Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} />
-						<Route exact path="/" component={Home} />
-						<Route path="/projects" component={Projects} />
-						<Route path="/roles" component={Roles} />
-						<Route path="/sprints" component={Sprints} />
-						<Route path="/tasks" component={Tasks} />
-						<Route path="/times" component={Times} />
-						<Route path="/users" component={Users} />
-						<Redirect from="*" to="/" />
-					</Switch>
-				</div>
+
+				<Switch>
+					<Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} />
+					<Route exact path="/" component={Home} />
+					<Route path="/projects" component={Projects} />
+					<Route path="/roles" component={Roles} />
+					<Route path="/sprints" component={Sprints} />
+					<Route path="/tasks" component={Tasks} />
+					<Route path="/times" component={Times} />
+					<Route path="/users" component={Users} />
+					<Redirect from="*" to="/" />
+				</Switch>
 			</AppProvider>
 		</div>
 	)

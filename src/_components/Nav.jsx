@@ -1,26 +1,68 @@
 import React, { useContext } from 'react'
 import { AppContext } from './AppContext'
-import { Navbar, Nav } from 'react-bootstrap'
+import {
+	Navbar,
+	Nav,
+	Container,
+	ButtonGroup,
+	Dropdown,
+	Button,
+	NavDropdown,
+} from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import NavTitleComponent from './NavTitleComponent'
 function NavComponent() {
 	const [project, setProject, sprint, setSprint, user, setUser] = useContext(
 		AppContext
 	)
 	return (
-		<Navbar bg="dark" expand="lg" variant="dark">
-			<Navbar.Brand href="/">Time Tracker</Navbar.Brand>
-			<Navbar.Toggle aria-controls="basic-navbar-nav" />
-			<Navbar.Collapse id="basic-navbar-nav">
-				<Nav className="ml-auto">
-					<Nav.Link href="#home">Home</Nav.Link>
-					<Nav.Link href="/projects">Projects</Nav.Link>
-					<Nav.Link href="/users">
-						<FontAwesomeIcon icon="user-circle" />
-						{` ${user.firstName}`}
-					</Nav.Link>
-				</Nav>
-			</Navbar.Collapse>
-		</Navbar>
+		<>
+			<Navbar expand="lg" variant="dark" fixed="top">
+				<Container>
+					<Navbar.Brand href="/">Time Tracker</Navbar.Brand>
+					<Navbar.Toggle aria-controls="basic-navbar-nav" />
+					<Navbar.Collapse id="basic-navbar-nav">
+						<Nav className="ml-auto d-flex align-items-center">
+							{user.firstName ? (
+								<>
+									<Nav.Link href="/projects">Projects</Nav.Link>
+									{/* <Nav.Link href="/users">{`User: ${user.firstName}`}</Nav.Link> */}
+									<div className="nav-item dropdown">
+										<a
+											className="nav-link dropdown-toggle"
+											href="#"
+											id="navbarDropdown"
+											role="button"
+											data-toggle="dropdown"
+											aria-haspopup="true"
+											aria-expanded="false"
+										>
+											<FontAwesomeIcon icon="user-circle" />{' '}
+											{`${user.firstName}`}
+										</a>
+										<div
+											className="dropdown-menu"
+											aria-labelledby="navbarDropdown"
+										>
+											<a className="dropdown-item" href="#">
+												My Tasks
+											</a>
+											<a className="dropdown-item" href="#">
+												Logout
+											</a>
+										</div>
+									</div>
+								</>
+							) : (
+								<a href="/users" className="btn-white ">
+									Try It Out
+								</a>
+							)}
+						</Nav>
+					</Navbar.Collapse>
+				</Container>
+			</Navbar>
+		</>
 	)
 }
 

@@ -10,11 +10,11 @@ module.exports = {
 				loader: 'babel-loader',
 			},
 			{
-				test: /\.less$/,
+				test: /\.scss$/,
 				use: [
 					{ loader: 'style-loader' },
 					{ loader: 'css-loader' },
-					{ loader: 'less-loader' },
+					{ loader: 'sass-loader' },
 				],
 			},
 		],
@@ -38,7 +38,7 @@ module.exports = {
 	devServer: {
 		historyApiFallback: true,
 	},
-	devtool: false,
+	devtool: 'source-map',
 	output: {
 		path: path.join(__dirname, 'dist'),
 		filename: `./[name].js`,

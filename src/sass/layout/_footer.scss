@@ -1,0 +1,116 @@
+// Footer
+.footer {
+    background: linear-gradient(135deg, rgba(12,74,168,1) 0%, rgba(16,30,97,1) 100%);
+    padding: 120px 0;
+    .who {
+        padding-right: 30px;
+
+        h4 {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 15px;
+            font-weight: 300;
+            line-height: 27px;
+            margin: 0;
+            margin-top: 20px;
+            color: #ffffff;
+        }
+    }
+
+    .links {
+        h4 {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 500;
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+
+            li {
+                list-style: none;
+                
+                a {
+                    font-size: 15px;
+                font-weight: 300;
+                color: #ffffff;
+                line-height: 28px;
+                margin: 0;
+                padding: 0;
+                text-decoration: none;
+                transition: all .4s ease-in-out;
+
+                &:hover {
+                    color: #ffffff;
+                }
+                }
+
+                &:not(:last-child) {
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+
+    .social {
+        h4 {
+            font-size: 20px;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        .icons {
+            .icon {
+                border: 1px solid #e2e2eb;
+                width: 44px;
+                height: 44px;
+                background: $text-color-white;
+                border-radius: 50%;
+                transition: all .4s ease-in-out;
+                margin-right: 2px;
+
+                a {
+                    font-size: 14px;
+                    color: #848ca7;
+                    text-decoration: none;
+                    transition: all .4s ease-in-out;
+                }
+                
+                &:hover {
+                    background: #eeeeee;
+                    color: $text-color-white;
+                    a {
+                        color: $text-color-white;
+                    }
+                }
+            }
+        }
+        .ico {
+            display: inline-block;
+        }
+    }
+    .bottom {
+        background: #6a7695;
+        padding: 10px 0;
+        span {
+            font-size: 15px;
+            color: #6a7695;
+            display: inline-block;margin: 0;
+            padding: 0;
+        }
+    }
+}
+.bottom {
+    background: #e3eef0;
+    padding: 20px 0;
+    span {
+        font-size: 15px;
+        color: #6a7695;
+        display: inline-block;margin: 0;
+        padding: 0;
+    }
+}
