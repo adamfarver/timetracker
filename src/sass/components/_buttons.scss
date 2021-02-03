@@ -1,0 +1,21 @@
+// Buttons
+a.btn-white {
+    background: $color-white;
+    padding: 12px 45px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    color: $text-color-purp;
+    display: inline-block;
+}
+a.btn-color {
+    background: $text-color-purp;
+    padding: 12px 45px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    color: $text-color-white;
+    display: inline-block;
+}

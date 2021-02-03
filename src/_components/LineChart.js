@@ -1,7 +1,7 @@
 import { Line } from 'react-chartjs-2'
 import React, { useEffect, useState, useContext } from 'react'
 import { AppContext } from '../_components/AppContext'
-import '../styles.less'
+// import '../styles.scss'
 
 export default function LineChart() {
 	const [chartData, setChartData] = useState({})

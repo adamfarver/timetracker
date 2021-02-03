@@ -1,0 +1,46 @@
+// Typography
+body {
+	font-family: 'Poppins', sans-serif;
+	// height: 5000px;
+}
+.h1-white {
+	font-size: 40px;
+	font-weight: 600;
+	margin: 0;
+	padding: 0;
+	color: $text-color-white;
+}
+.h2 {
+	font-size: 30px;
+	font-weight: 600;
+	color: $text-color-dark;
+	line-height: 40px;
+	margin: 0;
+}
+.h2-white {
+	font-size: 30px;
+	font-weight: 600;
+	color: #ffffff;
+	line-height: 40px;
+	margin: 0;
+}
+.h3 {
+	color: $text-color-dark;
+	font-size: 20px;
+	font-weight: 500;
+	margin: 0;
+}
+.p-white {
+	font-size: 15px;
+	font-weight: 400;
+	color: $text-color-white;
+	margin: 0;
+	line-height: 28px;
+}
+.p-dark {
+	font-size: 15px;
+	color: #6a7695;
+	font-weight: 400;
+	line-height: 27px;
+	margin: 0;
+}
