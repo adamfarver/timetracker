@@ -18,12 +18,14 @@ function App() {
 		<div className="app-container ">
 			<AppProvider>
 				<NavComponent />
+				<Switch>
+					<Route exact path="/" component={Home} />
+				</Switch>
 				<Container className="shift-below-header">
 					<Alert />
 
 					<Switch>
 						<Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} />
-						<Route exact path="/" component={Home} />
 						<Route path="/projects" component={Projects} />
 						<Route path="/roles" component={Roles} />
 						<Route path="/sprints" component={Sprints} />
