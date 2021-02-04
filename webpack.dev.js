@@ -1,8 +1,13 @@
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-const path = require('path')
 const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path')
 module.exports = {
 	mode: 'development',
+	entry: './src/index.js',
+	output: {
+		path: path.resolve(__dirname, 'dist'),
+		filename: 'my-first-webpack.bundle.js',
+	},
 	module: {
 		rules: [
 			{
@@ -13,8 +18,30 @@ module.exports = {
 				test: /\.scss$/,
 				use: [
 					{ loader: 'style-loader' },
-					{ loader: 'css-loader' },
-					{ loader: 'sass-loader' },
+					{ loader: 'css-loader', options: { sourceMap: true } },
+					{ loader: 'sass-loader', options: { sourceMap: true } },
+				],
+			},
+			{ test: /\.css$/, use: ['style-loader', 'css-loader'] },
+			{
+				test: /\.js$/,
+				enforce: 'pre',
+				use: ['source-map-loader'],
+			},
+			{
+				test: /\.css$/,
+				enforce: 'pre',
+				use: ['source-map-loader'],
+			},
+			{
+				test: /\.(png|jp(e*)g|svg|gif)$/,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							name: 'images/[hash]-[name].[ext]',
+						},
+					},
 				],
 			},
 		],
@@ -25,28 +52,19 @@ module.exports = {
 			'@': path.resolve(__dirname, 'src/'),
 		},
 	},
-	plugins: [
-		new HtmlWebpackPlugin({
-			template: './src/index.html',
-		}),
-		new webpack.SourceMapDevToolPlugin({
-			filename: 'sourcemaps/[file].map',
-			publicPath: 'http://localhost:8080/',
-			fileContext: 'public',
-		}),
-	],
 	devServer: {
 		historyApiFallback: true,
 	},
-	devtool: 'source-map',
-	output: {
-		path: path.join(__dirname, 'dist'),
-		filename: `./[name].js`,
-	},
+	devtool: 'eval-source-map',
 	externals: {
 		// global app config object
 		config: JSON.stringify({
 			apiUrl: 'http://localhost:5000/api',
 		}),
 	},
+	plugins: [
+		new HtmlWebpackPlugin({
+			template: './src/index.html',
+		}),
+	],
 }
