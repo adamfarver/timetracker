@@ -9,6 +9,7 @@ import { Sprints } from '@/sprints'
 import { Tasks } from '@/tasks'
 import { Times } from '@/times'
 import { Users } from '@/users'
+import Registration from '@/registration'
 import { AppProvider } from '../_components/AppContext'
 import { Container } from 'react-bootstrap'
 function App() {
@@ -32,6 +33,7 @@ function App() {
 						<Route path="/tasks" component={Tasks} />
 						<Route path="/times" component={Times} />
 						<Route path="/users" component={Users} />
+						<Route path="/registration" component={Registration} />
 						<Redirect from="*" to="/" />
 					</Switch>
 				</Container>
