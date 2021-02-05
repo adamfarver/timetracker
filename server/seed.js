@@ -7,7 +7,6 @@ const Task = require('../models/Task')
 const Role = require('../models/Role')
 const Sprint = require('../models/Sprint')
 const Time = require('../models/Time')
-const { faTasks } = require('@fortawesome/free-solid-svg-icons')
 
 mongoose.connect(localMongoServer, {
 	useNewUrlParser: true,
