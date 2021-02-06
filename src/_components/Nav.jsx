@@ -10,7 +10,6 @@ import {
 	NavDropdown,
 } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import NavTitleComponent from './NavTitleComponent'
 function NavComponent() {
 	const [project, setProject, sprint, setSprint, user, setUser] = useContext(
 		AppContext
