@@ -100,7 +100,7 @@ function Alert({ id, fade }) {
 	if (!alerts.length) return null
 
 	return (
-		<div className="container ">
+		<>
 			{alerts.map((alert, index) => (
 				<div key={index} className={cssClasses(alert)}>
 					<a className="close" onClick={() => removeAlert(alert)}>
@@ -109,7 +109,7 @@ function Alert({ id, fade }) {
 					<span dangerouslySetInnerHTML={{ __html: alert.message }}></span>
 				</div>
 			))}
-		</div>
+		</>
 	)
 }
 

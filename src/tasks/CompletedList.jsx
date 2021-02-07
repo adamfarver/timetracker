@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { AppContext } from '../_components/AppContext'
 import { Link } from 'react-router-dom'
-import { Container, Table, Row, Col } from 'react-bootstrap'
+import { Table, Row, Col } from 'react-bootstrap'
 import { taskService, alertService } from '@/_services'
 import { Breadcrumbs } from '../_components/Breadcrumbs'
 
@@ -31,7 +31,7 @@ export function CompletedList({ match }) {
 	}, [])
 
 	return (
-		<Container>
+		<>
 			<Row>
 				<Col>
 					<Breadcrumbs />
@@ -83,6 +83,6 @@ export function CompletedList({ match }) {
 					)}
 				</tbody>
 			</Table>
-		</Container>
+		</>
 	)
 }

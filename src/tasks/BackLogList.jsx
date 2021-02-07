@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Container, Table, Button, Row, Col } from 'react-bootstrap'
+import { Table, Button, Row, Col } from 'react-bootstrap'
 import { Breadcrumbs } from '../_components/Breadcrumbs'
 import { taskService, alertService } from '@/_services'
 
@@ -26,7 +26,7 @@ export function BackLogList({ match }) {
 	}
 
 	return (
-		<Container>
+		<>
 			<Row>
 				<Col>
 					<Breadcrumbs />
@@ -101,6 +101,6 @@ export function BackLogList({ match }) {
 					)}
 				</tbody>
 			</Table>
-		</Container>
+		</>
 	)
 }

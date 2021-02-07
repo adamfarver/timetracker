@@ -5,7 +5,7 @@ import { AppContext } from '../_components/AppContext'
 import { Breadcrumbs } from '../_components/Breadcrumbs'
 import { projectService, sprintService, taskService } from '@/_services'
 import LineChart from '../_components/LineChart'
-import { Form, Container, Row, Col } from 'react-bootstrap'
+import { Form, Row, Col } from 'react-bootstrap'
 import { HomeList } from '../_components/HomeList'
 import { usDateFormat } from '../_helpers/humanDateFormatter'
 
@@ -105,7 +105,7 @@ function Home({ history, match }) {
 		}
 	}
 	return (
-		<Container>
+		<>
 			<Row>
 				<Col>
 					<Breadcrumbs />
@@ -203,7 +203,7 @@ function Home({ history, match }) {
 					) : null}
 				</Col>
 			</Row>
-		</Container>
+		</>
 	)
 }
 

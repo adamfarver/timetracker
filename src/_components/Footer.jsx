@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 function Footer() {
 	return (
 		<>
+			{/* TODO: #40 Convert to React-Bootstrap */}
 			<footer className="footer ptb-120">
 				<div className="container">
 					<div className="row">
