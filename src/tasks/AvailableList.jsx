@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { Container, Button, Table, Row, Col } from 'react-bootstrap'
+import { Button, Table, Row, Col } from 'react-bootstrap'
 import { taskService, alertService } from '@/_services'
 import { AppContext } from '../_components/AppContext'
 import { Breadcrumbs } from '../_components/Breadcrumbs'
@@ -36,7 +36,7 @@ export function AvailableList({ match }) {
 	}, [])
 
 	return (
-		<Container>
+		<>
 			<Breadcrumbs />
 			<Row className={'mb-3'}>
 				<Col>
@@ -97,6 +97,6 @@ export function AvailableList({ match }) {
 					)}
 				</tbody>
 			</Table>
-		</Container>
+		</>
 	)
 }

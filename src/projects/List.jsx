@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { AppContext } from '../_components/AppContext'
 import { projectService, alertService } from '@/_services'
-import { Table, Button, Container, Row, Col } from 'react-bootstrap'
+import { Table, Button, Row, Col } from 'react-bootstrap'
 import { Breadcrumbs } from '../_components/Breadcrumbs'
 
 function List({ match }) {
@@ -39,7 +39,7 @@ function List({ match }) {
 	}
 
 	return (
-		<Container>
+		<>
 			<Row>
 				<Col>
 					<Breadcrumbs />
@@ -118,7 +118,7 @@ function List({ match }) {
 					)}
 				</tbody>
 			</Table>
-		</Container>
+		</>
 	)
 }
 

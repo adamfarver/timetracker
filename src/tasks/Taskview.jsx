@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
 import { AppContext } from '../_components/AppContext'
 import { Breadcrumbs } from '../_components/Breadcrumbs'
-import { Container, Row, Col, Button } from 'react-bootstrap'
+import { Row, Col, Button } from 'react-bootstrap'
 import { taskService, alertService } from '@/_services'
 import { AddEdit } from '../times/AddEdit'
 
@@ -52,7 +52,7 @@ export function TaskView({ history, match }) {
 
 	return (
 		<>
-			<Container>
+			<>
 				<Row>
 					<Col>
 						<Breadcrumbs />
@@ -130,7 +130,7 @@ export function TaskView({ history, match }) {
 						</Col>
 					)}
 				</Row>
-			</Container>
+			</>
 		</>
 	)
 }

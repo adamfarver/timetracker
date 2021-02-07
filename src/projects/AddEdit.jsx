@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
-import { Form as BSForm, Button, Col, Container } from 'react-bootstrap'
+import { Form as BSForm, Button, Col } from 'react-bootstrap'
 import * as Yup from 'yup'
 
 import { projectService, userService, alertService } from '@/_services'
@@ -80,7 +80,7 @@ function AddEdit({ history, match }) {
 	}
 
 	return (
-		<Container>
+		<>
 			<Formik
 				initialValues={initialValues}
 				validationSchema={validationSchema}
@@ -428,7 +428,7 @@ function AddEdit({ history, match }) {
 					)
 				}}
 			</Formik>
-		</Container>
+		</>
 	)
 }
 
