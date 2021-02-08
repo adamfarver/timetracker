@@ -2,7 +2,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
-import Webdashboard from '../img/Web Dashboard.svg'
+import Webdashboard from '../img/webdashboard.svg'
 
 function Slider() {
 	return (
