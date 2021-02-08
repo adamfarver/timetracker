@@ -1,10 +1,10 @@
 import React from 'react'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Container } from 'react-bootstrap'
 import Collab from '../img/collaborationillustration.svg'
 
 function AboutOrg() {
 	return (
-		<>
+		<Container>
 			<section className="company">
 				<>
 					<Row className="d-flex align-items-center">
@@ -22,11 +22,11 @@ function AboutOrg() {
 								alt="Collaboration and progress"
 								className="img-fluid"
 							/>
-						</Col>{' '}
+						</Col>
 					</Row>
 				</>
 			</section>
-		</>
+		</Container>
 	)
 }
 

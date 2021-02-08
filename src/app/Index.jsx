@@ -22,21 +22,24 @@ function App() {
 				<Switch>
 					<Route exact path="/" component={Home} />
 				</Switch>
-				<Container className="shift-below-header">
-					<Alert />
+				{/* This container is for all of the views below, instead of having to have one in each of the views. */}
+				{pathname === '/' ? null : (
+					<Container className="shift-below-header">
+						<Alert />
 
-					<Switch>
-						<Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} />
-						<Route path="/projects" component={Projects} />
-						<Route path="/roles" component={Roles} />
-						<Route path="/sprints" component={Sprints} />
-						<Route path="/tasks" component={Tasks} />
-						<Route path="/times" component={Times} />
-						<Route path="/users" component={Users} />
-						<Route path="/registration" component={Registration} />
-						<Redirect from="*" to="/" />
-					</Switch>
-				</Container>
+						<Switch>
+							<Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} />
+							<Route path="/projects" component={Projects} />
+							<Route path="/roles" component={Roles} />
+							<Route path="/sprints" component={Sprints} />
+							<Route path="/tasks" component={Tasks} />
+							<Route path="/times" component={Times} />
+							<Route path="/users" component={Users} />
+							<Route path="/registration" component={Registration} />
+							<Redirect from="*" to="/" />
+						</Switch>
+					</Container>
+				)}
 			</AppProvider>
 		</div>
 	)

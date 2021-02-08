@@ -1,13 +1,13 @@
 import React from 'react'
+import { Container, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 function Footer() {
 	return (
 		<>
-			{/* TODO: #40 Convert to React-Bootstrap */}
 			<footer className="footer ptb-120">
-				<div className="container">
-					<div className="row">
-						<div className="col-md-6">
+				<Container>
+					<Row>
+						<Col md={6}>
 							<div className="who">
 								<h4 className="h4 mb-20">About This Project</h4>
 								<p>
@@ -15,8 +15,8 @@ function Footer() {
 									data entered is reset at 15 minute intervals.
 								</p>
 							</div>
-						</div>
-						<div className="col-md-2">
+						</Col>
+						<Col md={2}>
 							<div className="links">
 								<h4 className="h4 mb-20">Help</h4>
 								<ul>
@@ -28,8 +28,9 @@ function Footer() {
 									</li>
 								</ul>
 							</div>
-						</div>
-						<div className="col-md-4">
+						</Col>
+
+						<Col md={4}>
 							<div className="social">
 								<h4 className="h4 mb-20">Social Media</h4>
 								<div className="icons">
@@ -63,9 +64,9 @@ function Footer() {
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-				</div>
+						</Col>
+					</Row>
+				</Container>
 			</footer>
 		</>
 	)
