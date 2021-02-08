@@ -1,6 +1,6 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap'
-import Collab from '../img/Collaboration illustration.svg'
+import Collab from '../img/collaborationillustration.svg'
 
 function AboutOrg() {
 	return (
