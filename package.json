@@ -5,10 +5,10 @@
 	"main": "src/index.js",
 	"author": "Adam Farver <adamfarver@gmail.com>",
 	"scripts": {
-		"build": "webpack --config webpack.config.js ",
+		"build": "webpack --config webpack.dev.js ",
 		"start": "webpack-dev-server --mode development --open --config webpack.dev.js",
 		"startserver": "nodemon ./server/server.js",
-		"seed": "node ./server/seed.js",
+		"seed": "node ./server/seed/seed.js",
 		"test": "jest --watch --verbose"
 	},
 	"dependencies": {
@@ -20,11 +20,13 @@
 		"bootstrap": "^4.6.0",
 		"chart.js": "^2.9.4",
 		"cors": "^2.8.5",
+		"cron": "^1.8.2",
 		"dotenv": "^8.2.0",
 		"express": "^4.17.1",
 		"formik": "^2.1.4",
 		"jquery": "^3.5.1",
 		"moment": "^2.29.1",
+		"mongodb": "^3.6.4",
 		"mongoose": "^5.10.7",
 		"popper.js": "^1.16.1",
 		"prop-types": "^15.7.2",
