@@ -21,7 +21,6 @@
 			}
 		}
 	],
-
 	"roles": [
 		{
 			"_id": "5f83b7059afb0523d2e7ac79",
@@ -123,26 +122,12 @@
 			"userModified": "5fa447d6578d6b1b5f71d103",
 			"sprintType": "code",
 			"active": false,
-			"dateStart": "2020-12-07T00:00:00.000Z",
-			"dateEnd": "2020-12-11T00:00:00.000Z",
 			"project": "5fa5a497767ee509ef0b118c",
-			"__v": 0
-		},
-		{
-			"_id": "5fee83bd094d95102b0fe298",
-			"sprint": 1,
-			"completed": false,
-			"userCreated": "5fa447d6578d6b1b5f71d103",
-			"userModified": "5fa447d6578d6b1b5f71d103",
-			"sprintType": "design",
-			"active": true,
-			"dateStart": "2021-01-01T00:00:00.000Z",
-			"dateEnd": "2021-01-09T00:00:00.000Z",
-			"project": "5fa5a497767ee509ef0b118c",
-			"__v": 0
+			"__v": 0,
+			"dateStart": "2021-02-13T16:10:13-05:00",
+			"dateEnd": "2021-02-19T16:10:13-05:00"
 		}
 	],
-
 	"tasks": [
 		{
 			"completed": false,
@@ -501,7 +486,6 @@
 			"updatedAt": "2021-01-07T19:19:56.298Z"
 		}
 	],
-
 	"times": [
 		{
 			"_id": "5fd11e7f7fa8e6571d3a6a9e",

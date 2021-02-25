@@ -22,7 +22,12 @@ export function InProcessList({ match }) {
 
 	useEffect(() => {
 		taskService.getByProjectId(id).then((res) => {
-			const filteredTaskList = res.filter((task) => task.claimedBy)
+			const filteredTaskList = res.filter((task) => {
+				if (task.active && task.claimedBy) {
+					console.log(task)
+					return task
+				}
+			})
 
 			settasks(filteredTaskList)
 		})

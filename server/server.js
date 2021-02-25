@@ -64,17 +64,17 @@ async function reseedDb(seedData) {
 reseedDb(seedData)
 
 // Set up cronjob to reset/reseed DB.
-const resetDB = new CronJob(
-	'*/15 * * * *',
-	function () {
-		reseedDb(seedData)
-		return
-	},
-	null,
-	true,
-	'America/New_York'
-)
-resetDB.start()
+// const resetDB = new CronJob(
+// 	'*/15 * * * *',
+// 	function () {
+// 		reseedDb(seedData)
+// 		return
+// 	},
+// 	null,
+// 	true,
+// 	'America/New_York'
+// )
+// resetDB.start()
 
 // Express Middlewares
 app.use(bodyParser.json())
