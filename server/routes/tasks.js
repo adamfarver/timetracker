@@ -44,28 +44,9 @@ router.get('/:id', async (req, res, next) => {
 })
 // Get project tasks
 router.get('/allprojecttasks/:id', async (req, res, next) => {
-	console.log(`Getting all tasks for ${req.params.id}`)
 	try {
 		const records = await Task.find({ project: ObjectId(`${req.params.id}`) })
 
-		// NOTE: This block was put here to make some views show the names of the people who claimed or completed the task. Must be moved into another route because otherwise, it will break other things.
-
-		// const records = await Task.aggregate([
-		// 	{
-		// 		$match: { project: ObjectId(`${req.params.id}`) },
-		// 	},
-		// 	{
-		// 		$lookup: {
-		// 			from: 'users',
-		// 			localField: 'claimedBy',
-		// 			foreignField: '_id',
-		// 			as: 'claimedBy',
-		// 		},
-		// 	},
-		// 	{
-		// 		$unwind: { path: '$claimedBy', preserveNullAndEmptyArrays: true },
-		// 	},
-		// ])
 		res.json(records).status(200)
 		res.end()
 	} catch (error) {
@@ -73,6 +54,31 @@ router.get('/allprojecttasks/:id', async (req, res, next) => {
 	}
 })
 
+// Get claimed tasks
+router.get('/allclaimedprojecttasks/:id', async (req, res, next) => {
+	try {
+		const records = await Task.aggregate([
+			{
+				$match: { project: ObjectId(`${req.params.id}`) },
+			},
+			{
+				$lookup: {
+					from: 'users',
+					localField: 'claimedBy',
+					foreignField: '_id',
+					as: 'claimedBy',
+				},
+			},
+			{
+				$unwind: { path: '$claimedBy', preserveNullAndEmptyArrays: true },
+			},
+		])
+		res.json(records).status(200)
+		res.end()
+	} catch (error) {
+		console.log(error)
+	}
+})
 // Create Task
 router.post('/', async (req, res, next) => {
 	const { body } = req
