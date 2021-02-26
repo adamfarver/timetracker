@@ -6,6 +6,7 @@ import { Breadcrumbs } from '../_components/Breadcrumbs'
 import { Row, Col, Button } from 'react-bootstrap'
 import { taskService, alertService } from '@/_services'
 import { AddEdit } from '../times/AddEdit'
+import TaskViewTimesList from '../times/TaskViewTimesList'
 
 export function TaskView({ history, match }) {
 	const { id } = match.params
@@ -122,8 +123,10 @@ export function TaskView({ history, match }) {
 						)}
 					</Col>
 				</Row>
-
 				<Row>
+					<Col>
+						<TaskViewTimesList />
+					</Col>
 					{task.claimedBy && (
 						<Col md={4}>
 							<AddEdit match={match} history={history} />
