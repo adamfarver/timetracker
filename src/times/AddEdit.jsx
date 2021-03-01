@@ -54,19 +54,6 @@ function AddEdit({ history, match }) {
 			{({ errors, touched, isSubmitting, setFieldValue }) => {
 				const [time, setTime] = useState({})
 
-				useEffect(() => {
-					// get time and set form fields
-					timeService.getById(id).then((time) => {
-						const fields = ['timeUsed']
-						if (!time.timeUsed) {
-							time.timeUsed = 0
-						}
-						fields.forEach((field) => setFieldValue(field, time[field], false))
-
-						setTime(time)
-					})
-				}, [])
-
 				return (
 					<Form>
 						<Row>
@@ -100,7 +87,7 @@ function AddEdit({ history, match }) {
 										{isSubmitting && (
 											<span className="spinner-border spinner-border-sm mr-1"></span>
 										)}
-										Save
+										Add
 									</Button>
 								</BSForm.Group>
 							</Col>
