@@ -8,6 +8,7 @@ export const taskService = {
 	getById,
 	getByProjectId,
 	getClaimedProjectId,
+	getTimeById,
 	create,
 	update,
 	delete: _delete,
@@ -19,6 +20,9 @@ function getAll() {
 
 function getById(id) {
 	return fetchWrapper.get(`${baseUrl}/${id}`)
+}
+function getTimeById(id) {
+	return fetchWrapper.get(`${baseUrl}/${id}/times`)
 }
 
 function getByProjectId(id) {

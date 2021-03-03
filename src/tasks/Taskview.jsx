@@ -22,12 +22,16 @@ export function TaskView({ history, match }) {
 	] = useContext(AppContext)
 
 	const [claimed, setClaimed] = useState(false)
+	const [times, setTimes] = useState([])
 	useEffect(() => {
 		taskService.getById(id).then((individualTask) => {
 			setTask(individualTask)
 		})
 	}, [])
 
+	useEffect(() => {
+		taskService.getTimeById(id).then((res) => setTimes(res))
+	}, [])
 	function claimItem(e, task, user) {
 		if (e.target.innerHTML === 'Claim') {
 			task.claimedBy = user._id
@@ -125,11 +129,23 @@ export function TaskView({ history, match }) {
 				</Row>
 				<Row>
 					<Col>
-						<TaskViewTimesList />
+						<h4>
+							<strong>Time Log</strong>
+						</h4>
+					</Col>
+				</Row>
+				<Row className="timelog py-3 mt-n1 ">
+					<Col>
+						<TaskViewTimesList times={times} setTimes={setTimes} />
 					</Col>
 					{task.claimedBy && (
 						<Col md={4}>
-							<AddEdit match={match} history={history} />
+							<AddEdit
+								match={match}
+								history={history}
+								times={times}
+								setTimes={setTimes}
+							/>
 						</Col>
 					)}
 				</Row>

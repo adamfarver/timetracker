@@ -8,7 +8,7 @@ import * as Yup from 'yup'
 import { timeService, alertService } from '@/_services'
 import { AppContext } from '../_components/AppContext'
 
-function AddEdit({ history, match }) {
+function AddEdit({ history, match, times, setTimes }) {
 	const { id } = match.params
 	const [
 		project,
@@ -24,47 +24,46 @@ function AddEdit({ history, match }) {
 
 	const validationSchema = Yup.object().shape({})
 
-	function onSubmit(fields, { setStatus, setSubmitting }) {
-		updateTime(id, fields, setSubmitting)
+	function onSubmit(fields, { setStatus, setSubmitting, resetForm }) {
+		addTime(id, fields, setSubmitting)
+
 		setStatus()
 		setSubmitting(false)
+		resetForm()
 	}
 
-	function updateTime(id, fields, setSubmitting) {
+	function addTime(id, fields, setSubmitting) {
 		fields.userId = user._id
 		fields.sprint = sprint._id
 		fields.taskId = task._id
 		timeService
-			.update(id, fields)
-			.then(() => {
-				alertService.success('Time updated', { keepAfterRouteChange: true })
+			.create(fields)
+			.then((response) => {
+				alertService.success('Time Added', { keepAfterRouteChange: true })
+				const { firstName, lastName } = user
+				response.userId = { firstName, lastName }
+
+				// console.log(response)
+				setTimes(times.concat(response))
 			})
 			.catch((error) => {
 				setSubmitting(false)
 				alertService.error(error)
 			})
 	}
-
 	return (
 		<Formik
 			initialValues={initialValues}
 			validationSchema={validationSchema}
 			onSubmit={onSubmit}
 		>
-			{({ errors, touched, isSubmitting, setFieldValue }) => {
-				const [time, setTime] = useState({})
-
+			{({ values, errors, touched, isSubmitting, setFieldValue }) => {
 				return (
 					<Form>
 						<Row>
 							<Col>
-								<h4>Edit Time</h4>
-							</Col>
-						</Row>
-						<Row>
-							<Col>
 								<BSForm.Group>
-									<BSForm.Label htmlFor="timeUsed">Used Time</BSForm.Label>
+									<BSForm.Label htmlFor="timeUsed">Add Time</BSForm.Label>
 									<Field
 										name="timeUsed"
 										id="timeUsed"
@@ -78,10 +77,10 @@ function AddEdit({ history, match }) {
 						</Row>
 						<Row>
 							<Col>
-								<BSForm.Group>
+								<BSForm.Group className="mb-0">
 									<Button
 										type="submit"
-										disabled={isSubmitting}
+										disabled={isSubmitting || values.timeUsed == 0}
 										className="btn btn-primary"
 									>
 										{isSubmitting && (

@@ -3,3 +3,13 @@
 .shift-below-header {
 	margin-top: calc(98px + 0.75rem);
 }
+.timelog {
+	background-color: #e9ecef;
+	margin: 15px 0;
+	border-radius: 0.25em;
+	table {
+		thead {
+			background-color: #ffffff;
+		}
+	}
+}
