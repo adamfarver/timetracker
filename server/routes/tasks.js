@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const Task = require('../../models/Task')
+const Time = require('../../models/Time')
 const { ObjectId } = mongoose.Types
 // All routes added together
 
@@ -42,6 +43,34 @@ router.get('/:id', async (req, res, next) => {
 		res.status(404).send({ msg: 'Resource not found.' }).end()
 	}
 })
+// Read Single Task Times
+router.get('/:id/times', async (req, res, next) => {
+	try {
+		const records = await Time.aggregate([
+			{
+				$match: { taskId: ObjectId(`${req.params.id}`) },
+			},
+
+			{
+				$lookup: {
+					from: 'users',
+					localField: 'userId',
+					foreignField: '_id',
+					as: 'userId',
+				},
+			},
+			{
+				$unwind: { path: '$userId', preserveNullAndEmptyArrays: true },
+			},
+		])
+
+		res.json(records).status(200)
+		res.end()
+	} catch (error) {
+		res.status(404).send({ msg: 'Resource not found.' }).end()
+	}
+})
+
 // Get project tasks
 router.get('/allprojecttasks/:id', async (req, res, next) => {
 	try {

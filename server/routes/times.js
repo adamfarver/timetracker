@@ -32,14 +32,13 @@ router.get('/:id', async (req, res, next) => {
 // Create Time
 router.post('/', async (req, res, next) => {
 	const { body } = req
-	const project = new Time(body)
-	if (mongoose.connection.readyState) {
-		await project.save().then(() => {
-			res.redirect('/dataadded')
-			res.end()
-		})
-	} else {
-		res.status(500).send({ msg: 'Not connected to DB. Cannot Save data' }).end()
+	const time = new Time(body)
+	try {
+		const record = await time.save()
+		res.json(record).status(200)
+		res.end()
+	} catch (error) {
+		res.status(404).send({ msg: "Couldn't create record" }).end()
 	}
 })
 
