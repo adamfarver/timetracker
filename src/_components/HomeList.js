@@ -34,8 +34,12 @@ export function HomeList(props) {
 					className="d-flex justify-content-between"
 					active
 				>
-					{/* TODO: #52 Add Link to name at top of homelist components. */}
-					{name}
+					<Link
+						to={`/tasks/${project._id}/${parsedName}`}
+						className="text-white"
+					>
+						{name}
+					</Link>
 					{name === 'Backlog Tasks' && (
 						<Link to={`/tasks/add`} className="text-white">
 							<FontAwesomeIcon icon="plus" /> Add Task
