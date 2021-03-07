@@ -1,0 +1,16 @@
+.nf {
+	height: 80vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	.nfimg {
+		height: 20vh;
+		filter: grayscale(100%);
+		margin: 1em;
+	}
+	.caps {
+		text-transform: uppercase;
+		color: $dark-grey;
+	}
+}
