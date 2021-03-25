@@ -32,22 +32,26 @@ export function TaskView({ history, match }) {
 	useEffect(() => {
 		taskService.getTimeById(id).then((res) => setTimes(res))
 	}, [])
+
 	function claimItem(e, task, user) {
 		if (e.target.innerHTML === 'Claim') {
 			task.claimedBy = user._id
 			setTask(task)
 			setClaimed(!claimed)
-			console.log(task.claimedBy)
 		} else {
 			task.claimedBy = null
 			setTask(task)
 			setClaimed(!claimed)
-			console.log(task.claimedBy)
 		}
 		try {
-			taskService
-				.update(task._id, task)
-				.then(() => alertService.success(`Task claimed by ${user.firstName}`))
+			taskService.update(task._id, task).then(() => {
+				if (!claimed) {
+					alertService.success(`Task claimed by ${user.firstName}`)
+				}
+				if (claimed) {
+					alertService.success(`Task Released.`)
+				}
+			})
 		} catch (error) {
 			alertService.error(
 				'Problems with Database Connection. Please contact your system administrator.'
