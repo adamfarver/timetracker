@@ -32,22 +32,26 @@ export function TaskView({ history, match }) {
 	useEffect(() => {
 		taskService.getTimeById(id).then((res) => setTimes(res))
 	}, [])
+
 	function claimItem(e, task, user) {
 		if (e.target.innerHTML === 'Claim') {
 			task.claimedBy = user._id
 			setTask(task)
 			setClaimed(!claimed)
-			console.log(task.claimedBy)
 		} else {
-			task.claimedBy = null
+			task.claimedBy = undefined
 			setTask(task)
 			setClaimed(!claimed)
-			console.log(task.claimedBy)
 		}
 		try {
-			taskService
-				.update(task._id, task)
-				.then(() => alertService.success(`Task claimed by ${user.firstName}`))
+			taskService.update(task._id, task).then(() => {
+				if (!claimed) {
+					alertService.success(`Task claimed by ${user.firstName}`)
+				}
+				if (claimed) {
+					alertService.success(`Task Released.`)
+				}
+			})
 		} catch (error) {
 			alertService.error(
 				'Problems with Database Connection. Please contact your system administrator.'
@@ -68,7 +72,7 @@ export function TaskView({ history, match }) {
 						<div className="d-flex align-items-center">
 							<h1>{task.taskName}</h1>
 							{user.role.rolename === 'Manager' ||
-								('Admin' && !task.completed && (
+								('Admin' && (
 									<Col md>
 										<Link to={`/tasks/edit/${id}`}>
 											<FontAwesomeIcon icon="edit" className={'mr-1'} />
@@ -94,7 +98,49 @@ export function TaskView({ history, match }) {
 						<p>{task.projectedTime} hours</p>
 					</Col>
 					<Col md={3}>
-						{!task.completed ? (
+						{/* If completed, show who claimed */}
+						{task.completed && (
+							<>
+								<p>
+									<strong>Claimed By:</strong>
+								</p>{' '}
+								<p>
+									{task.claimedBy.firstName} {task.claimedBy.lastName}
+								</p>
+							</>
+						)}
+						{/* If not completed and not claimed, show claim button */}
+						{!task.completed && !task.claimedBy && (
+							<Button
+								variant="success"
+								onClick={(event) => {
+									claimItem(event, task, user)
+								}}
+							>
+								Claim
+							</Button>
+						)}
+						{/* If not completed and claimed equals owner, show release button */}
+						{!task.completed && task.claimedBy._id === user._id && (
+							<Button
+								variant="danger"
+								onClick={(event) => {
+									claimItem(event, task, user)
+								}}
+							>
+								Release
+							</Button>
+						)}
+						{/* If not completed and claimed not equal owner, show who claimed*/}
+						{!task.completed && task.claimedBy._id !== user._id && (
+							<>
+								<strong>Claimed By:</strong>
+								<p>
+									{task.claimedBy.firstName} {task.claimedBy.lastName}
+								</p>
+							</>
+						)}
+						{/* {!task.completed && user._id === task.claimedBy._id ? (
 							task.claimedBy ? (
 								<Button
 									variant="danger"
@@ -114,7 +160,14 @@ export function TaskView({ history, match }) {
 									Claim
 								</Button>
 							)
-						) : null}
+						) : (
+							<>
+								<strong>Claimed By:</strong>
+								<p>
+									{task.claimedBy.firstName} {task.claimedBy.lastName}
+								</p>
+							</>
+						)} */}
 					</Col>
 				</Row>
 				<Row>
@@ -138,7 +191,7 @@ export function TaskView({ history, match }) {
 					<Col>
 						<TaskViewTimesList times={times} setTimes={setTimes} />
 					</Col>
-					{task.claimedBy && (
+					{task.claimedBy._id === user._id && (
 						<Col md={4}>
 							<AddEdit
 								match={match}
