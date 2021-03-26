@@ -100,26 +100,29 @@ function AddEdit({ history, match }) {
 				useEffect(() => {
 					if (!isAddMode) {
 						// get task and set form fields
-						taskService.getById(id).then((task) => {
-							const fields = [
-								'taskName',
-								'dateCompleted',
-								'completed',
-								'userCreated',
-								'userModified',
-								'additionalInfo',
-								'active',
-								'project',
-								'projectManager',
-								'sprint',
-								'claimedBy',
-								'projectedTime',
-							]
-							fields.forEach((field) =>
-								setFieldValue(field, task[field], false)
-							)
-							setTask(task)
-						})
+						taskService
+							.getById(id)
+							.then((task) => {
+								const fields = [
+									'taskName',
+									'dateCompleted',
+									'completed',
+									'userCreated',
+									'userModified',
+									'additionalInfo',
+									'active',
+									'project',
+									'projectManager',
+									'sprint',
+									'claimedBy',
+									'projectedTime',
+								]
+								fields.forEach((field) =>
+									setFieldValue(field, task[field], false)
+								)
+								setTask(task)
+							})
+							.catch((e) => history.push('/404'))
 					}
 				}, [])
 

@@ -47,6 +47,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
 	try {
 		const record = await User.findById(req.params.id)
+		console.log(record)
 		res.json(record).status(200)
 		res.end()
 	} catch (error) {

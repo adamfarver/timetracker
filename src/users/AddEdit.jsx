@@ -88,22 +88,25 @@ function AddEdit({ history, match }) {
 				useEffect(() => {
 					if (!isAddMode) {
 						// get user and set form fields
-						userService.getById(id).then((user) => {
-							const fields = [
-								'firstName',
-								'lastName',
-								'email',
-								'role',
-								'password',
-								'phone',
-							]
-							fields.forEach((field) => {
-								if (user[field]) {
-									setFieldValue(field, user[field], false)
-								}
+						userService
+							.getById(id)
+							.then((user) => {
+								const fields = [
+									'firstName',
+									'lastName',
+									'email',
+									'role',
+									'password',
+									'phone',
+								]
+								fields.forEach((field) => {
+									if (user[field]) {
+										setFieldValue(field, user[field], false)
+									}
+								})
+								setUser(user)
 							})
-							setUser(user)
-						})
+							.catch((e) => history.push('/404'))
 					}
 				}, [])
 
