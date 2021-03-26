@@ -107,28 +107,31 @@ function AddEdit({ history, match }) {
 				useEffect(() => {
 					if (!isAddMode) {
 						// get sprint and set form fields
-						sprintService.getById(id).then((sprint) => {
-							let fields = [
-								'sprint',
-								'completed',
-								'userCreated',
-								'userModified',
-								'sprintType',
-								'active',
-								'dateStart',
-								'dateEnd',
-								'project',
-							]
+						sprintService
+							.getById(id)
+							.then((sprint) => {
+								let fields = [
+									'sprint',
+									'completed',
+									'userCreated',
+									'userModified',
+									'sprintType',
+									'active',
+									'dateStart',
+									'dateEnd',
+									'project',
+								]
 
-							sprint.dateStart = dateSlice(sprint.dateStart)
-							sprint.dateEnd = dateSlice(sprint.dateEnd)
-							fields.forEach((field) => {
-								// Makes sure the current user is put in userModified field.
-								sprint.userModified = user._id
-								setFieldValue(field, sprint[field], false)
+								sprint.dateStart = dateSlice(sprint.dateStart)
+								sprint.dateEnd = dateSlice(sprint.dateEnd)
+								fields.forEach((field) => {
+									// Makes sure the current user is put in userModified field.
+									sprint.userModified = user._id
+									setFieldValue(field, sprint[field], false)
+								})
+								setSprint(sprint)
 							})
-							setSprint(sprint)
-						})
+							.catch((e) => history.push('/404'))
 					} else {
 						sprintService.getSprintNumber(project._id).then((data) => {
 							setSprintNumber(data)

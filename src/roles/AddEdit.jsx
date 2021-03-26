@@ -89,40 +89,43 @@ function AddEdit({ history, match }) {
 				useEffect(() => {
 					if (!isAddMode) {
 						// get user and set form fields
-						roleService.getById(id).then((role) => {
-							const fields = [
-								'roleName',
-								'active',
-								'projectCreate',
-								'projectRead',
-								'projectUpdate',
-								'projectRemoveData',
-								'sprintCreate',
-								'sprintRead',
-								'sprintUpdate',
-								'sprintRemoveData',
-								'taskCreate',
-								'taskRead',
-								'taskUpdate',
-								'taskRemoveData',
-								'timeCreate',
-								'timeRead',
-								'timeUpdate',
-								'timeRemoveData',
-								'userCreate',
-								'userRead',
-								'userUpdate',
-								'userRemoveData',
-								'roleCreate',
-								'roleRead',
-								'roleUpdate',
-								'roleRemoveData',
-							]
-							fields.forEach((field) =>
-								setFieldValue(field, role[field], false)
-							)
-							setRole(role)
-						})
+						roleService
+							.getById(id)
+							.then((role) => {
+								const fields = [
+									'roleName',
+									'active',
+									'projectCreate',
+									'projectRead',
+									'projectUpdate',
+									'projectRemoveData',
+									'sprintCreate',
+									'sprintRead',
+									'sprintUpdate',
+									'sprintRemoveData',
+									'taskCreate',
+									'taskRead',
+									'taskUpdate',
+									'taskRemoveData',
+									'timeCreate',
+									'timeRead',
+									'timeUpdate',
+									'timeRemoveData',
+									'userCreate',
+									'userRead',
+									'userUpdate',
+									'userRemoveData',
+									'roleCreate',
+									'roleRead',
+									'roleUpdate',
+									'roleRemoveData',
+								]
+								fields.forEach((field) =>
+									setFieldValue(field, role[field], false)
+								)
+								setRole(role)
+							})
+							.catch((e) => history.push('/404'))
 					}
 				}, [])
 

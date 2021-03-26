@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 
 import { InProcessList } from './InProcessList'
 import { AvailableList } from './AvailableList'
@@ -20,6 +20,7 @@ export function Tasks({ match }) {
 			<Route path={`${path}/:id/available`} component={AvailableList} />
 			<Route path={`${path}/:id/completed`} component={CompletedList} />
 			<Route path={`${path}/:id/backlog`} component={BackLogList} />
+			<Redirect to="/404" />
 		</Switch>
 	)
 }

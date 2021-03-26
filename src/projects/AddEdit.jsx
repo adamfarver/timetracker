@@ -92,24 +92,27 @@ function AddEdit({ history, match }) {
 					useEffect(() => {
 						if (!isAddMode) {
 							// get user and set form fields
-							projectService.getById(id).then((project) => {
-								const fields = [
-									'active',
-									'additionalInfo',
-									'completed',
-									'ownerCompany',
-									'ownerEmail',
-									'ownerName',
-									'ownerPhone',
-									'projectManager',
-									'projectName',
-									'teamLead',
-								]
-								fields.forEach((field) =>
-									setFieldValue(field, project[field], false)
-								)
-								setProject(project)
-							})
+							projectService
+								.getById(id)
+								.then((project) => {
+									const fields = [
+										'active',
+										'additionalInfo',
+										'completed',
+										'ownerCompany',
+										'ownerEmail',
+										'ownerName',
+										'ownerPhone',
+										'projectManager',
+										'projectName',
+										'teamLead',
+									]
+									fields.forEach((field) =>
+										setFieldValue(field, project[field], false)
+									)
+									setProject(project)
+								})
+								.catch((e) => history.push('/404'))
 						}
 					}, [])
 
@@ -342,7 +345,7 @@ function AddEdit({ history, match }) {
 
 								<Col md>
 									<BSForm.Group>
-										<BSForm.Label htmlfor="teamLead">Team Lead</BSForm.Label>
+										<BSForm.Label htmlFor="teamLead">Team Lead</BSForm.Label>
 										<Field
 											as="select"
 											name="teamLead"
