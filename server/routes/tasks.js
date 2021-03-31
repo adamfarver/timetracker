@@ -128,17 +128,14 @@ router.post('/', async (req, res, next) => {
 
 //Update Task
 router.put('/:id', async (req, res, next) => {
+	console.log('put route')
 	const objId = req.params.id
 	const { body } = req
 	try {
-		const record = await Task.findOneAndUpdate(
-			{ _id: ObjectId(`${objId}`) },
-			body,
-			{
-				new: true,
-				omitUndefined: true,
-			}
-		)
+		const record = await Task.updateOne({ _id: ObjectId(`${objId}`) }, body, {
+			new: true,
+			omitUndefined: true,
+		})
 		const expandedRecord = await Task.aggregate([
 			{
 				$match: { _id: ObjectId(`${req.params.id}`) },

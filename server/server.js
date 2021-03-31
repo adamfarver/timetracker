@@ -4,6 +4,7 @@
 // eslint-disable-next-line no-unused-vars
 const http = require('http')
 const CronJob = require('cron').CronJob
+const fs = require('fs')
 
 // DB Functions
 const mongoose = require('mongoose')
@@ -35,7 +36,7 @@ async function dbConnect() {
 		useUnifiedTopology: true,
 		autoIndex: false,
 		connectTimeoutMS: 4000,
-		useFindAndModify: false,
+		useFindAndModify: true,
 	})
 	if (mongoose.connection.readyState) {
 		console.log('DB Connected')
@@ -62,6 +63,17 @@ async function reseedDb(seedData) {
 
 // Do this first time.
 reseedDb(seedData)
+
+// const updateJSONFile= new CronJob(
+// 	'1 * * * *',
+// 	function () {
+// 		reseedDb(seedData)
+// 		return
+// 	},
+// 	null,
+// 	true,
+// 	'America/New_York'
+// )
 
 // Set up cronjob to reset/reseed DB.
 // const resetDB = new CronJob(

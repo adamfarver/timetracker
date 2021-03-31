@@ -21,13 +21,20 @@ export function TaskView({ history, match }) {
 		setTask,
 	] = useContext(AppContext)
 
-	const [claimed, setClaimed] = useState(false)
+	const [isClaimed, setIsClaimed] = useState(false)
 	const [times, setTimes] = useState([])
 	useEffect(() => {
 		taskService.getById(id).then((individualTask) => {
+			if (!individualTask.claimedBy) {
+				individualTask.claimedBy = {
+					_id: '',
+					firstName: 'Nobody',
+					lastName: '',
+				}
+			}
 			setTask(individualTask)
 		})
-	}, [])
+	}, [isClaimed, setIsClaimed])
 
 	useEffect(() => {
 		taskService.getTimeById(id).then((res) => setTimes(res))
@@ -37,19 +44,19 @@ export function TaskView({ history, match }) {
 		if (e.target.innerHTML === 'Claim') {
 			task.claimedBy = user._id
 			setTask(task)
-			setClaimed(!claimed)
 		} else {
-			task.claimedBy = undefined
+			task.claimedBy._id = null
 			setTask(task)
-			setClaimed(!claimed)
 		}
 		try {
 			taskService.update(task._id, task).then(() => {
-				if (!claimed) {
+				if (!isClaimed) {
 					alertService.success(`Task claimed by ${user.firstName}`)
+					setIsClaimed(!isClaimed)
 				}
-				if (claimed) {
+				if (isClaimed) {
 					alertService.success(`Task Released.`)
+					setIsClaimed(!isClaimed)
 				}
 			})
 		} catch (error) {
@@ -102,7 +109,7 @@ export function TaskView({ history, match }) {
 						{task.completed && (
 							<>
 								<p>
-									<strong>Claimed By:</strong>
+									<strong>Completed By:</strong>
 								</p>{' '}
 								<p>
 									{task.claimedBy.firstName} {task.claimedBy.lastName}
@@ -110,7 +117,7 @@ export function TaskView({ history, match }) {
 							</>
 						)}
 						{/* If not completed and not claimed, show claim button */}
-						{!task.completed && !task.claimedBy && (
+						{!task.completed && task.claimedBy._id === '' && (
 							<Button
 								variant="success"
 								onClick={(event) => {
@@ -132,14 +139,17 @@ export function TaskView({ history, match }) {
 							</Button>
 						)}
 						{/* If not completed and claimed not equal owner, show who claimed*/}
-						{!task.completed && task.claimedBy._id !== user._id && (
-							<>
-								<strong>Claimed By:</strong>
-								<p>
-									{task.claimedBy.firstName} {task.claimedBy.lastName}
-								</p>
-							</>
-						)}
+						{!task.completed &&
+							user._id !== task.claimedBy._id &&
+							task.claimedBy._id !== '' && (
+								<>
+									<strong>Claimed By:</strong>
+									<p>
+										{task.claimedBy.firstName} {task.claimedBy.lastName}
+									</p>
+								</>
+							)}
+
 						{/* {!task.completed && user._id === task.claimedBy._id ? (
 							task.claimedBy ? (
 								<Button
