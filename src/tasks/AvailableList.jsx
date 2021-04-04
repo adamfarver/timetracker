@@ -9,6 +9,7 @@ export function AvailableList({ match }) {
 	const { id } = match.params
 	const { path } = match
 	const [tasks, setTasks] = useState([])
+	const [claimed, setClaimed] = useState('')
 	const [
 		project,
 		setProject,
@@ -26,14 +27,31 @@ export function AvailableList({ match }) {
 				(task) =>
 					task.active &&
 					!task.completed &&
-					!task.claimedBy &&
+					!task.claimedBy._id &&
 					task.sprint === sprint._id
 			)
 
 			res = availableTasks
 			setTasks(res)
 		})
-	}, [])
+	}, [claimed, setClaimed])
+
+	const claimTask = async (id) => {
+		const change = {
+			'claimedBy._id': user._id,
+			'claimedBy.firstName': user.firstName,
+			'claimedBy.lastName': user.lastName,
+		}
+		await taskService
+			.update(id, change)
+			.then((res) => {
+				if (res.n) {
+					setClaimed(claimed + 1)
+					alertService.success('Task claimed.')
+				}
+			})
+			.catch((e) => console.log(e))
+	}
 
 	return (
 		<>
@@ -68,7 +86,7 @@ export function AvailableList({ match }) {
 								<td>{task.projectedTime} hrs.</td>
 								<td style={{ whiteSpace: 'nowrap' }}>
 									<Button
-										onClick={() => deletetask(task._id)}
+										onClick={() => claimTask(task._id)}
 										className="btn btn-sm btn-success btn-delete-task"
 										disabled={task.isDeleting}
 									>

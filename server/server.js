@@ -62,7 +62,7 @@ async function reseedDb(seedData) {
 }
 
 // Do this first time.
-reseedDb(seedData)
+// reseedDb(seedData)
 
 // const updateJSONFile= new CronJob(
 // 	'1 * * * *',
