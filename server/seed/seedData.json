@@ -132,7 +132,12 @@
 		{
 			"completed": false,
 			"active": true,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": null,
+				"firstName": null,
+				"lastName": null,
+				"v": 1
+			},
 			"actualUsedTime": 2,
 			"_id": "5fd11e7f7fa8e6571d3a6a95",
 			"taskName": "Test 1",
@@ -143,12 +148,18 @@
 			"projectedTime": 5,
 			"__v": 0,
 			"additionalInfo": "This is some additional info so that this field will appear in my view.",
-			"updatedAt": "2021-01-04T20:22:26.888Z"
+			"updatedAt": "2021-01-04T20:22:26.888Z",
+			"created_at": "2021-04-02T20:26:58.963Z"
 		},
 		{
 			"completed": false,
 			"active": true,
-			"claimedBy": "5fa447d6578d6b1b5f71d103",
+			"claimedBy": {
+				"_id": null,
+				"firstName": "Nobody",
+				"lastName": " ",
+				"v": 1
+			},
 			"actualUsedTime": 1.5,
 			"_id": "5fd11e7f7fa8e6571d3a6a96",
 			"taskName": "Test 2 Longer Text",
@@ -158,13 +169,19 @@
 			"sprint": "5fc7ab1418ed22c8f2a26139",
 			"projectedTime": 5,
 			"__v": 0,
-			"updatedAt": "2021-02-03T20:44:42.259Z",
-			"additionalInfo": "Here is some additional info to help you understand what the problem we are trying to solve here is. I know that this is not a paragraph with proper grammar but I rey don't care because I want it to be super long."
+			"updatedAt": "2021-04-03T22:26:53.778Z",
+			"additionalInfo": "Here is some additional info to help you understand what the problem we are trying to solve here is. I know that this is not a paragraph with proper grammar but I rey don't care because I want it to be super long.",
+			"created_at": "2021-04-02T20:26:58.963Z"
 		},
 		{
 			"completed": false,
 			"active": true,
-			"claimedBy": "5fa447d6578d6b1b5f71d103",
+			"claimedBy": {
+				"_id": null,
+				"firstName": "Nobody",
+				"lastName": " ",
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd11e7f7fa8e6571d3a6a97",
 			"taskName": "Test 3",
@@ -174,12 +191,18 @@
 			"sprint": "5fc7ab1418ed22c8f2a26139",
 			"projectedTime": 5,
 			"__v": 0,
-			"updatedAt": "2021-01-07T18:24:52.332Z"
+			"updatedAt": "2021-04-03T22:27:09.016Z",
+			"created_at": "2021-04-02T20:26:58.964Z"
 		},
 		{
 			"completed": false,
 			"active": true,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": null,
+				"firstName": "Nobody",
+				"lastName": " ",
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd11e7f7fa8e6571d3a6a98",
 			"taskName": "Test 4",
@@ -189,12 +212,18 @@
 			"sprint": "5fc7ab1418ed22c8f2a26139",
 			"projectedTime": 5,
 			"__v": 0,
-			"updatedAt": "2021-02-03T21:09:06.082Z"
+			"updatedAt": "2021-04-03T22:27:12.798Z",
+			"created_at": "2021-04-02T20:26:58.964Z"
 		},
 		{
 			"completed": false,
 			"active": true,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": null,
+				"firstName": "Nobody",
+				"lastName": " ",
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd11e7f7fa8e6571d3a6a99",
 			"taskName": "Test 5",
@@ -203,12 +232,19 @@
 			"project": "5fa5a497767ee509ef0b118c",
 			"sprint": "5fc7ab1418ed22c8f2a26139",
 			"projectedTime": 5,
-			"__v": 0
+			"__v": 0,
+			"created_at": "2021-04-02T20:26:58.964Z",
+			"updatedAt": "2021-04-03T22:27:16.377Z"
 		},
 		{
 			"completed": false,
 			"active": true,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": null,
+				"firstName": "Nobody",
+				"lastName": " ",
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd11e7f7fa8e6571d3a6a9a",
 			"taskName": "Test 6",
@@ -217,12 +253,19 @@
 			"project": "5fa5a497767ee509ef0b118c",
 			"sprint": "5fc7ab1418ed22c8f2a26139",
 			"projectedTime": 5,
-			"__v": 0
+			"__v": 0,
+			"created_at": "2021-04-02T20:26:58.964Z",
+			"updatedAt": "2021-04-03T22:27:21.547Z"
 		},
 		{
 			"completed": false,
 			"active": true,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": null,
+				"firstName": "Nobody",
+				"lastName": " ",
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd11e7f7fa8e6571d3a6a9b",
 			"taskName": "Test 7",
@@ -231,12 +274,19 @@
 			"project": "5fa5a497767ee509ef0b118c",
 			"sprint": "5fc7ab1418ed22c8f2a26139",
 			"projectedTime": 5,
-			"__v": 0
+			"__v": 0,
+			"created_at": "2021-04-02T20:26:58.964Z",
+			"updatedAt": "2021-04-03T22:27:26.561Z"
 		},
 		{
 			"completed": true,
 			"active": true,
-			"claimedBy": "5fa447d6578d6b1b5f71d103",
+			"claimedBy": {
+				"_id": "5fa447d6578d6b1b5f71d103",
+				"firstName": "Adam",
+				"lastName": "Farver",
+				"v": 1
+			},
 			"actualUsedTime": 3.5,
 			"_id": "5fd11e7f7fa8e6571d3a6a9c",
 			"taskName": "Test 8",
@@ -246,12 +296,18 @@
 			"sprint": "5fc7ab1418ed22c8f2a26139",
 			"projectedTime": 5,
 			"__v": 0,
-			"updatedAt": "2021-01-10T17:59:23.185Z"
+			"updatedAt": "2021-04-03T18:31:51.673Z",
+			"created_at": "2021-04-02T20:26:58.965Z"
 		},
 		{
-			"completed": false,
+			"completed": true,
 			"active": true,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": "5fa447d6578d6b1b5f71d103",
+				"firstName": "Adam",
+				"lastName": "Farver",
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd11e7f7fa8e6571d3a6a9d",
 			"taskName": "Test 9",
@@ -261,12 +317,18 @@
 			"sprint": "5fc7ab1418ed22c8f2a26139",
 			"projectedTime": 5,
 			"__v": 0,
-			"updatedAt": "2021-02-03T21:53:17.320Z"
+			"updatedAt": "2021-04-03T18:30:26.228Z",
+			"created_at": "2021-04-02T20:26:58.965Z"
 		},
 		{
 			"completed": false,
 			"active": true,
-			"claimedBy": "5fa447d6578d6b1b5f71d103",
+			"claimedBy": {
+				"_id": null,
+				"firstName": "Nobody",
+				"lastName": " ",
+				"v": 1
+			},
 			"actualUsedTime": 8,
 			"_id": "5fd11e7f7fa8e6571d3a6a9e",
 			"taskName": "Test 10",
@@ -276,13 +338,19 @@
 			"sprint": "5fc7ab1418ed22c8f2a26139",
 			"projectedTime": 5,
 			"__v": 0,
-			"updatedAt": "2021-01-08T22:57:13.061Z",
-			"additionalInfo": "This is the additional information that goes into the additional info field."
+			"updatedAt": "2021-04-04T20:04:24.528Z",
+			"additionalInfo": "This is the additional information that goes into the additional info field.",
+			"created_at": "2021-04-02T20:26:58.965Z"
 		},
 		{
 			"completed": false,
 			"active": true,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": "5fa447d6578d6b1b5f71d103",
+				"firstName": "Adam",
+				"lastName": "Farver",
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd11e7f7fa8e6571d3a6a9f",
 			"taskName": "Test 11",
@@ -291,12 +359,19 @@
 			"project": "5fa5a497767ee509ef0b118c",
 			"sprint": "5fc7ab1418ed22c8f2a26139",
 			"projectedTime": 5,
-			"__v": 0
+			"__v": 0,
+			"created_at": "2021-04-02T20:26:58.965Z",
+			"updatedAt": "2021-04-05T01:04:55.563Z"
 		},
 		{
 			"completed": false,
 			"active": true,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": "5fa447d6578d6b1b5f71d103",
+				"firstName": "Adam",
+				"lastName": "Farver",
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd11e7f7fa8e6571d3a6aa0",
 			"taskName": "Test 12",
@@ -305,12 +380,19 @@
 			"project": "5fa5a497767ee509ef0b118c",
 			"sprint": "5fc7ab1418ed22c8f2a26139",
 			"projectedTime": 5,
-			"__v": 0
+			"__v": 0,
+			"created_at": "2021-04-02T20:26:58.965Z",
+			"updatedAt": "2021-04-03T22:25:46.140Z"
 		},
 		{
 			"completed": false,
 			"active": true,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": "5fa447d6578d6b1b5f71d103",
+				"firstName": "Adam",
+				"lastName": "Farver",
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd11e7f7fa8e6571d3a6aa1",
 			"taskName": "Test 13",
@@ -319,12 +401,19 @@
 			"project": "5fa5a497767ee509ef0b118c",
 			"sprint": "5fc7ab1418ed22c8f2a26139",
 			"projectedTime": 5,
-			"__v": 0
+			"__v": 0,
+			"created_at": "2021-04-02T20:26:58.965Z",
+			"updatedAt": "2021-04-03T21:22:50.299Z"
 		},
 		{
 			"completed": false,
 			"active": true,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": "5fa447d6578d6b1b5f71d103",
+				"firstName": "Adam",
+				"lastName": "Farver",
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd11e7f7fa8e6571d3a6aa2",
 			"taskName": "Test 14",
@@ -333,12 +422,19 @@
 			"project": "5fa5a497767ee509ef0b118c",
 			"sprint": "5fc7ab1418ed22c8f2a26139",
 			"projectedTime": 5,
-			"__v": 0
+			"__v": 0,
+			"created_at": "2021-04-02T20:26:58.965Z",
+			"updatedAt": "2021-04-03T21:27:03.734Z"
 		},
 		{
 			"completed": false,
 			"active": true,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": null,
+				"firstName": null,
+				"lastName": null,
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd11e7f7fa8e6571d3a6aa3",
 			"taskName": "Test 15",
@@ -347,12 +443,19 @@
 			"project": "5fa5a497767ee509ef0b118c",
 			"sprint": "5fc7ab1418ed22c8f2a26139",
 			"projectedTime": 5,
-			"__v": 0
+			"__v": 0,
+			"created_at": "2021-04-02T20:26:58.965Z",
+			"updatedAt": "2021-04-02T20:26:58.965Z"
 		},
 		{
 			"completed": false,
 			"active": true,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": "5fa447d6578d6b1b5f71d103",
+				"firstName": "Adam",
+				"lastName": "Farver",
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd11e7f7fa8e6571d3a6aa4",
 			"taskName": "Test 16",
@@ -361,12 +464,19 @@
 			"project": "5fa5a497767ee509ef0b118c",
 			"sprint": "5fc7ab1418ed22c8f2a26139",
 			"projectedTime": 5,
-			"__v": 0
+			"__v": 0,
+			"created_at": "2021-04-02T20:26:58.966Z",
+			"updatedAt": "2021-04-03T21:14:04.722Z"
 		},
 		{
 			"completed": false,
 			"active": true,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": "5fa447d6578d6b1b5f71d103",
+				"firstName": "Adam",
+				"lastName": "Farver",
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd11e7f7fa8e6571d3a6aa5",
 			"taskName": "Test 17",
@@ -375,12 +485,19 @@
 			"project": "5fa5a497767ee509ef0b118c",
 			"sprint": "5fc7ab1418ed22c8f2a26139",
 			"projectedTime": 5,
-			"__v": 0
+			"__v": 0,
+			"created_at": "2021-04-02T20:26:58.966Z",
+			"updatedAt": "2021-04-03T21:27:06.627Z"
 		},
 		{
 			"completed": false,
 			"active": true,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": null,
+				"firstName": null,
+				"lastName": null,
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd11e7f7fa8e6571d3a6aa6",
 			"taskName": "Test 18",
@@ -389,12 +506,19 @@
 			"project": "5fa5a497767ee509ef0b118c",
 			"sprint": "5fc7ab1418ed22c8f2a26139",
 			"projectedTime": 5,
-			"__v": 0
+			"__v": 0,
+			"created_at": "2021-04-02T20:26:58.966Z",
+			"updatedAt": "2021-04-02T20:26:58.966Z"
 		},
 		{
 			"completed": false,
 			"active": true,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": null,
+				"firstName": null,
+				"lastName": null,
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd11e7f7fa8e6571d3a6aa7",
 			"taskName": "Test 19",
@@ -403,12 +527,19 @@
 			"project": "5fa5a497767ee509ef0b118c",
 			"sprint": "5fc7ab1418ed22c8f2a26139",
 			"projectedTime": 5,
-			"__v": 0
+			"__v": 0,
+			"created_at": "2021-04-02T20:26:58.966Z",
+			"updatedAt": "2021-04-02T20:26:58.966Z"
 		},
 		{
 			"completed": false,
 			"active": false,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": null,
+				"firstName": null,
+				"lastName": null,
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd3c2077fa8e6571d3a6ab8",
 			"taskName": "Test 21",
@@ -419,12 +550,18 @@
 			"projectedTime": 5,
 			"__v": 0,
 			"additionalInfo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel est consectetur, fringilla orci at, mattis magna. In at est in nisi dapibus tempor vel in ligula. Vestibulum maximus dolor a odio molestie, id sagittis magna malesuada. Sed quis ligula fringilla arcu pharetra tincidunt id eget enim. Sed nibh sem, rhoncus sagittis porta in, viverra eu purus. Sed ac erat pulvinar, eleifend dui vel, tristique mauris. Nam dapibus dui id urna iaculis, at lacinia metus bibendum. Cras aliquet lorem augue, vel vulputate nunc euismod sit amet.",
-			"updatedAt": "2021-02-03T21:53:46.701Z"
+			"updatedAt": "2021-02-03T21:53:46.701Z",
+			"created_at": "2021-04-02T20:26:58.966Z"
 		},
 		{
 			"completed": false,
 			"active": false,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": null,
+				"firstName": null,
+				"lastName": null,
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd3c2077fa8e6571d3a6ab9",
 			"taskName": "Test 22",
@@ -435,12 +572,18 @@
 			"projectedTime": 5,
 			"__v": 0,
 			"additionalInfo": "Nunc venenatis massa non vestibulum ullamcorper. Donec convis odio turpis, in dictum dolor lacinia quis. Morbi ornare, leo a bibendum aliquam, nisl odio vulputate leo, sit amet sodales diam magna ut magna. Aliquam vitae lacus felis. Sed eget justo nibh. Maecenas posuere lectus eget mi hendrerit, et consectetur dolor tempus. Sed volutpat sollicitudin sem, id scelerisque elit tincidunt id. Sed convis ac neque a pharetra. Ut at est sit amet velit pretium faucibus. Nullam non vestibulum dui. Nam fringilla velit sit amet elementum auctor.",
-			"updatedAt": "2021-01-07T19:18:49.562Z"
+			"updatedAt": "2021-01-07T19:18:49.562Z",
+			"created_at": "2021-04-02T20:26:58.966Z"
 		},
 		{
 			"completed": false,
 			"active": false,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": null,
+				"firstName": null,
+				"lastName": null,
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd3c2077fa8e6571d3a6aba",
 			"taskName": "Test 23",
@@ -451,12 +594,18 @@
 			"projectedTime": 5,
 			"__v": 0,
 			"additionalInfo": "Aliquam erat volutpat. Phasellus eu nibh urna. Suspendisse imperdiet suscipit lectus, eget scelerisque augue tristique vel. Sed ut neque sapien. Aliquam tincidunt urna dolor. Vivamus faucibus mi nisl, vitae pretium elit dapibus et. Nullam vitae metus neque. Nam gravida consectetur sem, at rutrum felis. Vestibulum scelerisque posuere orci. Donec ligula urna, maximus eu pretium at, sagittis vitae turpis. Nam id erat at nunc pretium tincidunt. Nullam posuere, risus auctor lacinia tempor, enim magna tincidunt arcu, sed placerat lectus eros in felis. Integer malesuada venenatis tellus, ac commodo nunc dictum a. Aliquam dui ipsum, porttitor eu fermentum id, aliquam sit amet neque. Donec eget ligula vel diam iaculis fringilla tincidunt id eros. Maecenas eget posuere lorem.\n\n",
-			"updatedAt": "2021-01-07T19:19:15.178Z"
+			"updatedAt": "2021-01-07T19:19:15.178Z",
+			"created_at": "2021-04-02T20:26:58.966Z"
 		},
 		{
 			"completed": false,
 			"active": false,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": null,
+				"firstName": null,
+				"lastName": null,
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd3c2077fa8e6571d3a6abb",
 			"taskName": "Test 24",
@@ -467,12 +616,18 @@
 			"projectedTime": 5,
 			"__v": 0,
 			"additionalInfo": "In convis nisl ex, at dapibus metus feugiat dignissim. Etiam suscipit id magna sit amet semper. Aliquam vitae quam et orci scelerisque lobortis sollicitudin vel justo. Vestibulum sed ex turpis. Nulla luctus nisl velit, ac facilisis metus vehicula eu. Duis ac faucibus enim, vel egestas orci. Vivamus urna lectus, maximus sodales enim et, malesuada tincidunt nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum volutpat nunc at urna sodales dictum.\n\n",
-			"updatedAt": "2021-01-07T19:19:38.660Z"
+			"updatedAt": "2021-01-07T19:19:38.660Z",
+			"created_at": "2021-04-02T20:26:58.973Z"
 		},
 		{
 			"completed": false,
 			"active": false,
-			"claimedBy": null,
+			"claimedBy": {
+				"_id": null,
+				"firstName": null,
+				"lastName": null,
+				"v": 1
+			},
 			"actualUsedTime": 0,
 			"_id": "5fd3c2077fa8e6571d3a6abc",
 			"taskName": "Test 25",
@@ -483,7 +638,8 @@
 			"projectedTime": 5,
 			"__v": 0,
 			"additionalInfo": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce eget ex eget risus tempor laoreet. Integer placerat libero risus, eu efficitur augue auctor sed. Cras porttitor eros at metus ornare consequat. Quisque accumsan tortor id felis elementum scelerisque. Ut sit amet blandit libero. Donec eu ligula blandit, faucibus ante et, ornare velit. Vestibulum et tincidunt lacus. Vestibulum sollicitudin leo purus, a elementum dui consectetur eget. Vivamus ultricies diam eget dui interdum sodales. Donec vulputate ac orci a accumsan.\n\n",
-			"updatedAt": "2021-01-07T19:19:56.298Z"
+			"updatedAt": "2021-01-07T19:19:56.298Z",
+			"created_at": "2021-04-02T20:26:58.973Z"
 		}
 	],
 	"times": [
