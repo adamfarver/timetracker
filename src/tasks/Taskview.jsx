@@ -182,14 +182,16 @@ export function TaskView({ history, match }) {
 						<TaskViewTimesList times={times} setTimes={setTimes} />
 					</Col>
 
-					<Col md={4}>
-						<AddEdit
-							match={match}
-							history={history}
-							times={times}
-							setTimes={setTimes}
-						/>
-					</Col>
+					{user._id === task.claimedBy._id && (
+						<Col md={4}>
+							<AddEdit
+								match={match}
+								history={history}
+								times={times}
+								setTimes={setTimes}
+							/>
+						</Col>
+					)}
 				</Row>
 			</>
 		</>
