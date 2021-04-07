@@ -23,24 +23,9 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
 	try {
 		// const record = await Task.findById(req.params.id)
-		const record = await Task.aggregate([
-			{
-				$match: { _id: ObjectId(`${req.params.id}`) },
-			},
-			{
-				$lookup: {
-					from: 'users',
-					localField: 'claimedBy',
-					foreignField: '_id',
-					as: 'claimedBy',
-				},
-			},
-			{
-				$unwind: { path: '$claimedBy', preserveNullAndEmptyArrays: true },
-			},
-		])
-		const parsedResponse = record[0]
-		res.json(parsedResponse).status(200)
+		const record = await Task.findOne({ _id: req.params.id })
+		console.log(record)
+		res.json(record).status(200)
 		res.end()
 	} catch (error) {
 		res.status(404).send({ msg: 'Resource not found.' }).end()
@@ -128,37 +113,13 @@ router.post('/', async (req, res, next) => {
 
 //Update Task
 router.put('/:id', async (req, res, next) => {
+	console.log('put route')
 	const objId = req.params.id
 	const { body } = req
 	try {
-		const record = await Task.findOneAndUpdate(
-			{ _id: ObjectId(`${objId}`) },
-			body,
-			{
-				new: true,
-				omitUndefined: true,
-			}
-		)
-		const expandedRecord = await Task.aggregate([
-			{
-				$match: { _id: ObjectId(`${req.params.id}`) },
-			},
+		const record = await Task.updateOne({ _id: ObjectId(`${objId}`) }, body, {})
 
-			{
-				$lookup: {
-					from: 'users',
-					localField: 'claimedBy',
-					foreignField: '_id',
-					as: 'claimedBy',
-				},
-			},
-			{
-				$unwind: { path: '$claimedBy', preserveNullAndEmptyArrays: true },
-			},
-		])
-
-		console.log(expandedRecord)
-		res.json(expandedRecord).status(200)
+		res.json(record).status(200)
 		res.end()
 	} catch (error) {
 		res.status(404).send({ msg: error }).end()

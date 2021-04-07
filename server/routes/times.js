@@ -35,6 +35,15 @@ router.post('/', async (req, res, next) => {
 	const time = new Time(body)
 	try {
 		const record = await time.save()
+		// When adding times, get current value of actualUsedTime and add current value of body.timeUsed
+
+		const lastValue = await Task.findById({ _id: body.taskId })
+		const newUsedTimeValue = body.timeUsed + lastValue.actualUsedTime
+		await Task.findOneAndUpdate(
+			{ _id: body.taskId },
+			{ actualUsedTime: newUsedTimeValue }
+		)
+
 		res.json(record).status(200)
 		res.end()
 	} catch (error) {
@@ -48,10 +57,6 @@ router.put('/:id', async (req, res, next) => {
 	const { body } = req
 	try {
 		await Time.findOneAndUpdate({ _id: objId }, body, { upsert: true })
-		await Task.findOneAndUpdate(
-			{ _id: body.taskId },
-			{ actualUsedTime: body.timeUsed }
-		)
 		const record = await Time.findById({ _id: objId })
 		res.json(record).status(200)
 		res.end()

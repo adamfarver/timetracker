@@ -21,7 +21,7 @@ export function CompletedList({ match }) {
 		setTask,
 	] = useContext(AppContext)
 	useEffect(() => {
-		taskService.getClaimedProjectId(id).then((res) => {
+		taskService.getByProjectId(id).then((res) => {
 			const filteredTaskList = res.filter(
 				(task) => task.active && task.completed && task.sprint === sprint._id
 			)

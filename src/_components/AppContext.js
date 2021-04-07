@@ -21,7 +21,29 @@ export function AppProvider(props) {
 			isSelected: false,
 		}
 	)
-	const [task, setTask] = useState(localTask || { _id: '' })
+	const [task, setTask] = useState(
+		localTask || {
+			active: false,
+			actualUsedTime: 0,
+			claimedBy: {
+				_id: '',
+				firstName: '',
+				lastName: '',
+				v: 1,
+			},
+			completed: false,
+			created_at: '',
+			project: '',
+			projectedTime: '',
+			sprint: '',
+			taskName: '',
+			updatedAt: '',
+			userCreated: '',
+			userModified: '',
+			__v: 0,
+			_id: '',
+		}
+	)
 	return (
 		<AppContext.Provider
 			value={[

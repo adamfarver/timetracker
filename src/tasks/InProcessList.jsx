@@ -21,9 +21,9 @@ export function InProcessList({ match }) {
 	] = useContext(AppContext)
 
 	useEffect(() => {
-		taskService.getClaimedProjectId(id).then((res) => {
+		taskService.getByProjectId(id).then((res) => {
 			const filteredTaskList = res.filter((task) => {
-				if (task.active && task.claimedBy) {
+				if (task.active && task.claimedBy._id && !task.completed) {
 					return task
 				}
 			})

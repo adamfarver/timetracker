@@ -4,12 +4,13 @@
 // eslint-disable-next-line no-unused-vars
 const http = require('http')
 const CronJob = require('cron').CronJob
+const fs = require('fs')
 
 // DB Functions
 const mongoose = require('mongoose')
 const { seed } = require('./seed/seed')
-const seedData = require('./seed/seedData.json')
 const { drop } = require('./seed/DropCollection')
+const { updateAllData } = require('./seed/updateData')
 
 // Express Server Stuff
 const express = require('express')
@@ -35,7 +36,7 @@ async function dbConnect() {
 		useUnifiedTopology: true,
 		autoIndex: false,
 		connectTimeoutMS: 4000,
-		useFindAndModify: false,
+		useFindAndModify: true,
 	})
 	if (mongoose.connection.readyState) {
 		console.log('DB Connected')
@@ -55,13 +56,28 @@ setInterval(() => {
 const app = express()
 port = port || 3001
 // Connect to DB and clear collections
-async function reseedDb(seedData) {
+async function reseedDb() {
 	await drop('timetracker')
+	const now = Date.now()
+	const seedData = await updateAllData(now)
+	console.log(seedData)
 	await seed(seedData)
 }
 
 // Do this first time.
-reseedDb(seedData)
+reseedDb()
+
+// const updateJSONFile= new CronJob(
+// 	'1 * * * *',
+// 	function () {
+// 		reseedDb(seedData)
+// 		return
+
+// 	},
+// 	null,
+// 	true,
+// 	'America/New_York'
+// )
 
 // Set up cronjob to reset/reseed DB.
 // const resetDB = new CronJob(

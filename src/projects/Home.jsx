@@ -70,7 +70,7 @@ function Home({ history, match }) {
 				(task) =>
 					task.active &&
 					!task.completed &&
-					!task.claimedBy &&
+					!task.claimedBy._id &&
 					task.sprint === sprint._id
 			)
 			const backlogTasks = res.filter(
@@ -80,7 +80,7 @@ function Home({ history, match }) {
 				(task) =>
 					task.active &&
 					!task.completed &&
-					task.claimedBy &&
+					task.claimedBy._id &&
 					task.sprint === sprint._id
 			)
 			res = { completedTasks, backlogTasks, availableTasks, inProcessTasks }

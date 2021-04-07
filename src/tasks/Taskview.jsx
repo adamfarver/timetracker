@@ -21,13 +21,23 @@ export function TaskView({ history, match }) {
 		setTask,
 	] = useContext(AppContext)
 
-	const [claimed, setClaimed] = useState(false)
+	const [isClaimed, setIsClaimed] = useState(false)
 	const [times, setTimes] = useState([])
+
+	const getTask = async (id) => {
+		const individualTask = await taskService
+			.getById(id)
+			.catch((e) => console.log(e))
+
+		if (individualTask.claimedBy._id) {
+			setIsClaimed(true)
+		}
+		setTask(individualTask)
+	}
+
 	useEffect(() => {
-		taskService.getById(id).then((individualTask) => {
-			setTask(individualTask)
-		})
-	}, [])
+		getTask(id)
+	}, [isClaimed])
 
 	useEffect(() => {
 		taskService.getTimeById(id).then((res) => setTimes(res))
@@ -35,21 +45,27 @@ export function TaskView({ history, match }) {
 
 	function claimItem(e, task, user) {
 		if (e.target.innerHTML === 'Claim') {
-			task.claimedBy = user._id
+			task.claimedBy._id = user._id
+			task.claimedBy.firstName = user.firstName
+			task.claimedBy.lastName = user.lastName
+
 			setTask(task)
-			setClaimed(!claimed)
 		} else {
-			task.claimedBy = undefined
+			task.claimedBy._id = null
+			task.claimedBy.firstName = 'Nobody'
+			task.claimedBy.lastName = ' '
 			setTask(task)
-			setClaimed(!claimed)
 		}
 		try {
-			taskService.update(task._id, task).then(() => {
-				if (!claimed) {
-					alertService.success(`Task claimed by ${user.firstName}`)
-				}
-				if (claimed) {
-					alertService.success(`Task Released.`)
+			taskService.update(task._id, task).then((res) => {
+				if (res.nModified) {
+					setIsClaimed(!isClaimed)
+					if (task.claimedBy._id) {
+						alertService.success(`Task claimed by ${user.firstName}`)
+					}
+					if (!task.claimedBy._id) {
+						alertService.success(`Task Released.`)
+					}
 				}
 			})
 		} catch (error) {
@@ -85,32 +101,30 @@ export function TaskView({ history, match }) {
 				</Row>
 				<Row>
 					<Col md={3}>
-						<b>Active:</b>
+						<strong>Active:</strong>
 						<p>{task.active ? 'Yes' : 'No'}</p>
 					</Col>
 
 					<Col md={3}>
-						<b>Completed:</b>
+						<strong>Completed:</strong>
 						<p>{task.completed ? 'Yes' : 'No'}</p>
 					</Col>
 					<Col md={3}>
-						<b>Projected Time:</b>
+						<strong>Projected Time:</strong>
 						<p>{task.projectedTime} hours</p>
 					</Col>
 					<Col md={3}>
 						{/* If completed, show who claimed */}
 						{task.completed && (
 							<>
-								<p>
-									<strong>Claimed By:</strong>
-								</p>{' '}
+								<strong>Completed By:</strong>
 								<p>
 									{task.claimedBy.firstName} {task.claimedBy.lastName}
 								</p>
 							</>
 						)}
 						{/* If not completed and not claimed, show claim button */}
-						{!task.completed && !task.claimedBy && (
+						{!task.completed && !task.claimedBy._id && (
 							<Button
 								variant="success"
 								onClick={(event) => {
@@ -121,27 +135,9 @@ export function TaskView({ history, match }) {
 							</Button>
 						)}
 						{/* If not completed and claimed equals owner, show release button */}
-						{!task.completed && task.claimedBy._id === user._id && (
-							<Button
-								variant="danger"
-								onClick={(event) => {
-									claimItem(event, task, user)
-								}}
-							>
-								Release
-							</Button>
-						)}
-						{/* If not completed and claimed not equal owner, show who claimed*/}
-						{!task.completed && task.claimedBy._id !== user._id && (
-							<>
-								<strong>Claimed By:</strong>
-								<p>
-									{task.claimedBy.firstName} {task.claimedBy.lastName}
-								</p>
-							</>
-						)}
-						{/* {!task.completed && user._id === task.claimedBy._id ? (
-							task.claimedBy ? (
+						{!task.completed &&
+							task.claimedBy._id &&
+							task.claimedBy._id === user._id && (
 								<Button
 									variant="danger"
 									onClick={(event) => {
@@ -150,24 +146,18 @@ export function TaskView({ history, match }) {
 								>
 									Release
 								</Button>
-							) : (
-								<Button
-									variant="success"
-									onClick={(event) => {
-										claimItem(event, task, user)
-									}}
-								>
-									Claim
-								</Button>
-							)
-						) : (
-							<>
-								<strong>Claimed By:</strong>
-								<p>
-									{task.claimedBy.firstName} {task.claimedBy.lastName}
-								</p>
-							</>
-						)} */}
+							)}
+						{/* If not completed and claimed not equal owner, show who claimed*/}
+						{!task.completed &&
+							task.claimedBy._id &&
+							task.claimedBy._id !== user._id && (
+								<>
+									<strong>Claimed By:</strong>
+									<p>
+										{task.claimedBy.firstName} {task.claimedBy.lastName}
+									</p>
+								</>
+							)}
 					</Col>
 				</Row>
 				<Row>
@@ -191,7 +181,8 @@ export function TaskView({ history, match }) {
 					<Col>
 						<TaskViewTimesList times={times} setTimes={setTimes} />
 					</Col>
-					{task.claimedBy._id === user._id && (
+
+					{user._id === task.claimedBy._id && (
 						<Col md={4}>
 							<AddEdit
 								match={match}

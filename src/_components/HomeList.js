@@ -62,7 +62,7 @@ export function HomeList(props) {
 										{task.taskName}
 									</Link>
 								</div>
-								{task.claimedBy ? (
+								{task.claimedBy._id ? (
 									<span>
 										{task.claimedBy.firstName} {task.claimedBy.lastName}
 									</span>
