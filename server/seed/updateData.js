@@ -1,51 +1,36 @@
 const fs = require('fs')
 const moment = require('moment')
 
-let data = fs.readFileSync('./seedData.json', 'ascii')
-
+let data = fs.readFileSync('server/seed/seedData.json', 'ascii')
 data = JSON.parse(data)
-
-// Start updating the file here.
-// Update the Sprint Start and End Data
-;(function () {
-	let now = moment()
-	data.sprints[0].dateStart = now.subtract(4, 'days').format()
-	data.sprints[0].dateEnd = now.add(7, 'days').format()
-})()
-
-// Update Completed dates
-
-let taskUpdates = (function (data) {
-	let now = moment()
-	let completedTasks = data.tasks.filter((task) => {
-		return task.completed
-	})
-
-	let uncompletedTasks = data.tasks.filter((task) => {
-		return !task.completed
-	})
-	completedTasks = completedTasks.map((task) => {
-		task.updatedAt = now.subtract(1, 'day').format()
-		return task
-	})
-	let allTasks = completedTasks.concat(...uncompletedTasks)
-
-	return allTasks
-})(data)
-
-data.tasks = taskUpdates
-// Update In-Process Numbers
-
-// Write out data
-data = JSON.stringify(data)
-
-try {
-	fs.writeFileSync('./newSeedData.json', data)
-	console.log('File Written.')
-} catch (e) {
-	console.log(e)
+function updateAllData(date) {
+	let time = new Date(date)
+	let utcTime = time.toISOString()
+	const sprints = updateSprintData(utcTime)
+	const times = updateTimeData(utcTime)
+	data.sprints[0] = sprints
+	data.times = times
+	return data
 }
 
-// Console Output
+function updateSprintData(date) {
+	let now = moment(date).utc()
+	data.sprints[0].dateStart = now.subtract(3, 'days').format()
+	data.sprints[0].dateEnd = now.add(7, 'days').format()
+	const transformedData = data.sprints[0]
+	return transformedData
+}
 
-// console.log(taskUpdates)
+function updateTimeData(date) {
+	let now = moment(date).utc()
+	let { times } = data
+	const sprintStartDate = now.subtract(4, 'days')
+	const newTimes = times.map((time) => {
+		time.createdAt = sprintStartDate.add(1, 'days').format()
+		return time
+	})
+
+	return times
+}
+
+module.exports = { updateAllData, updateSprintData, updateTimeData }
