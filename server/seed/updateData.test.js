@@ -12,7 +12,7 @@ describe('Given Date => Get Correctly formatted Data', () => {
 			active: false,
 			project: '5fa5a497767ee509ef0b118c',
 			dateStart: '2021-04-03T00:00:00.000Z',
-			dateEnd: '2021-04-10T00:00:00.000Z',
+			dateEnd: '2021-04-09T00:00:00.000Z',
 			__v: 0,
 		})
 	})

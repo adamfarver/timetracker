@@ -16,22 +16,20 @@ function updateAllData(date) {
 function updateSprintData(date) {
 	let now = DateTime.fromISO(date).toUTC().startOf('day')
 	data.sprints[0].dateStart = now.minus({ days: 3 }).toISO()
-	data.sprints[0].dateEnd = now.plus({ days: 4 }).toISO()
+	data.sprints[0].dateEnd = now.plus({ days: 3 }).toISO()
 	const transformedData = data.sprints[0]
 	return transformedData
 }
 
 function updateTimeData(date) {
-	const rndNum = () => Math.round(Math.random() * 4)
-	let now = DateTime.fromISO(date).toUTC().startOf('day')
+	let now = DateTime.fromISO(date).minus({ days: 3 }).toUTC()
 	let { times } = data
-	const sprintStartDate = now.minus({ days: 4 })
-	const newTimes = times.map((time) => {
-		time.createdAt = sprintStartDate.plus({ days: rndNum() }).toISO()
-		return time
-	})
+	times[0].createdAt = now.toISO()
+	times[1].createdAt = now.plus({ days: 1 }).toISO()
+	times[2].createdAt = now.plus({ days: 1 }).toISO()
+	times[3].createdAt = now.plus({ days: 2 }).toISO()
 
-	return newTimes
+	return times
 }
 
 module.exports = { updateAllData, updateSprintData, updateTimeData }

@@ -1,4 +1,5 @@
 const { DateTime } = require('luxon')
+const { date } = require('yup')
 
 /**
  *@desc Creates a sparse array that starts with time and ends with zero.
@@ -22,6 +23,12 @@ function makeSparseArrays(time, length) {
  * @author Adam Farver <adamfarver@gmail.com>
  */
 function makeDayArrays({ dateStart, dateEnd }) {
+	if (typeof dateStart === 'object') {
+		dateStart = dateStart.toISOString()
+	}
+	if (typeof dateEnd === 'object') {
+		dateEnd = dateEnd.toISOString()
+	}
 	// iterator Variable
 	let currentDay = 0
 	// Storage for array

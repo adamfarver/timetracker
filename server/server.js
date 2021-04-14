@@ -28,6 +28,7 @@ const tasks = require('./routes/tasks')
 const roles = require('./routes/roles')
 const sprints = require('./routes/sprints')
 const times = require('./routes/times')
+const charts = require('./routes/charts')
 
 // Connect to MongoDB
 async function dbConnect() {
@@ -36,7 +37,7 @@ async function dbConnect() {
 		useUnifiedTopology: true,
 		autoIndex: false,
 		connectTimeoutMS: 4000,
-		useFindAndModify: true,
+		useFindAndModify: false,
 	})
 	if (mongoose.connection.readyState) {
 		console.log('DB Connected')
@@ -60,7 +61,6 @@ async function reseedDb() {
 	await drop('timetracker')
 	const now = Date.now()
 	const seedData = await updateAllData(now)
-	console.log(seedData)
 	await seed(seedData)
 }
 
@@ -103,5 +103,6 @@ app.use('/api/task', tasks)
 app.use('/api/role', roles)
 app.use('/api/sprint', sprints)
 app.use('/api/time', times)
+app.use('/api/charts', charts)
 
 app.listen(port, () => console.log(`Express server running on ${port}`))

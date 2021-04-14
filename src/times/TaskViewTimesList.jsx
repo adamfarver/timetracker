@@ -25,7 +25,7 @@ function TaskViewTimesList({ times }) {
 					{times.map((row) => (
 						<tr key={row._id}>
 							<td>{row.timeUsed}</td>
-							<td>{DateTime.fromISO(row.created_at).toFormat('D')}</td>
+							<td>{DateTime.fromISO(row.createdAt).toFormat('D')}</td>
 							<td>
 								{row.userId.firstName} {row.userId.lastName}
 							</td>
