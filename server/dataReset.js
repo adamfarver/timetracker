@@ -4,9 +4,11 @@
 //  - Set each sprint end date to the current day + 7 days
 //  - Set completion date of task to some where in the 7 day window of the sprint.
 
+// Replace moment with luxon
+
 const fs = require('fs')
 const path = require('path')
-const moment = require('moment')
+const { DateTime } = require('luxon')
 
 const jsonData = JSON.parse(
 	fs.readFileSync(path.resolve(__dirname + '/seed/seedData.json')).toString()
@@ -15,9 +17,9 @@ const jsonData = JSON.parse(
 let { sprints, tasks } = jsonData
 
 const newSprints = sprints.map((sprint) => {
-	const now = moment()
-	sprint.dateStart = now.format()
-	sprint.dateEnd = now.add(6, 'd').format()
+	const now = DateTime.now().toISO()
+	console.log(now)
+	// sprint.dateEnd = now.add(6, 'd').format()
 	return sprint
 })
 

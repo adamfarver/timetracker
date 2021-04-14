@@ -1,17 +1,9 @@
-import moment from 'moment'
+import { DateTime } from 'luxon'
 
 export function dateSlice(date) {
-	let newDate = new Date(date)
-	newDate = moment(newDate, 'YYYY-MM-DDTHH:mm:ss.SSS')
-		.utc()
-		.format('YYYY-MM-DD')
-
-	return newDate
+	return DateTime.fromISO(date).toUTC().toISODate()
 }
 
 export function usDateFormat(date) {
-	let newDate = new Date(date)
-	newDate = moment(newDate, 'YYYY-MM-DDTHH:mm:ss.SSS').utc().format('MMM DD')
-
-	return newDate
+	return DateTime.fromISO(date).toUTC().toFormat('LLL dd')
 }

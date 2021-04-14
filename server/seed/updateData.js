@@ -1,5 +1,5 @@
 const fs = require('fs')
-const moment = require('moment')
+const { DateTime } = require('luxon')
 
 let data = fs.readFileSync('server/seed/seedData.json', 'ascii')
 data = JSON.parse(data)
@@ -14,23 +14,24 @@ function updateAllData(date) {
 }
 
 function updateSprintData(date) {
-	let now = moment(date).utc()
-	data.sprints[0].dateStart = now.subtract(3, 'days').format()
-	data.sprints[0].dateEnd = now.add(7, 'days').format()
+	let now = DateTime.fromISO(date).toUTC().startOf('day')
+	data.sprints[0].dateStart = now.minus({ days: 3 }).toISO()
+	data.sprints[0].dateEnd = now.plus({ days: 4 }).toISO()
 	const transformedData = data.sprints[0]
 	return transformedData
 }
 
 function updateTimeData(date) {
-	let now = moment(date).utc()
+	const rndNum = () => Math.round(Math.random() * 4)
+	let now = DateTime.fromISO(date).toUTC().startOf('day')
 	let { times } = data
-	const sprintStartDate = now.subtract(4, 'days')
+	const sprintStartDate = now.minus({ days: 4 })
 	const newTimes = times.map((time) => {
-		time.createdAt = sprintStartDate.add(1, 'days').format()
+		time.createdAt = sprintStartDate.plus({ days: rndNum() }).toISO()
 		return time
 	})
 
-	return times
+	return newTimes
 }
 
 module.exports = { updateAllData, updateSprintData, updateTimeData }
