@@ -148,61 +148,57 @@ function Home({ history, match }) {
 					</Col>
 				)}
 			</Row>
-			<Row>
-				<Col md={8}>
-					<LineChart />
-				</Col>
-				<Col md={4} className=" order-1">
-					{sprint._id ? (
-						<HomeList
-							name="Available Tasks"
-							max={5}
-							project={project}
-							sprint={sprint}
-							taskList={taskList.availableTasks}
-							user={user}
-						/>
-					) : null}
-				</Col>
-			</Row>
-			<Row>
-				<Col md={4} className="mt-4 ">
-					{sprint._id ? (
-						<HomeList
-							name="In-Process Tasks"
-							max={5}
-							project={project}
-							sprint={sprint}
-							taskList={taskList.inProcessTasks}
-							user={user}
-						/>
-					) : null}
-				</Col>
-				<Col md={4} className="mt-4 ">
-					{sprint._id ? (
-						<HomeList
-							name="Completed Tasks"
-							max={5}
-							project={project}
-							sprint={sprint}
-							taskList={taskList.completedTasks}
-							user={user}
-						/>
-					) : null}
-				</Col>
-				<Col md={4} className="mt-4 ">
-					{sprint._id ? (
-						<HomeList
-							name="Backlog Tasks"
-							max={5}
-							project={project}
-							sprint={sprint}
-							taskList={taskList.backlogTasks}
-							user={user}
-						/>
-					) : null}
-				</Col>
-			</Row>
+			{sprint._id ? (
+				<>
+					<Row>
+						<Col md={8}>
+							<LineChart />
+						</Col>
+						<Col md={4} className=" order-1">
+							<HomeList
+								name="Available Tasks"
+								max={5}
+								project={project}
+								sprint={sprint}
+								taskList={taskList.availableTasks}
+								user={user}
+							/>
+						</Col>
+					</Row>
+					<Row>
+						<Col md={4} className="mt-4 ">
+							<HomeList
+								name="In-Process Tasks"
+								max={5}
+								project={project}
+								sprint={sprint}
+								taskList={taskList.inProcessTasks}
+								user={user}
+							/>
+						</Col>
+						<Col md={4} className="mt-4 ">
+							<HomeList
+								name="Completed Tasks"
+								max={5}
+								project={project}
+								sprint={sprint}
+								taskList={taskList.completedTasks}
+								user={user}
+							/>
+						</Col>
+						<Col md={4} className="mt-4 ">
+							<HomeList
+								name="Backlog Tasks"
+								max={5}
+								project={project}
+								sprint={sprint}
+								taskList={taskList.backlogTasks}
+								user={user}
+							/>
+						</Col>
+					</Row>
+				</>
+			) : null}
 		</>
 	)
 }

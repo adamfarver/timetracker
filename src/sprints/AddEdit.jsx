@@ -7,7 +7,7 @@ import { sprintService, alertService } from '@/_services'
 import { Breadcrumbs } from '../_components/Breadcrumbs'
 import { dateSlice } from '../_helpers/humanDateFormatter'
 import { Form as BSForm, Button, Col } from 'react-bootstrap'
-import moment from 'moment'
+import { DateTime } from 'luxon'
 function AddEdit({ history, match }) {
 	const [sprintNumber, setSprintNumber] = useState({})
 	const [project, setProject, sprint, setSprint, user, setUser] = useContext(
@@ -29,9 +29,7 @@ function AddEdit({ history, match }) {
 	}
 
 	const getToday = function todayDate() {
-		const now = new Date()
-		const today = moment(now, 'YYYY-MM-DDTHH:mm:ss.SSS').format('YYYY-MM-DD')
-		return today
+		return DateTime.now().toFormat('YYYY-MM-DD')
 	}
 	const validationSchema = Yup.object().shape({
 		sprintType: Yup.string().required('Please select a sprint type.'),

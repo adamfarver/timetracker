@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Table } from 'react-bootstrap'
 import { timeService, alertService } from '@/_services'
-import Moment from 'moment'
+import { DateTime } from 'luxon'
 
 function TaskViewTimesList({ times }) {
 	return (
@@ -25,7 +25,7 @@ function TaskViewTimesList({ times }) {
 					{times.map((row) => (
 						<tr key={row._id}>
 							<td>{row.timeUsed}</td>
-							<td>{Moment(row.created_at).format('MM/DD/YYYY')}</td>
+							<td>{DateTime.fromISO(row.createdAt).toFormat('D')}</td>
 							<td>
 								{row.userId.firstName} {row.userId.lastName}
 							</td>

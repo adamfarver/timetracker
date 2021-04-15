@@ -7,6 +7,7 @@ import * as Yup from 'yup'
 
 import { timeService, alertService } from '@/_services'
 import { AppContext } from '../_components/AppContext'
+import { DateTime } from 'luxon'
 
 function AddEdit({ history, match, times, setTimes }) {
 	const { id } = match.params
@@ -36,6 +37,8 @@ function AddEdit({ history, match, times, setTimes }) {
 		fields.userId = user._id
 		fields.sprint = sprint._id
 		fields.taskId = task._id
+		fields.createdAt = DateTime.now().toISO()
+		console.log(fields.createdAt)
 		timeService
 			.create(fields)
 			.then((response) => {

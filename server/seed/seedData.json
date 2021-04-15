@@ -664,6 +664,13 @@
 			"taskId": "5fd11e7f7fa8e6571d3a6a9c",
 			"timeUsed": 3.5,
 			"userId": "5fa447d6578d6b1b5f71d103"
+		},
+		{
+			"_id": "60707df52ca89912aec43978",
+			"sprint": "5fc7ab1418ed22c8f2a26139",
+			"taskId": "5fd11e7f7fa8e6571d3a6a9d",
+			"timeUsed": 3.0,
+			"userId": "5fa447d6578d6b1b5f71d103"
 		}
 	],
 	"users": [

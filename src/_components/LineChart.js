@@ -1,6 +1,7 @@
 import { Line } from 'react-chartjs-2'
 import React, { useEffect, useState, useContext } from 'react'
 import { AppContext } from '../_components/AppContext'
+import { chartService } from '../_services'
 // import '../styles.scss'
 
 export default function LineChart() {
@@ -9,8 +10,10 @@ export default function LineChart() {
 		AppContext
 	)
 	useEffect(() => {
-		setChartData({})
-	}, [])
+		chartService.getBySprintId(sprint._id).then((res) => {
+			setChartData(res)
+		})
+	}, [sprint, setSprint])
 
 	return (
 		<div className={'chartcontainer'}>
@@ -21,9 +24,10 @@ export default function LineChart() {
 				options={{
 					legend: {
 						position: 'bottom',
+						display: false,
 					},
 					title: {
-						text: 'Fake Data - Burn Down',
+						text: 'Burn Down',
 						fontColor: '#000000',
 						fontSize: 16,
 						display: true,
