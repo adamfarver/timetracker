@@ -7,6 +7,7 @@ import { CompletedList } from './CompletedList'
 import { BackLogList } from './BackLogList'
 import { AddEdit } from './AddEdit'
 import { TaskView } from './Taskview'
+import { MyTasks } from './MyTasks'
 
 export function Tasks({ match }) {
 	const { path } = match
@@ -20,6 +21,8 @@ export function Tasks({ match }) {
 			<Route path={`${path}/:id/available`} component={AvailableList} />
 			<Route path={`${path}/:id/completed`} component={CompletedList} />
 			<Route path={`${path}/:id/backlog`} component={BackLogList} />
+			<Route path={`${path}/:id`} component={MyTasks} />
+
 			<Redirect to="/404" />
 		</Switch>
 	)
