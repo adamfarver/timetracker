@@ -10,10 +10,32 @@ import {
 	NavDropdown,
 } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useHistory } from 'react-router-dom'
 function NavComponent() {
-	const [project, setProject, sprint, setSprint, user, setUser] = useContext(
-		AppContext
-	)
+	const [
+		project,
+		setProject,
+		sprint,
+		setSprint,
+		user,
+		setUser,
+		task,
+		setTask,
+	] = useContext(AppContext)
+
+	let history = useHistory()
+	function logout() {
+		localStorage.removeItem('current_user')
+		localStorage.removeItem('current_sprint')
+		localStorage.removeItem('current_project')
+		localStorage.removeItem('current_task')
+		setUser({})
+		setSprint({})
+		setProject({})
+		setTask({})
+		history.push('/')
+		return
+	}
 	return (
 		<>
 			<Navbar expand="lg" variant="dark" fixed="top">
@@ -46,14 +68,14 @@ function NavComponent() {
 											<a className="dropdown-item" href="#">
 												My Tasks
 											</a>
-											<a className="dropdown-item" href="#">
+											<a className="dropdown-item" onClick={logout}>
 												Logout
 											</a>
 										</div>
 									</div>
 								</>
 							) : (
-								<a href="/users" className="btn-white ">
+								<a href="/registration" className="btn-white ">
 									Try It Out
 								</a>
 							)}
