@@ -65,7 +65,7 @@ function NavComponent() {
 											className="dropdown-menu"
 											aria-labelledby="navbarDropdown"
 										>
-											<a className="dropdown-item" href="#">
+											<a className="dropdown-item" href={`/tasks/${user._id}`}>
 												My Tasks
 											</a>
 											<a className="dropdown-item" onClick={logout}>
