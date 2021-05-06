@@ -9,10 +9,10 @@ const Task = require('../../models/Task')
 const Time = require('../../models/Time')
 const User = require('../../models/User')
 
-mongoose.connect(localMongoServer, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-})
+// mongoose.connect(localMongoServer, {
+// 	useNewUrlParser: true,
+// 	useUnifiedTopology: true,
+// })
 
 const drop = async () => {
 	await Project.deleteMany({})

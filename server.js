@@ -2,60 +2,67 @@
  * @format
  */
 // eslint-disable-next-line no-unused-vars
+// Config
+let { mongoserver, localMongoServer } = require('./config')
 const http = require('http')
 const CronJob = require('cron').CronJob
 const fs = require('fs')
 
 // DB Functions
 const mongoose = require('mongoose')
-const { seed } = require('./seed/seed')
-const { drop } = require('./seed/DropCollection')
-const { updateAllData } = require('./seed/updateData')
+const { seed } = require('./server/seed/seed')
+const { drop } = require('./server/seed/DropCollection')
+const { updateAllData } = require('./server/seed/updateData')
 
 // Express Server Stuff
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
-// Config
-// Using let in this declaration because server port number can be changed if it is not available.
-let { port, mongoserver, localMongoServer } = require('../config')
-
 // Routes
-const projects = require('./routes/projects')
-const users = require('./routes/users')
-const tasks = require('./routes/tasks')
-const roles = require('./routes/roles')
-const sprints = require('./routes/sprints')
-const times = require('./routes/times')
-const charts = require('./routes/charts')
+const projects = require('./server/routes/projects')
+const users = require('./server/routes/users')
+const tasks = require('./server/routes/tasks')
+const roles = require('./server/routes/roles')
+const sprints = require('./server/routes/sprints')
+const times = require('./server/routes/times')
+const charts = require('./server/routes/charts')
 
 // Connect to MongoDB
-async function dbConnect() {
-	await mongoose.connect(localMongoServer, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-		autoIndex: false,
-		connectTimeoutMS: 4000,
-		useFindAndModify: false,
-	})
-	if (mongoose.connection.readyState) {
-		console.log('DB Connected')
-	}
+async function dbConnect(uri) {
+	console.log(uri)
+	await mongoose
+		.connect(uri, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+			autoIndex: false,
+			connectTimeoutMS: 4000,
+			useFindAndModify: false,
+		})
+		.then(() => console.log('DB Connected'))
+		.catch((e) => {
+			console.log('🔥🔥 NOT CONNECTED TO DB 🚒')
+			console.log(e)
+		})
 }
 
-dbConnect()
+process.env.NODE_ENV === 'production'
+	? dbConnect(mongoserver)
+	: dbConnect(localMongoServer)
 
 // Check if DB disconnected, if not reconnects.
 setInterval(() => {
 	if (!mongoose.connection.readyState) {
 		console.log('No DB connected. Trying to reconnect now.')
-		dbConnect()
+		process.env.NODE_ENV === 'production'
+			? dbConnect(mongoserver)
+			: dbConnect(localMongoServer)
 	}
 }, 10000)
 
 const app = express()
-port = port || 3001
+const port = process.env.PORT || 3001
+
 // Connect to DB and clear collections
 async function reseedDb() {
 	await drop('timetracker')

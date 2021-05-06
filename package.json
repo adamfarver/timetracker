@@ -7,7 +7,7 @@
 	"scripts": {
 		"build": "webpack --config webpack.dev.js ",
 		"start": "webpack-dev-server --mode development --open --config webpack.dev.js",
-		"startserver": "nodemon ./server/server.js",
+		"startserver": "nodemon server.js",
 		"seed": "node ./server/seed/seed.js",
 		"test": "jest --watch --verbose"
 	},

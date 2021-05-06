@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { localMongoServer } = require('../../config')
+const { mongoserver } = require('../../config')
 
 const Project = require('../../models/Project')
 const User = require('../../models/User')
@@ -12,7 +12,7 @@ const Time = require('../../models/Time')
 
 async function seed(data) {
 	await mongoose
-		.connect(localMongoServer, {
+		.connect(mongoserver, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 		})
