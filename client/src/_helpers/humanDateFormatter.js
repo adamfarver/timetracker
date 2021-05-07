@@ -1,9 +1,10 @@
-import { DateTime } from 'luxon'
+const { DateTime } = require('luxon')
 
-export function dateSlice(date) {
+function dateSlice(date) {
 	return DateTime.fromISO(date).toUTC().toISODate()
 }
 
-export function usDateFormat(date) {
+function usDateFormat(date) {
 	return DateTime.fromISO(date).toUTC().toFormat('LLL dd')
 }
+module.exports = { dateSlice, usDateFormat }

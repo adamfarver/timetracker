@@ -6,6 +6,7 @@
 let { mongoserver, localMongoServer } = require('./config')
 const CronJob = require('cron').CronJob
 const fs = require('fs')
+const path = require('path')
 
 // DB Functions
 const mongoose = require('mongoose')
@@ -99,5 +100,12 @@ app.use('/api/time', times)
 app.use('/api/charts', charts)
 
 // Serve Client files - Front-End
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static(path.join(__dirname, 'client', 'dist')))
+	app.get('*', (req, res) => {
+		res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
+		//  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+	})
+}
 
 app.listen(port, () => console.log(`Express server running on ${port}`))

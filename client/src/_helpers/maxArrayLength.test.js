@@ -1,4 +1,4 @@
-import maxArrayLength from './maxArrayLength'
+const maxArrayLength = require('./maxArrayLength')
 
 let array = [
 	'Han',

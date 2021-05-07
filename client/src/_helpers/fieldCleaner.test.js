@@ -1,4 +1,4 @@
-import fieldCleaner from './fieldCleaner'
+const fieldCleaner = require('./fieldCleaner')
 
 describe('Field cleaning', () => {
 	test('Remove blank fields from input to DB', () =>

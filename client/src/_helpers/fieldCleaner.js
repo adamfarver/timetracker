@@ -1,4 +1,4 @@
-export default function objectCleaner(dirtyObject) {
+module.exports = function objectCleaner(dirtyObject) {
 	const emptyKeys = Object.keys(dirtyObject).filter(
 		(key) => dirtyObject[key] === ''
 	)
