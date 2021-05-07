@@ -4,7 +4,6 @@
 // eslint-disable-next-line no-unused-vars
 // Config
 let { mongoserver, localMongoServer } = require('./config')
-const http = require('http')
 const CronJob = require('cron').CronJob
 const fs = require('fs')
 
@@ -30,7 +29,6 @@ const charts = require('./server/routes/charts')
 
 // Connect to MongoDB
 async function dbConnect(uri) {
-	console.log(uri)
 	await mongoose
 		.connect(uri, {
 			useNewUrlParser: true,
@@ -74,36 +72,24 @@ async function reseedDb() {
 // Do this first time.
 reseedDb()
 
-// const updateJSONFile= new CronJob(
-// 	'1 * * * *',
-// 	function () {
-// 		reseedDb(seedData)
-// 		return
-
-// 	},
-// 	null,
-// 	true,
-// 	'America/New_York'
-// )
-
 // Set up cronjob to reset/reseed DB.
-// const resetDB = new CronJob(
-// 	'*/15 * * * *',
-// 	function () {
-// 		reseedDb(seedData)
-// 		return
-// 	},
-// 	null,
-// 	true,
-// 	'America/New_York'
-// )
-// resetDB.start()
+const resetDB = new CronJob(
+	'*/15 * * * *',
+	function () {
+		reseedDb()
+		return
+	},
+	null,
+	true,
+	'America/New_York'
+)
+resetDB.start()
 
 // Express Middlewares
 app.use(bodyParser.json())
 app.use(cors())
 
-// Route Modules
+// API Route Modules
 app.use('/api/project', projects)
 app.use('/api/user', users)
 app.use('/api/task', tasks)
@@ -111,5 +97,7 @@ app.use('/api/role', roles)
 app.use('/api/sprint', sprints)
 app.use('/api/time', times)
 app.use('/api/charts', charts)
+
+// Serve Client files - Front-End
 
 app.listen(port, () => console.log(`Express server running on ${port}`))
