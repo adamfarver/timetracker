@@ -66,7 +66,7 @@ module.exports = {
 	externals: {
 		// global app config object
 		config: JSON.stringify({
-			apiUrl: 'https://adamfarver-timetracker.herokuapp.com',
+			apiUrl: 'https://adamfarver-timetracker.herokuapp.com/api',
 		}),
 	},
 	plugins: [
