@@ -58,8 +58,10 @@ function NavComponent() {
 											aria-haspopup="true"
 											aria-expanded="false"
 										>
-											<FontAwesomeIcon icon="user-circle" />{' '}
-											{`${user.firstName}`}
+											<a href="/users" className="nav-link">
+												<FontAwesomeIcon icon="user-circle" />
+												{`${user.firstName}`}
+											</a>
 										</a>
 										<div
 											className="dropdown-menu"
