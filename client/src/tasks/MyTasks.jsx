@@ -20,6 +20,9 @@ export function MyTasks({ match }) {
 		task,
 		setTask,
 	] = useContext(AppContext)
+	useEffect(() => {
+		setTask({})
+	}, [])
 
 	useEffect(() => {
 		taskService.getAll(id).then((res) => {
@@ -46,7 +49,7 @@ export function MyTasks({ match }) {
 					<tr>
 						<th>Task</th>
 						<th>Additional Info</th>
-						<th>Used Time </th>
+						<th>Projected Time </th>
 					</tr>
 				</thead>
 				<tbody>

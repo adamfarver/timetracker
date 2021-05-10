@@ -43,17 +43,15 @@ function NavComponent() {
 									<div className="nav-item dropdown">
 										<a
 											className="nav-link dropdown-toggle"
-											href="#"
+											href="/users"
 											id="navbarDropdown"
 											role="button"
 											data-toggle="dropdown"
 											aria-haspopup="true"
 											aria-expanded="false"
 										>
-											<a href="/users" className="nav-link">
-												<FontAwesomeIcon icon="user-circle" />
-												{`${user.firstName}`}
-											</a>
+											<FontAwesomeIcon icon="user-circle" />
+											{`${user.firstName}`}
 										</a>
 										<div
 											className="dropdown-menu"
