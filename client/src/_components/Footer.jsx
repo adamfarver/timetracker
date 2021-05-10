@@ -47,14 +47,22 @@ function Footer() {
 									</div>
 									<div className="ico">
 										<div className="icon d-flex justify-content-center align-items-center">
-											<a href="#0">
+											<a
+												href="http://www.twitter.com/adamfarver"
+												target="_blank"
+												rel="noreferrer"
+											>
 												<FontAwesomeIcon icon={['fab', 'twitter']} size="2x" />
 											</a>
 										</div>
 									</div>
 									<div className="ico">
 										<div className="icon d-flex justify-content-center align-items-center">
-											<a href="#0">
+											<a
+												href="https://stackoverflow.com/users/10007749/adam-farver"
+												target="_blank"
+												rel="noreferrer"
+											>
 												<FontAwesomeIcon
 													icon={['fab', 'stack-overflow']}
 													size="2x"

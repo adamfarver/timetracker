@@ -1,14 +1,6 @@
 import React, { useContext } from 'react'
 import { AppContext } from './AppContext'
-import {
-	Navbar,
-	Nav,
-	Container,
-	ButtonGroup,
-	Dropdown,
-	Button,
-	NavDropdown,
-} from 'react-bootstrap'
+import { Navbar, Nav, Container } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useHistory } from 'react-router-dom'
 function NavComponent() {
