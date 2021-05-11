@@ -67,7 +67,8 @@ router.get('/:id', async (req, res, next) => {
 
 	// Getting Dates in sprint
 
-	const startAndEndDates = await Sprint.find({ _id: `${id}` })
+	let startAndEndDates = await Sprint.find({ _id: `${id}` })
+
 	let { dateStart, dateEnd } = startAndEndDates[0]
 	const daysArray = makeDayArrays({ dateStart, dateEnd })
 	chartData.labels = daysArray
