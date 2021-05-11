@@ -6,11 +6,11 @@ import { chartService } from '../_services'
 
 export default function LineChart() {
 	const [chartData, setChartData] = useState({})
-	const [project, setProject, sprint, setSprint, user, setUser] = useContext(
-		AppContext
-	)
+	const [project, setProject, sprint, setSprint, user, setUser] =
+		useContext(AppContext)
 	useEffect(() => {
 		chartService.getBySprintId(sprint._id).then((res) => {
+			console.log(res.labels)
 			setChartData(res)
 		})
 	}, [sprint, setSprint])

@@ -28,18 +28,21 @@ function makeDayArrays({ dateStart, dateEnd }) {
 	if (typeof dateEnd === 'object') {
 		dateEnd = dateEnd.toISOString()
 	}
+
+	console.log('dateStart: ', dateStart)
+	// console.log('dateEnd: ', dateEnd)
 	// iterator Variable
-	let currentDay = 0
+	let currentDay = -1
 	// Storage for array
 	let dayArray = []
 	// set value at start of the day for the given start date
-	dateStart = DateTime.fromISO(dateStart).startOf('day')
+	dateStart = DateTime.fromISO(dateStart, { zone: 'utc' }).startOf('day')
 	// Set Value at end of the given end date
-	dateEnd = DateTime.fromISO(dateEnd).endOf('day')
+	dateEnd = DateTime.fromISO(dateEnd, { zone: 'utc' }).endOf('day')
 	// Get the Difference between start and end dates
 	let diff = dateEnd.diff(dateStart, 'days')
 	// while the currentday value is less tnan the total difference of the dates given, push the date number on to the day array. Must be a string because values will be used as labels for the chartjs feature
-	while (currentDay < diff.get('days')) {
+	while (currentDay <= diff.get('days') - 1) {
 		currentDay++
 		dayArray.push(String(dateStart.plus({ days: currentDay }).get('day')))
 	}
