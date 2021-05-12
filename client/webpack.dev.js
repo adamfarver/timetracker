@@ -1,15 +1,19 @@
-let { mongoserver, localMongoServer } = require('../config')
-const webpack = require('webpack')
-
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
-module.exports = {
+const common = require('./webpack.common')
+const { merge } = require('webpack-merge')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+module.exports = merge(common, {
 	mode: 'development',
-	entry: './src/index.js',
 	output: {
+		filename: '[name].bundle.js',
 		path: path.resolve(__dirname, 'dist'),
-		filename: 'bundle.js',
 	},
+	plugins: [
+		new HtmlWebpackPlugin({
+			template: 'src/index.html',
+		}),
+	],
 	module: {
 		rules: [
 			{
@@ -24,31 +28,9 @@ module.exports = {
 			{
 				test: /\.scss$/,
 				use: [
-					{ loader: 'style-loader' },
-					{ loader: 'css-loader', options: { sourceMap: true } },
-					{ loader: 'sass-loader', options: { sourceMap: true } },
-				],
-			},
-			{ test: /\.css$/, use: ['style-loader', 'css-loader'] },
-			{
-				test: /\.js$/,
-				enforce: 'pre',
-				use: ['source-map-loader'],
-			},
-			{
-				test: /\.css$/,
-				enforce: 'pre',
-				use: ['source-map-loader'],
-			},
-			{
-				test: /\.(png|jp(e*)g|svg|gif)$/,
-				use: [
-					{
-						loader: 'file-loader',
-						options: {
-							name: 'images/[hash]-[name].[ext]',
-						},
-					},
+					'style-loader', //3. Inject styles into DOM
+					'css-loader', //2. Turns css into commonjs
+					'sass-loader', //1. Turns sass into css
 				],
 			},
 		],
@@ -66,12 +48,7 @@ module.exports = {
 	externals: {
 		// global app config object
 		config: JSON.stringify({
-			apiUrl: 'https://adamfarver-timetracker.herokuapp.com/api',
+			apiUrl: 'https://localhost:3001/api',
 		}),
 	},
-	plugins: [
-		new HtmlWebpackPlugin({
-			template: './src/index.html',
-		}),
-	],
-}
+})
