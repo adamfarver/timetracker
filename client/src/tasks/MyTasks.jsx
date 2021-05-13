@@ -10,18 +10,10 @@ export function MyTasks({ match }) {
 	const { path } = match
 	const [tasks, setTasks] = useState([])
 	const [claimed, setClaimed] = useState('')
-	const [
-		project,
-		setProject,
-		sprint,
-		setSprint,
-		user,
-		setUser,
-		task,
-		setTask,
-	] = useContext(AppContext)
+	const [project, setProject, sprint, setSprint, user, setUser, task, setTask] =
+		useContext(AppContext)
 	useEffect(() => {
-		setTask({})
+		setTask({ claimedBy: { _id: '' } })
 	}, [])
 
 	useEffect(() => {

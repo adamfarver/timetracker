@@ -10,16 +10,8 @@ import TaskViewTimesList from '../times/TaskViewTimesList'
 
 export function TaskView({ history, match }) {
 	const { id } = match.params
-	const [
-		project,
-		setProject,
-		sprint,
-		setSprint,
-		user,
-		setUser,
-		task,
-		setTask,
-	] = useContext(AppContext)
+	const [project, setProject, sprint, setSprint, user, setUser, task, setTask] =
+		useContext(AppContext)
 
 	const [isClaimed, setIsClaimed] = useState(false)
 	const [times, setTimes] = useState([])
@@ -27,12 +19,14 @@ export function TaskView({ history, match }) {
 	const getTask = async (id) => {
 		const individualTask = await taskService
 			.getById(id)
+			.then((res) => {
+				setTask(res)
+			})
 			.catch((e) => console.log(e))
 
-		if (individualTask.claimedBy._id) {
+		if (task.claimedBy._id) {
 			setIsClaimed(true)
 		}
-		setTask(individualTask)
 	}
 
 	useEffect(() => {
