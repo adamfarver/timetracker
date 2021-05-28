@@ -1,7 +1,7 @@
 import { updateSprintData, updateTimeData, updateAllData } from './updateData'
 
 describe('Given Date => Get Correctly formatted Data', () => {
-	test('Test for sprint data', () => {
+	test('Test for sprint data.', () => {
 		expect(updateSprintData('2021-04-06T00:00:00Z')).toStrictEqual({
 			_id: '5fc7ab1418ed22c8f2a26139',
 			sprint: 1,
@@ -16,6 +16,4 @@ describe('Given Date => Get Correctly formatted Data', () => {
 			__v: 0,
 		})
 	})
-
-
 })
