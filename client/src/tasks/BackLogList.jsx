@@ -3,18 +3,40 @@ import { Link } from 'react-router-dom'
 import { Table, Button, Row, Col } from 'react-bootstrap'
 import { Breadcrumbs } from '../_components/Breadcrumbs'
 import { taskService, alertService } from '@/_services'
+import { AppContext } from '../_components/AppContext'
 
 export function BackLogList({ match }) {
 	const { id } = match.params
 	const { path } = match
 	const [tasks, settasks] = useState([])
-
+	const [project, setProject, sprint, setSprint, user, setUser, task, setTask] =
+		useContext(AppContext)
 	useEffect(() => {
 		taskService.getByProjectId(id).then((res) => {
 			const filteredTaskList = res.filter(
 				(task) => !task.active && !task.completed
 			)
-
+			setTask({
+				active: false,
+				actualUsedTime: 0,
+				claimedBy: {
+					_id: '',
+					firstName: '',
+					lastName: '',
+					v: 1,
+				},
+				completed: false,
+				created_at: '',
+				project: '',
+				projectedTime: '',
+				sprint: '',
+				taskName: '',
+				updatedAt: '',
+				userCreated: '',
+				userModified: '',
+				__v: 0,
+				_id: '',
+			})
 			settasks(filteredTaskList)
 		})
 	}, [])
