@@ -157,11 +157,7 @@ export function TaskView({ history, match }) {
 				<Row>
 					<Col>
 						<b>Additional Info:</b>
-						{task.additionalInfo ? (
-							<p>{task.additionalInfo} hours</p>
-						) : (
-							<p>None</p>
-						)}
+						{task.additionalInfo ? <p>{task.additionalInfo}</p> : <p>None</p>}
 					</Col>
 				</Row>
 				<Row>
