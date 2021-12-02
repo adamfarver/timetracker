@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { AppContext } from '../_components/AppContext'
 import { Breadcrumbs } from '../_components/Breadcrumbs'
 import { Row, Col, Button } from 'react-bootstrap'
@@ -22,7 +22,7 @@ export function TaskView({ history, match }) {
 			.then((res) => {
 				setTask(res)
 			})
-			.catch((e) => console.log(e))
+			.catch((e) => history.push('/404'))
 
 		if (task.claimedBy._id) {
 			setIsClaimed(true)
@@ -79,20 +79,20 @@ export function TaskView({ history, match }) {
 						</Col>
 					</Row>
 					<Row>
-						<Col>
-							<div className="d-flex align-items-center">
+						<Col md={4}>
+							<div className="mb-1">
 								<h1>{task.taskName}</h1>
-								{user.role.rolename === 'Manager' ||
-									('Admin' && (
-										<Col md>
-											<Link to={`/tasks/edit/${id}`}>
-												<FontAwesomeIcon icon="edit" className={'mr-1'} />
-												Edit Task
-											</Link>
-										</Col>
-									))}
 							</div>
 						</Col>
+						{user.role.rolename === 'Manager' ||
+							('Admin' && (
+								<Col md={4} className="mb-1 d-flex align-items-center">
+									<Link to={`/tasks/edit/${id}`}>
+										<FontAwesomeIcon icon="edit" className={'mr-1'} />
+										Edit Task
+									</Link>
+								</Col>
+							))}
 					</Row>
 					<Row>
 						<Col md={3}>
@@ -108,7 +108,7 @@ export function TaskView({ history, match }) {
 							<strong>Projected Time:</strong>
 							<p>{task.projectedTime} hours</p>
 						</Col>
-						<Col md={3}>
+						<Col md={3} className="mb-3">
 							{/* If completed, show who claimed */}
 							{task.completed && (
 								<>
