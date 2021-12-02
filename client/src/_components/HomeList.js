@@ -5,16 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { AppContext } from '../_components/AppContext'
 export function HomeList(props) {
 	let { name, max, taskList } = props
-	const [
-		project,
-		setProject,
-		sprint,
-		setSprint,
-		user,
-		setUser,
-		task,
-		setTask,
-	] = useContext(AppContext)
+	const [project, setProject, sprint, setSprint, user, setUser, task, setTask] =
+		useContext(AppContext)
 	const parsedName = name.split(' ')[0].toLowerCase()
 
 	while (max < taskList.length) {
@@ -46,7 +38,7 @@ export function HomeList(props) {
 						</Link>
 					)}
 				</ListGroup.Item>
-				{taskList &&
+				{taskList.length > 0 &&
 					taskList.map((task) => {
 						return (
 							<ListGroup.Item
@@ -70,6 +62,9 @@ export function HomeList(props) {
 							</ListGroup.Item>
 						)
 					})}
+				{taskList.length === 0 && (
+					<ListGroup.Item as="li">No Items To Display.</ListGroup.Item>
+				)}
 				{taskList.length < max ? null : (
 					<ListGroup.Item as="li">
 						<Link to={`/tasks/${project._id}/${parsedName}`}>View More</Link>

@@ -7,11 +7,11 @@ import * as Yup from 'yup'
 import { dateSlice } from '../_helpers/humanDateFormatter'
 
 import { taskService, sprintService, alertService } from '@/_services'
+import { FindValueSubscriber } from 'rxjs/internal/operators/find'
 
 function AddEdit({ history, match }) {
-	const [project, setProject, sprint, setSprint, user, setUser] = useContext(
-		AppContext
-	)
+	const [project, setProject, sprint, setSprint, user, setUser] =
+		useContext(AppContext)
 	const [sprintList, setSprintList] = useState([])
 	const { id } = match.params
 	const isAddMode = !id
@@ -41,7 +41,7 @@ function AddEdit({ history, match }) {
 		userCreated: '',
 		userModified: user._id,
 		additionalInfo: '',
-		active: true,
+		active: false,
 		project: project._id,
 		sprint: '',
 		claimedBy: '',
@@ -94,7 +94,7 @@ function AddEdit({ history, match }) {
 			validationSchema={validationSchema}
 			onSubmit={onSubmit}
 		>
-			{({ errors, touched, isSubmitting, setFieldValue }) => {
+			{({ values, errors, touched, isSubmitting, setFieldValue }) => {
 				const [task, setTask] = useState({})
 
 				useEffect(() => {
@@ -163,6 +163,7 @@ function AddEdit({ history, match }) {
 									<Field
 										as="select"
 										name="sprint"
+										disabled={values.active !== true}
 										className={
 											'custom-select' +
 											(errors.sprint && touched.sprint ? ' is-invalid' : '')
@@ -240,9 +241,18 @@ function AddEdit({ history, match }) {
 									)}
 									Save
 								</Button>
-								<Link to={`/tasks/view/${id}`} className="btn btn-link">
-									Cancel
-								</Link>
+								{isAddMode ? (
+									<Link
+										to={`/tasks/${project._id}/backlog`}
+										className="btn btn-link"
+									>
+										Cancel
+									</Link>
+								) : (
+									<Link to={`/tasks/view/${id}`} className="btn btn-link">
+										Cancel
+									</Link>
+								)}
 							</Col>
 							{!isAddMode ? (
 								<Col>

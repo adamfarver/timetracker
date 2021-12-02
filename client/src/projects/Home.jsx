@@ -18,19 +18,33 @@ function Home({ history, match }) {
 		inProcessTasks: [],
 	})
 	const [sprintList, setSprintList] = useState('')
-	const [
-		project,
-		setProject,
-		sprint,
-		setSprint,
-		user,
-		setUser,
-		task,
-		setTask,
-	] = useContext(AppContext)
+	const [project, setProject, sprint, setSprint, user, setUser, task, setTask] =
+		useContext(AppContext)
 
 	// Setting Project ID in state/localStorage and removing sprint data
 	useEffect(() => {
+		setTask({
+			active: false,
+			actualUsedTime: 0,
+			claimedBy: {
+				_id: '',
+				firstName: '',
+				lastName: '',
+				v: 1,
+			},
+			completed: false,
+			created_at: '',
+			project: '',
+			projectedTime: '',
+			sprint: '',
+			taskName: '',
+			updatedAt: '',
+			userCreated: '',
+			userModified: '',
+			__v: 0,
+			_id: '',
+		})
+		setSprint({ _id: '', number: '' })
 		projectService.getById(id).then((data) => {
 			console.log(data)
 			const { _id, projectName } = data
@@ -39,9 +53,7 @@ function Home({ history, match }) {
 			const stringifiedData = JSON.stringify(parsedData)
 			localStorage.setItem('current_project', stringifiedData)
 			localStorage.removeItem('current_sprint')
-			setSprint({})
 			localStorage.removeItem('current_task')
-			setTask({})
 		})
 	}, [])
 

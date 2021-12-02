@@ -1,37 +1,33 @@
 import React, { useContext } from 'react'
+import { Link } from 'react-router-dom'
 import { Breadcrumb } from 'react-bootstrap'
 import { AppContext } from './AppContext'
 export function Breadcrumbs() {
-	const [
-		project,
-		setProject,
-		sprint,
-		setSprint,
-		user,
-		setUser,
-		task,
-		setTask,
-	] = useContext(AppContext)
+	const [project, setProject, sprint, setSprint, user, setUser, task, setTask] =
+		useContext(AppContext)
 	return (
 		<Breadcrumb>
-			<Breadcrumb.Item active={project._id ? false : true} href="/projects">
+			<Link
+				to="/projects"
+				className={`breadcrumb-item ${project._id ? '' : ' active'}`}
+			>
 				Project List
-			</Breadcrumb.Item>
+			</Link>
 			{project._id && (
-				<Breadcrumb.Item
-					active={sprint._id ? false : true}
-					href={`/projects/${project._id}`}
+				<Link
+					to={`/projects/${project._id}`}
+					className={`breadcrumb-item ${sprint._id ? '' : ' active'}`}
 				>
 					{project.projectName}
-				</Breadcrumb.Item>
+				</Link>
 			)}
 			{sprint._id && (
-				<Breadcrumb.Item
-					active={task._id ? false : true}
-					href={`/projects/${project._id}`}
+				<Link
+					to={`/projects/${project._id}`}
+					className={`breadcrumb-item ${task._id ? '' : ' active'}`}
 				>
 					{sprint.name}
-				</Breadcrumb.Item>
+				</Link>
 			)}
 			{task._id && <Breadcrumb.Item active>{task.taskName}</Breadcrumb.Item>}
 		</Breadcrumb>
