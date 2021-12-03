@@ -16,19 +16,6 @@ function Footer() {
 								</p>
 							</div>
 						</Col>
-						<Col md={2}>
-							<div className="links">
-								<h4 className="h4 mb-20">Help</h4>
-								<ul>
-									<li>
-										<a href="#0">FAQ</a>
-									</li>
-									<li>
-										<a href="#0">Licensing</a>
-									</li>
-								</ul>
-							</div>
-						</Col>
 
 						<Col md={4}>
 							<div className="social">

@@ -71,7 +71,7 @@ async function reseedDb() {
 }
 
 // Do this first time.
-reseedDb()
+// reseedDb()
 
 // Set up cronjob to reset/reseed DB.
 const resetDB = new CronJob(
@@ -84,7 +84,7 @@ const resetDB = new CronJob(
 	true,
 	'America/New_York'
 )
-resetDB.start()
+// resetDB.start()
 
 // Express Middlewares
 app.use(bodyParser.json())
@@ -100,7 +100,7 @@ app.use('/api/time', times)
 app.use('/api/charts', charts)
 
 // Serve Client files - Front-End
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'development') {
 	app.use(express.static(path.join(__dirname, 'client', 'dist')))
 	app.get('*', (req, res) => {
 		res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))

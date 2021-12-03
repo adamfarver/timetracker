@@ -13,6 +13,7 @@ import Registration from '../registration/Index'
 import _404 from '../404/index'
 import { AppProvider } from '../_components/AppContext'
 import { Container } from 'react-bootstrap'
+import Footer from '../_components/Footer'
 function App() {
 	const { pathname } = useLocation()
 
@@ -41,6 +42,7 @@ function App() {
 						</Switch>
 					</Container>
 				)}
+				{pathname === '/' ? null : <Container className="mb-5" />}
 			</AppProvider>
 		</div>
 	)
