@@ -12,7 +12,7 @@ function Footer() {
 								<h4 className="h4 mb-20">About This Project</h4>
 								<p>
 									This is a project by Adam Farver. Thanks for stopping by. All
-									data entered is reset at 15 minute intervals.
+									data entered is reset at midnight, daily.
 								</p>
 							</div>
 						</Col>
