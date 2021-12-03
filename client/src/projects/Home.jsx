@@ -8,6 +8,7 @@ import LineChart from '../_components/LineChart'
 import { Form, Row, Col } from 'react-bootstrap'
 import { HomeList } from '../_components/HomeList'
 import { usDateFormat } from '../_helpers/humanDateFormatter'
+import { BackLogList } from '../tasks/BackLogList'
 
 function Home({ history, match }) {
 	const { id } = match.params
@@ -163,10 +164,12 @@ function Home({ history, match }) {
 			{sprint._id ? (
 				<>
 					<Row>
-						<Col md={8}>
+						<Col>
 							<LineChart />
 						</Col>
-						<Col md={4} className=" order-1">
+					</Row>
+					<Row className="mt-4 ">
+						<Col>
 							<HomeList
 								name="Available Tasks"
 								max={5}
@@ -176,9 +179,7 @@ function Home({ history, match }) {
 								user={user}
 							/>
 						</Col>
-					</Row>
-					<Row>
-						<Col md={4} className="mt-4 ">
+						<Col md={4} className="mt-4 mt-md-0">
 							<HomeList
 								name="In-Process Tasks"
 								max={5}
@@ -188,7 +189,7 @@ function Home({ history, match }) {
 								user={user}
 							/>
 						</Col>
-						<Col md={4} className="mt-4 ">
+						<Col md={4} className="mt-4 mt-md-0">
 							<HomeList
 								name="Completed Tasks"
 								max={5}
@@ -198,19 +199,11 @@ function Home({ history, match }) {
 								user={user}
 							/>
 						</Col>
-						<Col md={4} className="mt-4 ">
-							<HomeList
-								name="Backlog Tasks"
-								max={5}
-								project={project}
-								sprint={sprint}
-								taskList={taskList.backlogTasks}
-								user={user}
-							/>
-						</Col>
 					</Row>
 				</>
-			) : null}
+			) : (
+				<BackLogList id={id} />
+			)}
 		</>
 	)
 }

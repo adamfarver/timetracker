@@ -5,9 +5,7 @@ import { Breadcrumbs } from '../_components/Breadcrumbs'
 import { taskService, alertService } from '@/_services'
 import { AppContext } from '../_components/AppContext'
 
-export function BackLogList({ match }) {
-	const { id } = match.params
-	const { path } = match
+export function BackLogList({ id }) {
 	const [tasks, settasks] = useState([])
 	const [project, setProject, sprint, setSprint, user, setUser, task, setTask] =
 		useContext(AppContext)
@@ -49,14 +47,9 @@ export function BackLogList({ match }) {
 
 	return (
 		<>
-			<Row>
-				<Col>
-					<Breadcrumbs />
-				</Col>
-			</Row>
 			<Row className={'mb-3 d-flex align-items-center'}>
 				<Col>
-					<h1>Backlog Tasks</h1>
+					<h3>Backlog Tasks</h3>
 				</Col>
 				<Col className="d-flex justify-content-end">
 					<Link to={`/tasks/add`} className="btn btn-sm btn-success mb-2">

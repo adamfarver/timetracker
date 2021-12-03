@@ -71,11 +71,11 @@ async function reseedDb() {
 }
 
 // Do this first time.
-// reseedDb()
+reseedDb()
 
 // Set up cronjob to reset/reseed DB.
 const resetDB = new CronJob(
-	'*/15 * * * *',
+	'0 */1 * * *',
 	function () {
 		reseedDb()
 		return
@@ -84,7 +84,7 @@ const resetDB = new CronJob(
 	true,
 	'America/New_York'
 )
-// resetDB.start()
+resetDB.start()
 
 // Express Middlewares
 app.use(bodyParser.json())
