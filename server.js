@@ -75,7 +75,7 @@ reseedDb()
 
 // Set up cronjob to reset/reseed DB.
 const resetDB = new CronJob(
-	'0 */1 * * *',
+	'0 0 * * *',
 	function () {
 		reseedDb()
 		return

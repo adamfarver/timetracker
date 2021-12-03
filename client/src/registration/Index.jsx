@@ -9,16 +9,8 @@ import { AppContext } from '../_components/AppContext'
 
 function Registration({ history }) {
 	const [isHuman, setIsHuman] = useState(false)
-	const [
-		project,
-		setProject,
-		sprint,
-		setSprint,
-		user,
-		setUser,
-		task,
-		setTask,
-	] = useContext(AppContext)
+	const [project, setProject, sprint, setSprint, user, setUser, task, setTask] =
+		useContext(AppContext)
 
 	const initialValues = {
 		firstName: '',
@@ -96,8 +88,10 @@ function Registration({ history }) {
 										<Col>
 											<small>
 												This will give you a taste of the app and we reset all
-												data in the database every 15, 30, 45, and 1 hour mark.
-												By default, you will be a manager of the data.
+												data in the database at midnight of every day. If your
+												session is across midnight, it will create issues
+												because your user will no longer be in the database. By
+												default, you will be a manager of the data.
 											</small>
 										</Col>
 									</BSForm.Row>
