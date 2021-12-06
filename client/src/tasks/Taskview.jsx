@@ -10,8 +10,16 @@ import TaskViewTimesList from '../times/TaskViewTimesList'
 
 export function TaskView({ history, match }) {
 	const { id } = match.params
-	const [project, setProject, sprint, setSprint, user, setUser, task, setTask] =
-		useContext(AppContext)
+	const [
+		project,
+		setProject,
+		sprint,
+		setSprint,
+		user,
+		setUser,
+		task,
+		setTask,
+	] = useContext(AppContext)
 
 	const [isClaimed, setIsClaimed] = useState(false)
 	const [times, setTimes] = useState([])
@@ -79,11 +87,13 @@ export function TaskView({ history, match }) {
 						</Col>
 					</Row>
 					<Row>
-						<Col md={4}>
+						<Col>
 							<div className="mb-1">
 								<h1>{task.taskName}</h1>
 							</div>
 						</Col>
+					</Row>
+					<Row>
 						{user.role.rolename === 'Manager' ||
 							('Admin' && (
 								<Col md={4} className="mb-1 d-flex align-items-center">
