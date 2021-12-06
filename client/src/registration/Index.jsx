@@ -9,8 +9,16 @@ import { AppContext } from '../_components/AppContext'
 
 function Registration({ history }) {
 	const [isHuman, setIsHuman] = useState(false)
-	const [project, setProject, sprint, setSprint, user, setUser, task, setTask] =
-		useContext(AppContext)
+	const [
+		project,
+		setProject,
+		sprint,
+		setSprint,
+		user,
+		setUser,
+		task,
+		setTask,
+	] = useContext(AppContext)
 
 	const initialValues = {
 		firstName: '',
@@ -181,7 +189,7 @@ function Registration({ history }) {
 												)}
 												Save
 											</Button>
-											<Link to={'/projects'} className="btn btn-link">
+											<Link to={'/'} className="btn btn-link">
 												Cancel
 											</Link>
 										</Col>
