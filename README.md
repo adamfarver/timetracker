@@ -1,18 +1,32 @@
 # Time Tracker App
 
-Full-stack app designed for multiple users to track time spent on projects. I've intentionally left the auth system disabled so people can view the working software. Deployment will reset via node-cron job every 15 minutes.
+Full-Stack Application
 
-## Back-End API
+## Key Features:
 
-- MongoDB Atlas
-- NodeJS
-- Express
-- Mongoose
+React Front-End
+Multi-User Interface
+Dynamic Charts
+Custom API
 
-## Front-End
+## What
 
-- React
-- GraphJS
-- RXJS
-- React Bootstrap
-- React FontAwesome
+This project is a data-driven web application that has advanced features, such as dynamic graphs, statistical aggregations, authentication/authorization, and a live database for long-term storage.
+
+## How
+
+| Technology      | Purpose                                 |
+| ReactJS         | General Interface Library               |
+| ChartJS         | Charts Library                          |
+| React Hooks     | State Management / Component Lifecycles |
+| React Router    | Internal App Routing                    |
+| Formik/Yup      | Form Handling / Validation              |
+| React-Bootstrap | Layout / Styling                        |
+| Recaptcha       | App Protection                          |
+| NodeJS          | Base For API software                   |
+| Express         | API Routing                             |
+| Jest            | Testing Library                         |
+| Mongoose        | Database Operations                     |
+| MongoDB Atlas   | Database                                |
+| Luxon           | Time Library                            |
+| NodeCron        | Database Reset                          |
