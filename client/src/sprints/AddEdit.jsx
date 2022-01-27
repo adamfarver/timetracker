@@ -225,13 +225,6 @@ function AddEdit({ history, match }) {
 										Cancel
 									</Link>
 								</Col>
-								{!isAddMode ? (
-									<Col>
-										<Button variant="danger" onClick={() => deleteSprint(id)}>
-											Delete
-										</Button>
-									</Col>
-								) : null}
 							</BSForm.Row>
 						</Form>
 					</>
