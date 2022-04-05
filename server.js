@@ -27,6 +27,7 @@ const roles = require('./server/routes/roles')
 const sprints = require('./server/routes/sprints')
 const times = require('./server/routes/times')
 const charts = require('./server/routes/charts')
+const { errorHandler } = require('./server/middleware/errorMiddleware')
 
 // Connect to MongoDB
 async function dbConnect(uri) {
@@ -107,5 +108,6 @@ if (process.env.NODE_ENV === 'production') {
 		//  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 	})
 }
+app.use(errorHandler)
 
 app.listen(port, () => console.log(`Express server running on ${port}`))

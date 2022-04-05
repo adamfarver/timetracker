@@ -10,7 +10,6 @@ function AboutSection() {
 					<Row>
 						<Col lg={6}>
 							<AboutCard
-								// TODO: insert image
 								image="users"
 								// image alt text below
 								headline="Multi-User"
@@ -20,7 +19,6 @@ function AboutSection() {
 						</Col>
 						<Col lg={6}>
 							<AboutCard
-								// TODO: insert image
 								image={['fab', 'osi']}
 								// image alt text below
 								headline="Open-Source"

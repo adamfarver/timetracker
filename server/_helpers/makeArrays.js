@@ -41,7 +41,7 @@ function makeDayArrays({ dateStart, dateEnd }) {
 	dateEnd = DateTime.fromISO(dateEnd, { zone: 'utc' }).endOf('day')
 	// Get the Difference between start and end dates
 	let diff = dateEnd.diff(dateStart, 'days')
-	// while the currentday value is less tnan the total difference of the dates given, push the date number on to the day array. Must be a string because values will be used as labels for the chartjs feature
+	// while the currentday value is less than the total difference of the dates given, push the date number on to the day array. Must be a string because values will be used as labels for the chartjs feature
 	while (currentDay <= diff.get('days') - 1) {
 		currentDay++
 		dayArray.push(String(dateStart.plus({ days: currentDay }).get('day')))
