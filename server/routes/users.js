@@ -12,19 +12,29 @@ const {
 
 // User
 
-// Read Single User
+// @desc List Single User
+// @route GET /api/user/:id
+// @access Private
 router.get('/:id', getSingleUser)
 
-// Read All Users
+// @desc List all Users
+// @route GET /api/user
+// @access Private
 router.get('/', getAllUsers)
 
-// Create User
+// @desc Register New User
+// @route POST /api/user
+// @access PUBLIC
 router.post('/', registerNewUser)
 
-//Update User
+// @desc Update User
+// @route PUT /api/user/:id
+// @access Private
 router.put('/:id', updateUser)
 
-//Delete User
+// @desc Delete User
+// @route Delete /api/user/:id
+// @access Private
 router.delete('/:id', deleteUser)
 
 module.exports = router
