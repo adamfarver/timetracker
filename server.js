@@ -27,6 +27,7 @@ const roles = require('./server/routes/roles')
 const sprints = require('./server/routes/sprints')
 const times = require('./server/routes/times')
 const charts = require('./server/routes/charts')
+const auth = require('./server/routes/auth')
 const { errorHandler } = require('./server/middleware/errorMiddleware')
 
 // Connect to MongoDB
@@ -92,6 +93,7 @@ app.use(bodyParser.json())
 app.use(cors())
 
 // API Route Modules
+app.use('/api/auth', auth)
 app.use('/api/project', projects)
 app.use('/api/user', users)
 app.use('/api/task', tasks)

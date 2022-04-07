@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 const User = require('../../models/User')
-const mongoose = require('mongoose')
 const { stripNulls } = require('../_helpers/stripNulls')
 
 const generateToken = (id) => {
@@ -13,26 +12,33 @@ const generateToken = (id) => {
 // @access Private
 
 const getAllUsers = asyncHandler(async (req, res) => {
-	const allUsers = await User.aggregate([
-		{
-			$lookup: {
-				from: 'roles',
-				foreignField: '_id',
-				localField: 'role',
-				as: 'role',
+	let allUsers
+	try {
+		// Why does this aggregation exist? Because roleName doesn't exist in the current collection, only objectId in role property. So, lookups are necessary.
+		allUsers = await User.aggregate([
+			{
+				$lookup: {
+					from: 'roles',
+					foreignField: '_id',
+					localField: 'role',
+					as: 'role',
+				},
 			},
-		},
-		{ $unwind: '$role' },
-		{
-			$project: {
-				_id: 1,
-				firstName: 1,
-				lastName: 1,
-				email: 1,
-				role: { _id: 1, roleName: 1 },
+			{ $unwind: '$role' },
+			{
+				$project: {
+					_id: 1,
+					firstName: 1,
+					lastName: 1,
+					email: 1,
+					role: { _id: 1, roleName: 1 },
+				},
 			},
-		},
-	])
+		])
+	} catch (e) {
+		res.status(500)
+		throw new Error('Internal Server Error')
+	}
 	res.status(200).send(allUsers)
 })
 
@@ -106,22 +112,21 @@ const updateUser = asyncHandler(async (req, res) => {
 	const { id } = req.params
 	const { body } = req
 	const cleanedData = stripNulls(body)
-	const { firstName, lastName, role, password, email } = cleanedData
 
 	const salt = await bcrypt.genSalt(10)
 	let hashedPassword
 
-	if (password) {
-		hashedPassword = await bcrypt.hash(password, salt)
+	if (cleanedData.password) {
+		hashedPassword = await bcrypt.hash(cleanedData.password, salt)
 		cleanedData.password = hashedPassword
 	}
 	try {
 		const updatedUser = await User.findByIdAndUpdate(id, { $set: cleanedData })
 
-		res.status(201).send('fine')
+		res.status(204).send('fine')
 	} catch (e) {
 		res.status(409)
-		throw new Error('User Already Exists.')
+		throw new Error('User Could Not Be Updated')
 	}
 })
 
@@ -129,13 +134,19 @@ const updateUser = asyncHandler(async (req, res) => {
 // @route Delete /api/user/:id
 // @access Private
 
-const deleteUser = asyncHandler(async (req, res) => {})
-
-// @desc Auth User
-// @route Auth /api/user/login
-// @access PUBLIC
-
-const authUser = asyncHandler(async (req, res) => {})
+const deleteUser = asyncHandler(async (req, res, next) => {
+	const { id } = req.params
+	try {
+		const record = await User.findOneAndDelete({ _id: id })
+		if (!record) {
+			throw new Error('User Not Found')
+		}
+		res.status(204).send()
+	} catch (e) {
+		res.status(409)
+		throw new Error("User couldn't be deleted")
+	}
+})
 
 module.exports = {
 	getAllUsers,

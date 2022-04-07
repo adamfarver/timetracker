@@ -1,13 +1,17 @@
 const fs = require('fs')
 const { DateTime } = require('luxon')
+const bcrypt = require('bcryptjs')
 
 let data = fs.readFileSync('server/seed/seedData.json', 'ascii')
 data = JSON.parse(data)
-function updateAllData(date) {
+async function updateAllData(date) {
 	let time = new Date(date)
 	let utcTime = time.toISOString()
 	const sprints = updateSprintData(utcTime)
 	const times = updateTimeData(utcTime)
+	const users = await hashPasswords()
+
+	data.users = users
 	data.sprints[0] = sprints
 	data.times = times
 	return data
@@ -31,5 +35,13 @@ function updateTimeData(date) {
 
 	return times
 }
-
+// Must hash passwords before putting them in the DB
+async function hashPasswords() {
+	const { users } = data
+	const salt = await bcrypt.genSalt(10)
+	for (let i = 0; i < users.length; i++) {
+		users[i].password = await bcrypt.hash(users[i].password, salt)
+	}
+	return users
+}
 module.exports = { updateAllData, updateSprintData, updateTimeData }
