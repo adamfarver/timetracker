@@ -1,142 +1,58 @@
 const express = require('express')
 const router = express.Router()
-const mongoose = require('mongoose')
-const Task = require('../../models/Task')
-const Time = require('../../models/Time')
-const { ObjectId } = mongoose.Types
-// All routes added together
+const {
+	getAllTasks,
+	getSingleTask,
+	createTask,
+	updateTask,
+	deleteTask,
+	getSingleTaskTimes,
+	getAllProjectTasks,
+	getAllClaimedProjectTasks,
+} = require('../controllers/tasksController')
+const {protect} =require("../middleware/authMiddleware.js")
 
-// Task
+// @desc Get all tasks
+// @route GET /api/task/:id
+// @access Private
+router.get('/', protect, getAllTasks)
 
-// Read All Tasks
-router.get('/', async (req, res, next) => {
-	try {
-		const allTasks = await Task.find({})
-		res.json(allTasks).status(200)
-		res.end()
-	} catch (error) {
-		res.status(500).send({ msg: 'Server issues' }).end()
-	}
-})
+// @desc Get Single task
+// @route GET /api/task/:id
+// @access Private
+router.get('/:id', protect, getSingleTask)
 
-// Read Single Task
-router.get('/:id', async (req, res, next) => {
-	try {
-		// const record = await Task.findById(req.params.id)
-		const record = await Task.findOne({ _id: req.params.id })
-		console.log(record)
-		res.json(record).status(200)
-		res.end()
-	} catch (error) {
-		res.status(404).send({ msg: 'Resource not found.' }).end()
-	}
-})
-// Read Single Task Times
-router.get('/:id/times', async (req, res, next) => {
-	try {
-		const records = await Time.aggregate([
-			{
-				$match: { taskId: ObjectId(`${req.params.id}`) },
-			},
+// @desc Create task
+// @route POST /api/task/
+// @access Private
+router.post('/', protect, createTask)
 
-			{
-				$lookup: {
-					from: 'users',
-					localField: 'userId',
-					foreignField: '_id',
-					as: 'userId',
-				},
-			},
-			{
-				$unwind: { path: '$userId', preserveNullAndEmptyArrays: true },
-			},
-		])
+// @desc Update Single task
+// @route PUT /api/task/:id
+// @access Private
+router.put('/:id', protect, updateTask)
 
-		res.json(records).status(200)
-		res.end()
-	} catch (error) {
-		res.status(404).send({ msg: 'Resource not found.' }).end()
-	}
-})
+// @desc Delete Specific task
+// @route DELETE /api/task/:id
+// @access Private
+router.delete('/:id', protect, deleteTask)
 
-// Get project tasks
-router.get('/allprojecttasks/:id', async (req, res, next) => {
-	try {
-		const records = await Task.find({ project: ObjectId(`${req.params.id}`) })
+// @desc Get Single Task Times
+// @route GET /api/task/:id/times
+// @access Private
 
-		res.json(records).status(200)
-		res.end()
-	} catch (error) {
-		console.log(error)
-	}
-})
+router.get('/', protect, getSingleTaskTimes)
 
-// Get claimed tasks
-router.get('/allclaimedprojecttasks/:id', async (req, res, next) => {
-	try {
-		const records = await Task.aggregate([
-			{
-				$match: { project: ObjectId(`${req.params.id}`) },
-			},
-			{
-				$lookup: {
-					from: 'users',
-					localField: 'claimedBy',
-					foreignField: '_id',
-					as: 'claimedBy',
-				},
-			},
-			{
-				$unwind: { path: '$claimedBy', preserveNullAndEmptyArrays: true },
-			},
-		])
-		res.json(records).status(200)
-		res.end()
-	} catch (error) {
-		console.log(error)
-	}
-})
-// Create Task
-router.post('/', async (req, res, next) => {
-	const { body } = req
-	const project = new Task(body)
+// @desc Get AllProjectTasks
+// @route GET /api/task/allprojecttasks/:id
+// @access Private
 
-	if (mongoose.connection.readyState) {
-		await project.save().then(() => {
-			res.set({ ok: 'true' }).status(200)
-			res.end()
-		})
-	} else {
-		res.status(500).send({ msg: 'Not connected to DB. Cannot Save data' }).end()
-	}
-})
+router.get('/', protect, getAllProjectTasks)
 
-//Update Task
-router.put('/:id', async (req, res, next) => {
-	console.log('put route')
-	const objId = req.params.id
-	const { body } = req
-	try {
-		const record = await Task.updateOne({ _id: ObjectId(`${objId}`) }, body, {})
+// @desc Get all claimed project tasks
+// @route GET /api/task/allclaimedprojecttasks/:id
+// @access Private
 
-		res.json(record).status(200)
-		res.end()
-	} catch (error) {
-		res.status(404).send({ msg: error }).end()
-	}
-})
-
-//Delete Task
-router.delete('/:id', async (req, res, next) => {
-	const objId = req.params.id
-	const { body } = req
-	try {
-		const record = await Task.findOneAndDelete({ _id: objId })
-		res.set({ ok: 'true' }).status(200)
-		res.end()
-	} catch (error) {
-		res.status(404).send({ msg: 'Object not found.' }).end()
-	}
-})
+router.get('/', protect, getAllClaimedProjectTasks)
 
 module.exports = router

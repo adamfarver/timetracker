@@ -35,6 +35,8 @@ const getAllUsers = asyncHandler(async (req, res) => {
 				},
 			},
 		])
+    res.status(200)
+    res.send(allUsers)
 	} catch (e) {
 		res.status(500)
 		throw new Error('Internal Server Error')

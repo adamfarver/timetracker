@@ -1,81 +1,37 @@
 const express = require('express')
 const router = express.Router()
-const mongoose = require('mongoose')
-const Time = require('../../models/Time')
-const Task = require('../../models/Task')
-// All routes added together
+const {
+	getAllTimes,
+	getSingleTime,
+	createTime,
+	updateTime,
+	deleteTime,
+} = require('../controllers/timesController')
+const {protect} = require("../middleware/authMiddleware.js")
 
-// Time
+// @desc Get all times
+// @route GET /api/time/:id
+// @access Private
+router.get('/', protect, getAllTimes)
 
-// Read All Times
-router.get('/', async (req, res, next) => {
-	try {
-		const allTimes = await Time.find({})
-		res.json(allTimes).status(200)
-		res.end()
-	} catch (error) {
-		res.status(500).send({ msg: 'Server issues' }).end()
-	}
-})
+// @desc Get Single time
+// @route GET /api/time/:id
+// @access Private
+router.get('/:id', protect, getSingleTime)
 
-// Read Single Time
-router.get('/:id', async (req, res, next) => {
-	try {
-		const record = await Time.findById(req.params.id)
-		res.json(record).status(200)
-		res.end()
-	} catch (error) {
-		res.status(404).send({ msg: 'Resource not found.' }).end()
-	}
-})
+// @desc Create time
+// @route POST /api/time/
+// @access Private
+router.post('/', protect, createTime)
 
-// Create Time
-router.post('/', async (req, res, next) => {
-	const { body } = req
-	const time = new Time(body)
-	try {
-		const record = await time.save()
-		// When adding times, get current value of actualUsedTime and add current value of body.timeUsed
+// @desc Update Single time
+// @route PUT /api/time/:id
+// @access Private
+router.put('/:id', protect, updateTime)
 
-		const lastValue = await Task.findById({ _id: body.taskId })
-		const newUsedTimeValue = body.timeUsed + lastValue.actualUsedTime
-		await Task.findOneAndUpdate(
-			{ _id: body.taskId },
-			{ actualUsedTime: newUsedTimeValue }
-		)
-
-		res.json(record).status(200)
-		res.end()
-	} catch (error) {
-		res.status(404).send({ msg: "Couldn't create record" }).end()
-	}
-})
-
-//Update Time
-router.put('/:id', async (req, res, next) => {
-	const objId = req.params.id
-	const { body } = req
-	try {
-		await Time.findOneAndUpdate({ _id: objId }, body, { upsert: true })
-		const record = await Time.findById({ _id: objId })
-		res.json(record).status(200)
-		res.end()
-	} catch (error) {
-		res.status(404).send({ msg: 'Resource not found.' }).end()
-	}
-})
-
-//Delete Time
-router.delete('/:id', async (req, res, next) => {
-	const objId = req.params.id
-	const { body } = req
-	try {
-		const record = await Time.findOneAndDelete({ _id: objId })
-		res.set({ ok: 'true' }).status(200)
-		res.end()
-	} catch (error) {
-		res.status(404).send({ msg: 'Object not found.' }).end()
-	}
-})
+// @desc Delete Specific time
+// @route DELETE /api/time/:id
+// @access Private
+router.delete('/:id', protect, deleteTime)
 
 module.exports = router

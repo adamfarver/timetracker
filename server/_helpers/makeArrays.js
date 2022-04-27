@@ -29,8 +29,6 @@ function makeDayArrays({ dateStart, dateEnd }) {
 		dateEnd = dateEnd.toISOString()
 	}
 
-	console.log('dateStart: ', dateStart)
-	// console.log('dateEnd: ', dateEnd)
 	// iterator Variable
 	let currentDay = -1
 	// Storage for array

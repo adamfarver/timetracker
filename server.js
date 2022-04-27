@@ -3,7 +3,7 @@
  */
 // eslint-disable-next-line no-unused-vars
 // Config
-let { mongoserver, localMongoServer } = require('./config')
+let { mongoserver, localMongoServer, node_env } = require('./config')
 const CronJob = require('cron').CronJob
 const fs = require('fs')
 const path = require('path')
@@ -30,27 +30,23 @@ const charts = require('./server/routes/charts')
 const auth = require('./server/routes/auth')
 const { errorHandler } = require('./server/middleware/errorMiddleware')
 
+console.log(node_env)
 // Connect to MongoDB
 async function dbConnect(uri) {
-	await mongoose
-		.connect(uri, {
+	try {
+		const response = await mongoose.connect(uri, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 			autoIndex: false,
 			connectTimeoutMS: 4000,
 			useFindAndModify: false,
 		})
-		.then(() => console.log('DB Connected'))
-		.catch((e) => {
-			console.log('🔥🔥 NOT CONNECTED TO DB 🚒')
-			console.log(e)
-		})
+	} catch (error) {
+		console.log(error)
+	}
 }
 
-process.env.NODE_ENV === 'production'
-	? dbConnect(mongoserver)
-	: dbConnect(localMongoServer)
-
+node_env === 'production' ? dbConnect(mongoserver) : dbConnect(localMongoServer)
 // Check if DB disconnected, if not reconnects.
 setInterval(() => {
 	if (!mongoose.connection.readyState) {
@@ -66,10 +62,12 @@ const port = process.env.PORT || 3001
 
 // Connect to DB and clear collections
 async function reseedDb() {
-	await drop('timetracker')
-	const now = Date.now()
-	const seedData = await updateAllData(now)
-	await seed(seedData)
+	if (mongoose.connection.readyState) {
+		await drop('timetracker')
+		const now = Date.now()
+		const seedData = await updateAllData(now)
+		await seed(seedData)
+	}
 }
 
 // Do this first time.
@@ -103,13 +101,13 @@ app.use('/api/time', times)
 app.use('/api/charts', charts)
 
 // Serve Client files - Front-End
-if (process.env.NODE_ENV === 'production') {
+//if (process.env.NODE_ENV === 'production') {
 	app.use(express.static(path.join(__dirname, 'client', 'dist')))
 	app.get('*', (req, res) => {
 		res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
 		//  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 	})
-}
+//}
 app.use(errorHandler)
 
 app.listen(port, () => console.log(`Express server running on ${port}`))

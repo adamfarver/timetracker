@@ -1,73 +1,36 @@
 const express = require('express')
 const router = express.Router()
-const mongoose = require('mongoose')
-const Role = require('../../models/Role')
-// All routes added together
+const {
+	getAllRoles,
+	getSingleRole,
+	createRole,
+	updateRole,
+	deleteRole,
+} = require('../controllers/rolesController')
+const {protect} = require("../middleware/authMiddleware.js")
+// @desc Get all roles
+// @route GET /api/role/:id
+// @access Private
+router.get('/',protect,  getAllRoles)
 
-// Role
+// @desc Get Single role
+// @route GET /api/role/:id
+// @access Private
+router.get('/:id',protect, getSingleRole)
 
-// Read All Roles
-router.get('/', async (req, res, next) => {
-	try {
-		const allRoles = await Role.find({})
-		res.json(allRoles).status(200)
-		res.end()
-	} catch (error) {
-		res.status(500).send({ msg: 'Server issues' }).end()
-	}
-})
+// @desc Create Role
+// @route POST /api/role/
+// @access Private
+router.post('/', protect, createRole)
 
-// Read Single Role
-router.get('/:id', async (req, res, next) => {
-	try {
-		const record = await Role.findById(req.params.id)
-		res.json(record).status(200)
-		res.end()
-	} catch (error) {
-		res.status(404).send({ msg: 'Resource not found.' }).end()
-	}
-})
+// @desc Update Single Role
+// @route PUT /api/role/:id
+// @access Private
+router.put('/:id',protect,  updateRole)
 
-// Create Role
-router.post('/', async (req, res, next) => {
-	const { body } = req
-	const project = new Role(body)
-	if (mongoose.connection.readyState) {
-		await project.save().then(() => {
-			res.set({ ok: 'true' }).status(200)
-			res.end()
-		})
-	} else {
-		res.status(500).send({ msg: 'Not connected to DB. Cannot Save data' }).end()
-	}
-})
-
-//Update Role
-router.put('/:id', async (req, res, next) => {
-	const objId = req.params.id
-	const { body } = req
-	try {
-		await Role.findOneAndUpdate({ _id: objId }, body)
-
-		const record = await Role.findById({ _id: objId })
-		res.json(record).status(200)
-		res.end()
-	} catch (error) {
-		res.status(404).send({ msg: 'Resource not found.' }).end()
-	}
-})
-
-//Delete Role
-router.delete('/:id', async (req, res, next) => {
-	const objId = req.params.id
-	const { body } = req
-	try {
-		const record = await Role.findOneAndDelete({ _id: objId })
-		res.set({ ok: 'true' }).status(200)
-		res.end()
-	} catch (error) {
-		res.status(404).send({ msg: 'Object not found.' }).end()
-	}
-})
+// @desc Delete Specific Role
+// @route DELETE /api/role/:id
+// @access Private
+router.delete('/:id', protect, deleteRole)
 
 module.exports = router
