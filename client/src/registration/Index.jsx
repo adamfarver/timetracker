@@ -7,29 +7,35 @@ import ReCAPTCHA from 'react-google-recaptcha'
 import { Form as BSForm, Col, Button } from 'react-bootstrap'
 import { AppContext } from '../_components/AppContext'
 
+// TODO: Add Illustration to right side of the form
+
 function Registration({ history }) {
 	const [isHuman, setIsHuman] = useState(false)
-	const [
-		project,
-		setProject,
-		sprint,
-		setSprint,
-		user,
-		setUser,
-		task,
-		setTask,
-	] = useContext(AppContext)
+	const [project, setProject, sprint, setSprint, user, setUser, task, setTask] =
+		useContext(AppContext)
 
 	const initialValues = {
 		firstName: '',
 		lastName: '',
 		email: '',
+		password: '',
+		verifyPassword: '',
 	}
 
 	const validationSchema = Yup.object().shape({
 		firstName: Yup.string().required('First Name is required'),
 		lastName: Yup.string().required('Last Name is required'),
-		email: Yup.string().email('Email is invalid').required('Email is required'),
+		email: Yup.string()
+			.email('Email is invalid')
+			.required('Email is required')
+			.lowercase(),
+		password: Yup.string()
+			.min(8, 'Password must be at least 8 characters long.')
+			.required('Password longer than 8 characters is required.'),
+		verifyPassword: Yup.string().oneOf(
+			[Yup.ref('password'), null],
+			'Passwords must match'
+		),
 	})
 
 	const onChange = (response) => {
@@ -49,6 +55,7 @@ function Registration({ history }) {
 					onSubmit={(fields, { setStatus, setSubmitting }) => {
 						if (isHuman) {
 							fields.role = '5f83b76c9afb0523d2e7ac7a'
+							delete fields.verifyPassword
 							userService
 								.create(fields)
 								.then(() => {
@@ -93,7 +100,7 @@ function Registration({ history }) {
 										</Col>
 									</BSForm.Row>
 									<BSForm.Row>
-										<Col>
+										<Col md={4}>
 											<small>
 												This will give you a taste of the app and we reset all
 												data in the database at midnight of every day. If your
@@ -104,7 +111,7 @@ function Registration({ history }) {
 										</Col>
 									</BSForm.Row>
 									<BSForm.Row className="mt-3">
-										<Col md={6}>
+										<Col md={4}>
 											<BSForm.Group>
 												<BSForm.Label htmlFor="firstName">
 													First Name
@@ -115,7 +122,7 @@ function Registration({ history }) {
 													id="firstName"
 													className={
 														'form-control' +
-														(errors.projectName && touched.projectName
+														(errors.firstName && touched.firstName
 															? ' is-invalid'
 															: '')
 													}
@@ -125,7 +132,9 @@ function Registration({ history }) {
 												<ErrorMessage name="firstName" />
 											</BSForm.Group>
 										</Col>
-										<Col md={6}>
+									</BSForm.Row>
+									<BSForm.Row>
+										<Col md={4}>
 											<BSForm.Group>
 												<BSForm.Label htmlFor="lastName">
 													Last Name
@@ -136,7 +145,7 @@ function Registration({ history }) {
 													id="lastName"
 													className={
 														'form-control' +
-														(errors.projectName && touched.projectName
+														(errors.lastName && touched.lastName
 															? ' is-invalid'
 															: '')
 													}
@@ -148,7 +157,7 @@ function Registration({ history }) {
 										</Col>
 									</BSForm.Row>
 									<BSForm.Row>
-										<Col md={6}>
+										<Col md={4}>
 											<BSForm.Group>
 												<BSForm.Label htmlFor="email">Email</BSForm.Label>
 												<Field
@@ -165,6 +174,50 @@ function Registration({ history }) {
 											</BSForm.Group>
 											<BSForm.Group className=" text-danger">
 												<ErrorMessage name="email" />
+											</BSForm.Group>
+										</Col>
+									</BSForm.Row>
+									<BSForm.Row>
+										<Col md={4}>
+											<BSForm.Group>
+												<BSForm.Label htmlFor="password">Password</BSForm.Label>
+												<Field
+													name="password"
+													type="password"
+													id="password"
+													className={
+														'form-control' +
+														(errors.password && touched.password
+															? ' is-invalid'
+															: '')
+													}
+												/>
+											</BSForm.Group>
+											<BSForm.Group className=" text-danger">
+												<ErrorMessage name="password" />
+											</BSForm.Group>
+										</Col>
+									</BSForm.Row>
+									<BSForm.Row>
+										<Col md={4}>
+											<BSForm.Group>
+												<BSForm.Label htmlFor="verifyPassword">
+													Verify Password
+												</BSForm.Label>
+												<Field
+													name="verifyPassword"
+													type="password"
+													id="verifyPassword"
+													className={
+														'form-control' +
+														(errors.verifyPassword && touched.verifyPassword
+															? ' is-invalid'
+															: '')
+													}
+												/>
+											</BSForm.Group>
+											<BSForm.Group className=" text-danger">
+												<ErrorMessage name="verifyPassword" />
 											</BSForm.Group>
 										</Col>
 									</BSForm.Row>
