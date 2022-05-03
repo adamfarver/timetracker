@@ -4,16 +4,8 @@ import { Navbar, Nav, Container } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useHistory } from 'react-router-dom'
 function NavComponent() {
-	const [
-		project,
-		setProject,
-		sprint,
-		setSprint,
-		user,
-		setUser,
-		task,
-		setTask,
-	] = useContext(AppContext)
+	const [project, setProject, sprint, setSprint, user, setUser, task, setTask] =
+		useContext(AppContext)
 
 	let history = useHistory()
 	function logout() {
@@ -67,9 +59,14 @@ function NavComponent() {
 									</div>
 								</>
 							) : (
-								<a href="/registration" className="btn-white ">
-									Try It Out
-								</a>
+								<>
+									<Nav.Link href="/login" className="nav-item mr-3">
+										Log In
+									</Nav.Link>
+									<a href="/registration" className="btn-white ">
+										Try It Out
+									</a>
+								</>
 							)}
 						</Nav>
 					</Navbar.Collapse>

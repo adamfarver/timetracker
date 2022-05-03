@@ -14,6 +14,7 @@ import _404 from '../404/index'
 import { AppProvider } from '../_components/AppContext'
 import { Container } from 'react-bootstrap'
 import Footer from '../_components/Footer'
+import Login from '../login/Index'
 function App() {
 	const { pathname } = useLocation()
 
@@ -38,6 +39,7 @@ function App() {
 							<Route path="/times" component={Times} />
 							<Route path="/users" component={Users} />
 							<Route path="/registration" component={Registration} />
+							<Route path="/login" component={Login} />
 							<Route path="*" component={_404} />
 						</Switch>
 					</Container>
