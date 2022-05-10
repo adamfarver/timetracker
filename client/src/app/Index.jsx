@@ -32,12 +32,14 @@ function App() {
 
 						<Switch>
 							<Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} />
+							{/* TODO: Protect Routes */}
 							<Route path="/projects" component={Projects} />
 							<Route path="/roles" component={Roles} />
 							<Route path="/sprints" component={Sprints} />
 							<Route path="/tasks" component={Tasks} />
 							<Route path="/times" component={Times} />
 							<Route path="/users" component={Users} />
+							{/* End Protected Routes */}
 							<Route path="/registration" component={Registration} />
 							<Route path="/login" component={Login} />
 							<Route path="*" component={_404} />
