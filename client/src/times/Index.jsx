@@ -1,17 +1,49 @@
 import React from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 
-import { List } from './List'
-import { AddEdit } from './AddEdit'
+
+import { List as TimeList } from './List'
+import { AddEdit as TimeAddEdit } from './AddEdit'
+import { ProtectRoute } from '../_components/ProtectRoute'
 
 function Times({ match }) {
 	const { path } = match
 
 	return (
 		<Switch>
-			<Route exact path={path} component={List} />
-			<Route path={`${path}/add`} component={AddEdit} />
-			<Route path={`${path}/edit/:id`} component={AddEdit} />
+
+			<ProtectRoute exact path={path}>
+				<TimeList />
+			</ProtectRoute>
+			<ProtectRoute path={`${path}/add`}>
+				<TimeAddEdit />
+			</ProtectRoute>
+			<ProtectRoute path={`${path}/edit/:id`}>
+				<TimeAddEdit />
+			</ProtectRoute>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			{/* <Route exact path={path} component={List} /> */}
+			{/* <Route path={`${path}/add`} component={AddEdit} /> */}
+			{/* <Route path={`${path}/edit/:id`} component={AddEdit} /> */}
 			<Redirect to="/404" />
 		</Switch>
 	)

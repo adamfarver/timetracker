@@ -5,7 +5,7 @@ import { InProcessList } from './InProcessList'
 import { AvailableList } from './AvailableList'
 import { CompletedList } from './CompletedList'
 import { BackLogList } from './BackLogList'
-import { AddEdit } from './AddEdit'
+import { AddEdit as TaskAddEdit } from './AddEdit'
 import { TaskView } from './Taskview'
 import { MyTasks } from './MyTasks'
 
@@ -14,16 +14,49 @@ export function Tasks({ match }) {
 
 	return (
 		<Switch>
-			<Route path={`${path}/add`} component={AddEdit} />
-			<Route path={`${path}/edit/:id`} component={AddEdit} />
-			<Route path={`${path}/view/:id`} component={TaskView} />
-			<Route path={`${path}/:id/in-process`} component={InProcessList} />
-			<Route path={`${path}/:id/available`} component={AvailableList} />
-			<Route path={`${path}/:id/completed`} component={CompletedList} />
-			<Route path={`${path}/:id/backlog`} component={BackLogList} />
-			<Route path={`${path}/:id`} component={MyTasks} />
+			<ProtectRoute path={`${path}/add`}>
+				<TaskAddEdit />
+			</ProtectRoute>
+			
+      <ProtectRoute path={`${path}/edit/:id`}>
+				<TaskAddEdit />
+			</ProtectRoute>
+        
+			<ProtectRoute path={`${path}/view/:id`}>
+				<TaskView />
+			</ProtectRoute>
 
-			<Redirect to="/404" />
+			<ProtectRoute path={`${path}/:id/in-process`}>
+				<InProcessList />
+			</ProtectRoute>
+
+			<ProtectRoute path={`${path}/:id/available`}>
+				<AvailableList />
+			</ProtectRoute>
+
+			<ProtectRoute path={`${path}/:id/completed`}>
+				<CompletedList />
+			</ProtectRoute>
+
+			<ProtectRoute path={`${path}/:id/backlog`}>
+				<BackLogList />
+			</ProtectRoute>
+
+			<ProtectRoute path={`${path}/:id`}>
+				<MyTasks />
+			</ProtectRoute>
+
+			{/* <Route path={`${path}/add`} component={AddEdit} /> */}
+			{/* <Route path={`${path}/edit/:id`} component={AddEdit} /> */}
+			{/* <Route path={`${path}/view/:id`} component={TaskView} /> */}
+			{/* <Route path={`${path}/:id/in-process`} component={InProcessList} /> */}
+			{/* <Route path={`${path}/:id/available`} component={AvailableList} /> */}
+			{/* <Route path={`${path}/:id/completed`} component={CompletedList} /> */}
+			{/* <Route path={`${path}/:id/backlog`} component={BackLogList} /> */}
+
+			{/* <Route path={`${path}/:id`} component={MyTasks} /> */}
+
+			<Redirect to='/404' />
 		</Switch>
 	)
 }
