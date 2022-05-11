@@ -12,6 +12,7 @@ const generateToken = (id) => {
 // @access PUBLIC
 
 const authUser = asyncHandler(async (req, res, next) => {
+  console.log(req.body)
 	// Get password and email
 	const { email, password } = req.body
 

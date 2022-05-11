@@ -25,8 +25,7 @@ function Login({ history }) {
 			.required('Email is required')
 			.lowercase(),
 		password: Yup.string()
-			.min(8, 'Password must be at least 8 characters long.')
-			.required('Password longer than 8 characters is required.'),
+			.required('Password is required'),
 	})
 
 	const onChange = (response) => {
