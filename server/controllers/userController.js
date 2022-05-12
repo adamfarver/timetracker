@@ -92,13 +92,14 @@ const registerNewUser = asyncHandler(async (req, res) => {
 	})
 	try {
 		const savedUser = await newUser.save()
-		console.log(savedUser)
 		formattedUser.firstName = savedUser.firstName
 		formattedUser.lastName = savedUser.lastName
 		formattedUser.email = savedUser.email
-		formattedUser.token = await generateToken(savedUser._id)
+		formattedUser.token = generateToken(savedUser._id)
+		console.log(formattedUser)
 		res.status(201).json(formattedUser)
 	} catch (e) {
+		console.log('save error ', e)
 		res.status(409)
 		throw new Error(`Couldn't save to db`)
 	}
