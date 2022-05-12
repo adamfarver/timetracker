@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import { Link } from 'react-router-dom'
-import { authService, alertService } from '@/_services'
+import { authService, userService, alertService } from '@/_services'
 import * as Yup from 'yup'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { Form as BSForm, Col, Button } from 'react-bootstrap'
@@ -24,8 +24,7 @@ function Login({ history }) {
 			.email('Email is invalid')
 			.required('Email is required')
 			.lowercase(),
-		password: Yup.string()
-			.required('Password is required'),
+		password: Yup.string().required('Password is required'),
 	})
 
 	const onChange = (response) => {
@@ -46,25 +45,11 @@ function Login({ history }) {
 						if (isHuman) {
 							authService
 								.loginUser(fields)
-								// TODO: Fix the rest of this. This contains all stuff from registration page.
-								.then(() => {
-									alertService.success('User added', {
-										keepAfterRouteChange: true,
-									})
-								})
-
-								.then(async () => {
-									// Get list of users and sets storage location
-									const list = await userService.getWithRole()
-									// Get length of array
-									const lastUser = list.length - 1
-									// Get last added user
-									let newestUser = list[lastUser]
-									// Sets current user in state
-									setUser(newestUser)
-									newestUser = JSON.stringify(newestUser)
+								.then(async (res) => {
+									setUser(res)
+									res = JSON.stringify(res)
 									// Sets current user in local storage
-									localStorage.setItem('current_user', newestUser)
+									localStorage.setItem('current_user', res)
 								})
 								.then(() => {
 									history.push('/projects')
