@@ -35,8 +35,8 @@ const getAllUsers = asyncHandler(async (req, res) => {
 				},
 			},
 		])
-    res.status(200)
-    res.send(allUsers)
+		res.status(200)
+		res.send(allUsers)
 	} catch (e) {
 		res.status(500)
 		throw new Error('Internal Server Error')
@@ -91,6 +91,7 @@ const registerNewUser = asyncHandler(async (req, res) => {
 	})
 	try {
 		const savedUser = await newUser.save()
+		console.log(savedUser)
 		if (savedUser) {
 			res.status(201).json({
 				_id: savedUser.id,
@@ -102,7 +103,7 @@ const registerNewUser = asyncHandler(async (req, res) => {
 		}
 	} catch (e) {
 		res.status(409)
-		throw new Error('User Already Exists.')
+		throw new Error(`Couldn't save to db`)
 	}
 })
 

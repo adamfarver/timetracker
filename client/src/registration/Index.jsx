@@ -58,24 +58,18 @@ function Registration({ history }) {
 							delete fields.verifyPassword
 							userService
 								.create(fields)
-								.then(() => {
+
+								.then((res) => {
+									setUser(res)
+									res = JSON.stringify(res)
+									// Sets current user in local storage
+									localStorage.setItem('current_user', res)
+								})
+								.then((res) => {
+									console.log(res)
 									alertService.success('User added', {
 										keepAfterRouteChange: true,
 									})
-								})
-
-								.then(async () => {
-									// Get list of users and sets storage location
-									const list = await userService.getWithRole()
-									// Get length of array
-									const lastUser = list.length - 1
-									// Get last added user
-									let newestUser = list[lastUser]
-									// Sets current user in state
-									setUser(newestUser)
-									newestUser = JSON.stringify(newestUser)
-									// Sets current user in local storage
-									localStorage.setItem('current_user', newestUser)
 								})
 								.then(() => {
 									history.push('/projects')
