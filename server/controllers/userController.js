@@ -68,6 +68,7 @@ const getSingleUser = asyncHandler(async (req, res) => {
 
 const registerNewUser = asyncHandler(async (req, res) => {
 	const { firstName, lastName, email, password, phone } = req.body
+	const formattedUser = {}
 	// Check that all fields are filled in
 	if (!firstName || !lastName || !email || !password) {
 		res.status(400)
@@ -92,15 +93,11 @@ const registerNewUser = asyncHandler(async (req, res) => {
 	try {
 		const savedUser = await newUser.save()
 		console.log(savedUser)
-		if (savedUser) {
-			res.status(201).json({
-				_id: savedUser.id,
-				firstName: savedUser.firstName,
-				lastName: savedUser.lastName,
-				email: savedUser.email,
-				token: generateToken(savedUser._id),
-			})
-		}
+		formattedUser.firstName = savedUser.firstName
+		formattedUser.lastName = savedUser.lastName
+		formattedUser.email = savedUser.email
+		formattedUser.token = await generateToken(savedUser._id)
+		res.status(201).json(formattedUser)
 	} catch (e) {
 		res.status(409)
 		throw new Error(`Couldn't save to db`)
