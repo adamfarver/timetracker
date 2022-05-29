@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { AppContext } from '../_components/AppContext'
-import { Link } from 'react-router-dom'
+import { Link, useHistory, useRouteMatch } from 'react-router-dom'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import { Form as BSForm, Button, Col } from 'react-bootstrap'
 import * as Yup from 'yup'
@@ -9,7 +9,9 @@ import { dateSlice } from '../_helpers/humanDateFormatter'
 import { taskService, sprintService, alertService } from '@/_services'
 import { FindValueSubscriber } from 'rxjs/internal/operators/find'
 
-function AddEdit({ history, match }) {
+function AddEdit() {
+	const match = useRouteMatch()
+	const history = useHistory()
 	const [project, setProject, sprint, setSprint, user, setUser] =
 		useContext(AppContext)
 	const [sprintList, setSprintList] = useState([])

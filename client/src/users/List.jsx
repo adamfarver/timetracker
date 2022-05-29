@@ -2,12 +2,13 @@ import React, { useState, useEffect, useContext } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { AppContext } from '../_components/AppContext'
 import { Table, Button } from 'react-bootstrap'
-import { Link, useRouteMatch } from 'react-router-dom'
+import { Link, useHistory, useRouteMatch } from 'react-router-dom'
 
 import { userService, alertService } from '@/_services'
 
 function List({ history, match }) {
-	// history hook
+	// TODO: Add history hooks to all places where history is needed
+	const history = useHistory()
 	const match = useRouteMatch()
 	const { path } = match
 	const [users, setUsers] = useState(null)

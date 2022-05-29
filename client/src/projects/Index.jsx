@@ -1,12 +1,12 @@
 import React from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch, Redirect, useRouteMatch } from 'react-router-dom'
 import { ProtectRoute } from '../_components/ProtectRoute'
 import { List as ProjectList } from './List'
 import { AddEdit as ProjectAddEdit } from './AddEdit'
 import { Home as ProjectView } from './Home'
 
-function Projects({ match }) {
-	const { path } = match
+function Projects() {
+	const { path } = useRouteMatch()
 
 	return (
 		<Switch>
@@ -26,7 +26,7 @@ function Projects({ match }) {
 			<ProtectRoute path={`${path}/:id`}>
 				<ProjectView />
 			</ProtectRoute>
-			<Redirect to='/404' />
+			<Redirect to="/404" />
 		</Switch>
 	)
 }

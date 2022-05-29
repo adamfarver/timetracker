@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { userService, alertService } from '@/_services'
 import * as Yup from 'yup'
 import ReCAPTCHA from 'react-google-recaptcha'
@@ -9,7 +9,8 @@ import { AppContext } from '../_components/AppContext'
 
 // TODO: Add Illustration to right side of the form
 
-function Registration({ history }) {
+function Registration() {
+	const history = useHistory()
 	const [isHuman, setIsHuman] = useState(false)
 	const [project, setProject, sprint, setSprint, user, setUser, task, setTask] =
 		useContext(AppContext)

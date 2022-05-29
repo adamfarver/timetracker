@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory, useRouteMatch } from 'react-router-dom'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import { Form as BSForm, Button, Col } from 'react-bootstrap'
 import * as Yup from 'yup'
 
 import { projectService, userService, alertService } from '@/_services'
 
-function AddEdit({ history, match }) {
+function AddEdit() {
+	const match = useRouteMatch()
+	const history = useHistory()
 	const { id } = match.params
 	const isAddMode = !id
 	const [managers, setManagers] = useState({})

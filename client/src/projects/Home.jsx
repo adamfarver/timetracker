@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory, useRouteMatch } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { AppContext } from '../_components/AppContext'
 import { Breadcrumbs } from '../_components/Breadcrumbs'
@@ -10,7 +10,9 @@ import { HomeList } from '../_components/HomeList'
 import { usDateFormat } from '../_helpers/humanDateFormatter'
 import { BackLogList } from '../tasks/BackLogList'
 
-function Home({ history, match }) {
+function Home() {
+	const match = useRouteMatch()
+	const history = useHistory()
 	const { id } = match.params
 	const [taskList, setTasklist] = useState({
 		completedTasks: [],

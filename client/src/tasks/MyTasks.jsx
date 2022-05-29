@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useRouteMatch } from 'react-router-dom'
 import { Button, Table, Row, Col } from 'react-bootstrap'
 import { taskService, alertService } from '@/_services'
 import { AppContext } from '../_components/AppContext'
 import { Breadcrumbs } from '../_components/Breadcrumbs'
 
-export function MyTasks({ match }) {
+export function MyTasks() {
+	const match = useRouteMatch()
 	const { id } = match.params
-	const { path } = match
 	const [tasks, setTasks] = useState([])
 	const [claimed, setClaimed] = useState('')
 	const [project, setProject, sprint, setSprint, user, setUser, task, setTask] =

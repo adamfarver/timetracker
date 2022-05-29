@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory, useRouteMatch } from 'react-router-dom'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { AppContext } from '../_components/AppContext'
@@ -8,11 +8,12 @@ import { Breadcrumbs } from '../_components/Breadcrumbs'
 import { dateSlice } from '../_helpers/humanDateFormatter'
 import { Form as BSForm, Button, Col } from 'react-bootstrap'
 import { DateTime } from 'luxon'
-function AddEdit({ history, match }) {
+function AddEdit() {
+	const match = useRouteMatch()
+	const history = useHistory()
 	const [sprintNumber, setSprintNumber] = useState({})
-	const [project, setProject, sprint, setSprint, user, setUser] = useContext(
-		AppContext
-	)
+	const [project, setProject, sprint, setSprint, user, setUser] =
+		useContext(AppContext)
 	const { id } = match.params
 	const isAddMode = !id
 
