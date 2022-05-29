@@ -5,39 +5,51 @@ export const fetchWrapper = {
 	delete: _delete,
 }
 
-function get(url) {
+function get(url, token) {
 	const requestOptions = {
 		method: 'GET',
-		Referrer: 'no-referrer-when-downgrade',
+		headers: {
+			authorization: `Bearer ${token}`,
+		},
 	}
 	return fetch(url, requestOptions).then(handleResponse)
 }
 
-function post(url, body) {
+function post(url, body, token) {
 	const requestOptions = {
 		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
+		headers: {
+			'Content-Type': 'application/json',
+			authorization: `Bearer ${token}`,
+		},
+
 		body: JSON.stringify(body),
 	}
 	return fetch(url, requestOptions).then(handleResponse)
 }
 
-function put(url, body) {
+function put(url, body, token) {
 	const requestOptions = {
 		method: 'PUT',
 		headers: {
+			authorization: `Bearer ${token}`,
 			'Content-Type': 'application/json',
-			'Access-Control-Allow-Origin': '*',
 		},
+
+		authorization: `Bearer ${token}`,
 		body: JSON.stringify(body),
 	}
 	return fetch(url, requestOptions).then(handleResponse)
 }
 
 // prefixed with underscored because delete is a reserved word in javascript
-function _delete(url) {
+function _delete(url, token) {
 	const requestOptions = {
 		method: 'DELETE',
+		headers: {
+			authorization: `Bearer ${token}`,
+			'Content-Type': 'application/json',
+		},
 	}
 	return fetch(url, requestOptions).then(handleResponse)
 }
