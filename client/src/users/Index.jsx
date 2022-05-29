@@ -1,11 +1,12 @@
 import React from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch, Redirect, useRouteMatch } from 'react-router-dom'
 
 import { List as UserList } from './List'
 import { AddEdit as UserAddEdit } from './AddEdit'
 import { ProtectRoute } from '../_components/ProtectRoute'
 
-function Users({ match }) {
+function Users() {
+	const match = useRouteMatch()
 	const { path } = match
 
 	return (
@@ -23,7 +24,7 @@ function Users({ match }) {
 			{/* <Route exact path={path} component={List} /> */}
 			{/* <Route path={`${path}/add`} component={AddEdit} /> */}
 			{/* <Route path={`${path}/edit/:id`} component={AddEdit} /> */}
-			<Redirect to='/404' />
+			<Redirect to="/404" />
 		</Switch>
 	)
 }

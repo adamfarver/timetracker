@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useRouteMatch } from 'react-router-dom'
 
 import { roleService, alertService } from '@/_services'
 
-function List({ match }) {
-	const { path } = match
+function List() {
+	const { path } = useRouteMatch()
 	const [roles, setRoles] = useState(null)
 
 	useEffect(() => {
-		roleService.getAll().then(x => {
+		roleService.getAll().then((x) => {
 			setRoles(x)
 		})
 	}, [])
 
 	function deleteRole(id) {
 		roleService.delete(id).then(() => {
-			setRoles(roles => roles.filter(role => role._id !== id))
+			setRoles((roles) => roles.filter((role) => role._id !== id))
 		})
 	}
 
@@ -34,7 +34,7 @@ function List({ match }) {
 				</thead>
 				<tbody>
 					{roles &&
-						roles.map(role => (
+						roles.map((role) => (
 							<tr key={role._id}>
 								<td>{role.roleName}</td>
 								<td style={{ whiteSpace: 'nowrap' }}>

@@ -2,16 +2,17 @@ import React, { useState, useEffect, useContext } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { AppContext } from '../_components/AppContext'
 import { Table, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useRouteMatch } from 'react-router-dom'
 
 import { userService, alertService } from '@/_services'
 
 function List({ history, match }) {
+	// history hook
+	const match = useRouteMatch()
 	const { path } = match
 	const [users, setUsers] = useState(null)
-	const [project, setProject, sprint, setSprint, user, setUser] = useContext(
-		AppContext
-	)
+	const [project, setProject, sprint, setSprint, user, setUser] =
+		useContext(AppContext)
 
 	useEffect(() => {
 		userService.getWithRole().then((x) => {

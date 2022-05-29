@@ -1,10 +1,10 @@
 import React from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch, Redirect, useRouteMatch } from 'react-router-dom'
 import { List as SprintList } from './List'
-import { AddEdit as SprintAddEdit} from './AddEdit'
+import { AddEdit as SprintAddEdit } from './AddEdit'
 
-function Sprints({ match }) {
-	const { path } = match
+function Sprints() {
+	const { path } = useRouteMatch()
 
 	return (
 		<Switch>
@@ -17,7 +17,7 @@ function Sprints({ match }) {
 			<ProtectRoute path={`${path}/edit`}>
 				<SprintAddEdit />
 			</ProtectRoute>
-			<Redirect to='/404' />
+			<Redirect to="/404" />
 			{/* <Route exact path={path} component={List} /> */}
 			{/* <Route path={`${path}/add`} component={AddEdit} /> */}
 			{/* <Route path={`${path}/edit/:id`} component={AddEdit} /> */}

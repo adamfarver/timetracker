@@ -1,15 +1,14 @@
 import React from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch, Redirect, useRouteMatch } from 'react-router-dom'
 
-import { List as RoleList} from './List'
-import { AddEdit as RoleAddEdit} from './AddEdit'
+import { List as RoleList } from './List'
+import { AddEdit as RoleAddEdit } from './AddEdit'
 
-function Roles({ match }) {
-	const { path } = match
+function Roles() {
+	const { path } = useRouteMatch()
 
 	return (
 		<Switch>
-      
 			<ProtectRoute exact path={path}>
 				<RoleList />
 			</ProtectRoute>

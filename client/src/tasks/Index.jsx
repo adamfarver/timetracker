@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch, Redirect, useRouteMatch } from 'react-router-dom'
 
 import { InProcessList } from './InProcessList'
 import { AvailableList } from './AvailableList'
@@ -9,7 +9,8 @@ import { AddEdit as TaskAddEdit } from './AddEdit'
 import { TaskView } from './Taskview'
 import { MyTasks } from './MyTasks'
 
-export function Tasks({ match }) {
+export function Tasks() {
+	const match = useRouteMatch()
 	const { path } = match
 
 	return (
@@ -17,11 +18,11 @@ export function Tasks({ match }) {
 			<ProtectRoute path={`${path}/add`}>
 				<TaskAddEdit />
 			</ProtectRoute>
-			
-      <ProtectRoute path={`${path}/edit/:id`}>
+
+			<ProtectRoute path={`${path}/edit/:id`}>
 				<TaskAddEdit />
 			</ProtectRoute>
-        
+
 			<ProtectRoute path={`${path}/view/:id`}>
 				<TaskView />
 			</ProtectRoute>
@@ -56,7 +57,7 @@ export function Tasks({ match }) {
 
 			{/* <Route path={`${path}/:id`} component={MyTasks} /> */}
 
-			<Redirect to='/404' />
+			<Redirect to="/404" />
 		</Switch>
 	)
 }

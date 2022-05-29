@@ -1,24 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { AppContext } from '../_components/AppContext'
-import { Link } from 'react-router-dom'
+import { Link, useRouteMatch } from 'react-router-dom'
 import { Button, Table, Row, Col } from 'react-bootstrap'
 import { Breadcrumbs } from '../_components/Breadcrumbs'
 import { taskService, alertService } from '@/_services'
 
-export function InProcessList({ match }) {
+export function InProcessList() {
+	const match = useRouteMatch()
 	const { id } = match.params
-	const { path } = match
 	const [tasks, settasks] = useState([])
-	const [
-		project,
-		setProject,
-		sprint,
-		setSprint,
-		user,
-		setUser,
-		task,
-		setTask,
-	] = useContext(AppContext)
+	const [project, setProject, sprint, setSprint, user, setUser, task, setTask] =
+		useContext(AppContext)
 
 	useEffect(() => {
 		taskService.getByProjectId(id).then((res) => {

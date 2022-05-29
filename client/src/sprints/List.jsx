@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useRouteMatch } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
 import { sprintService, alertService } from '@/_services'
 
-function List({ match }) {
-	const { path } = match
+function List() {
+	const { path } = useRouteMatch()
 	const [sprints, setSprints] = useState(null)
 
 	useEffect(() => {

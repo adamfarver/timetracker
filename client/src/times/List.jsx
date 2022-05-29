@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useRouteMatch } from 'react-router-dom'
 
 import { userService, alertService } from '@/_services'
 
-function List({ match }) {
+function List() {
+	const match = useRouteMatch()
 	const { path } = match
 	const [users, setUsers] = useState(null)
 
