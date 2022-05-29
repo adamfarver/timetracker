@@ -14,33 +14,33 @@ export const taskService = {
 	delete: _delete,
 }
 
-function getAll() {
-	return fetchWrapper.get(baseUrl)
+function getAll(token) {
+	return fetchWrapper.get(baseUrl, token)
 }
 
-function getById(id) {
-	return fetchWrapper.get(`${baseUrl}/${id}`)
+function getById(id, token) {
+	return fetchWrapper.get(`${baseUrl}/${id}`, token)
 }
-function getTimeById(id) {
-	return fetchWrapper.get(`${baseUrl}/${id}/times`)
-}
-
-function getByProjectId(id) {
-	return fetchWrapper.get(`${baseUrl}/allprojecttasks/${id}`)
-}
-function getClaimedProjectId(id) {
-	return fetchWrapper.get(`${baseUrl}/allclaimedprojecttasks/${id}`)
+function getTimeById(id, token) {
+	return fetchWrapper.get(`${baseUrl}/${id}/times`, token)
 }
 
-function create(params) {
-	return fetchWrapper.post(baseUrl, params)
+function getByProjectId(id, token) {
+	return fetchWrapper.get(`${baseUrl}/allprojecttasks/${id}`, token)
+}
+function getClaimedProjectId(id, token) {
+	return fetchWrapper.get(`${baseUrl}/allclaimedprojecttasks/${id}`, token)
 }
 
-function update(id, params) {
-	return fetchWrapper.put(`${baseUrl}/${id}`, params)
+function create(params, token) {
+	return fetchWrapper.post(baseUrl, params, token)
+}
+
+function update(id, params, token) {
+	return fetchWrapper.put(`${baseUrl}/${id}`, params, token)
 }
 
 // prefixed with underscored because delete is a reserved word in javascript
-function _delete(id) {
-	return fetchWrapper.delete(`${baseUrl}/${id}`)
+function _delete(id, token) {
+	return fetchWrapper.delete(`${baseUrl}/${id}`, token)
 }

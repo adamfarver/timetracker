@@ -13,31 +13,31 @@ export const sprintService = {
 	getSprintNumber,
 }
 
-function getAll() {
+function getAll(token) {
 	console.log(baseUrl)
-	return fetchWrapper.get(baseUrl)
+	return fetchWrapper.get(baseUrl, token)
 }
 
-function getById(id) {
-	return fetchWrapper.get(`${baseUrl}/${id}`)
+function getById(id, token) {
+	return fetchWrapper.get(`${baseUrl}/${id}`, token)
 }
-function filterByProjectId(id) {
-	return fetchWrapper.get(`${baseUrl}/list/${id}`)
-}
-
-function getSprintNumber(id) {
-	return fetchWrapper.get(`${baseUrl}/number/${id}`)
+function filterByProjectId(id, token) {
+	return fetchWrapper.get(`${baseUrl}/list/${id}`, token)
 }
 
-function create(params) {
-	return fetchWrapper.post(baseUrl, params)
+function getSprintNumber(id, token) {
+	return fetchWrapper.get(`${baseUrl}/number/${id}`, token)
 }
 
-function update(id, params) {
-	return fetchWrapper.put(`${baseUrl}/${id}`, params)
+function create(params, token) {
+	return fetchWrapper.post(baseUrl, params, token)
+}
+
+function update(id, params, token) {
+	return fetchWrapper.put(`${baseUrl}/${id}`, params, token)
 }
 
 // prefixed with underscored because delete is a reserved word in javascript
-function _delete(id) {
-	return fetchWrapper.delete(`${baseUrl}/${id}`)
+function _delete(id, token) {
+	return fetchWrapper.delete(`${baseUrl}/${id}`, token)
 }

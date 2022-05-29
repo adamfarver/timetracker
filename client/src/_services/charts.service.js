@@ -7,6 +7,6 @@ export const chartService = {
 	getBySprintId,
 }
 
-function getBySprintId(id) {
-	return fetchWrapper.get(`${baseUrl}/${id}`)
+function getBySprintId(id, token) {
+	return fetchWrapper.get(`${baseUrl}/${id}`, token)
 }
