@@ -6,7 +6,6 @@ const { jwt_key } = require('../../config.js')
 
 const protect = asyncHandler(async (req, res, next) => {
   let token
-  console.log(req.header("Authorization"))
 
   if (
     req.header("authorization") &&
@@ -15,7 +14,7 @@ const protect = asyncHandler(async (req, res, next) => {
     try {
       // Get token from header
       token = req.headers.authorization.split(' ')[1]
-
+      console.log(token)
       // Verify token
       const decoded = jwt.verify(token, jwt_key)
 

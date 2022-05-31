@@ -1,16 +1,16 @@
 const express = require('express')
 const router = express.Router()
 const {
-	getAllTasks,
-	getSingleTask,
-	createTask,
-	updateTask,
-	deleteTask,
-	getSingleTaskTimes,
-	getAllProjectTasks,
-	getAllClaimedProjectTasks,
+  getAllTasks,
+  getSingleTask,
+  createTask,
+  updateTask,
+  deleteTask,
+  getSingleTaskTimes,
+  getAllProjectTasks,
+  getAllClaimedProjectTasks,
 } = require('../controllers/tasksController')
-const {protect} =require("../middleware/authMiddleware.js")
+const { protect } = require("../middleware/authMiddleware.js")
 
 // @desc Get all tasks
 // @route GET /api/task/:id
@@ -41,18 +41,18 @@ router.delete('/:id', protect, deleteTask)
 // @route GET /api/task/:id/times
 // @access Private
 
-router.get('/', protect, getSingleTaskTimes)
+router.get('/:id/times', protect, getSingleTaskTimes)
 
 // @desc Get AllProjectTasks
 // @route GET /api/task/allprojecttasks/:id
 // @access Private
 
-router.get('/', protect, getAllProjectTasks)
+router.get('/allprojecttasks/:id', protect, getAllProjectTasks)
 
 // @desc Get all claimed project tasks
 // @route GET /api/task/allclaimedprojecttasks/:id
 // @access Private
 
-router.get('/', protect, getAllClaimedProjectTasks)
+router.get('/allclaimedprojecttasks/:id', protect, getAllClaimedProjectTasks)
 
 module.exports = router

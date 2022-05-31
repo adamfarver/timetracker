@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Link, useRouteMatch } from 'react-router-dom'
+import { Link, useHistory, useRouteMatch } from 'react-router-dom'
 import { AppContext } from '../_components/AppContext'
 import { projectService, alertService } from '@/_services'
 import { Table, Button, Row, Col } from 'react-bootstrap'
 import { Breadcrumbs } from '../_components/Breadcrumbs'
 
 function List() {
+  const history = useHistory()
   const { path } = useRouteMatch()
   const [projects, setprojects] = useState([])
   const [
@@ -28,15 +29,20 @@ function List() {
       setProject({})
       setSprint({})
       setTask({})
+    }).catch((e) => {
+      alertService.error(e)
+      setUser({})
+      history.push("/login")
     })
   }, [])
 
   function deleteproject(id) {
     projectService.delete(id).then(() => {
+      alertService()
       setprojects((projects) =>
         projects.filter((project) => project._id !== id)
       )
-    })
+    }).catch((e) => { console.log(e) })
   }
 
   return (

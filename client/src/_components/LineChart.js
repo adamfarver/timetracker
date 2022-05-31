@@ -5,38 +5,39 @@ import { chartService } from '../_services'
 // import '../styles.scss'
 
 export default function LineChart() {
-	const [chartData, setChartData] = useState({})
-	const [project, setProject, sprint, setSprint, user, setUser] =
-		useContext(AppContext)
-	useEffect(() => {
-		chartService.getBySprintId(sprint._id).then((res) => {
-			console.log(res.labels)
-			setChartData(res)
-		})
-	}, [sprint, setSprint])
+  const [chartData, setChartData] = useState({})
+  const [project, setProject, sprint, setSprint, user, setUser] =
+    useContext(AppContext)
+  const { token } = user
+  useEffect(() => {
+    chartService.getBySprintId(sprint._id, token).then((res) => {
+      console.log(res.labels)
+      setChartData(res)
+    })
+  }, [sprint, setSprint])
 
-	return (
-		<div className={'chartcontainer'}>
-			<Line
-				height={344}
-				width={500}
-				data={chartData}
-				options={{
-					legend: {
-						position: 'bottom',
-						display: false,
-					},
-					title: {
-						text: 'Burn Down',
-						fontColor: '#000000',
-						fontSize: 16,
-						display: true,
-					},
-					maintainAspectRatio: false,
-					spanGaps: true,
-					responsive: true,
-				}}
-			/>
-		</div>
-	)
+  return (
+    <div className={'chartcontainer'}>
+      <Line
+        height={344}
+        width={500}
+        data={chartData}
+        options={{
+          legend: {
+            position: 'bottom',
+            display: false,
+          },
+          title: {
+            text: 'Burn Down',
+            fontColor: '#000000',
+            fontSize: 16,
+            display: true,
+          },
+          maintainAspectRatio: false,
+          spanGaps: true,
+          responsive: true,
+        }}
+      />
+    </div>
+  )
 }
