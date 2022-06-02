@@ -60,6 +60,9 @@ function handleResponse(response) {
   return response.text().then((text) => {
     const data = text && JSON.parse(text)
     if (!response.ok) {
+      if (data.message === "Token Not Valid, Please Log In.") {
+        localStorage.removeItem('current_user')
+      }
       const error = (data && data.message) || response.statusText
       return Promise.reject(error)
     }

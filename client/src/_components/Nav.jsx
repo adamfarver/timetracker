@@ -24,13 +24,13 @@ function NavComponent() {
     <>
       <Navbar expand="lg" variant="dark" fixed="top">
         <Container>
-          <Navbar.Brand href="/">Time Tracker</Navbar.Brand>
+          <Navbar.Brand onClick={() => history.push('/')}>Time Tracker</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto d-flex align-items-center">
               {user.firstName ? (
                 <>
-                  <Nav.Link href="/projects">Projects</Nav.Link>
+                  <Nav.Link onClick={() => history.push('/projects')}>Projects</Nav.Link>
                   {/* <Nav.Link href="/users">{`User: ${user.firstName}`}</Nav.Link> */}
                   <NavDropdown
                     id="navbarDropdown"
@@ -40,7 +40,7 @@ function NavComponent() {
                         {`${user.firstName}`}
                       </>}
                   >
-                    <Dropdown.Item href={`/tasks/${user._id}`}>
+                    <Dropdown.Item onClick={() => history.push(`/tasks/${user._id}`)}>
                       My Tasks
                     </Dropdown.Item>
                     <Dropdown.Item onClick={logout}>
