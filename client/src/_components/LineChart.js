@@ -14,7 +14,7 @@ export default function LineChart() {
       console.log(res.labels)
       setChartData(res)
     })
-  }, [sprint, setSprint])
+  }, [sprint])
 
   return (
     <div className={'chartcontainer'}>

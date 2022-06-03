@@ -14,7 +14,7 @@ function Sprints() {
       <ProtectRoute path={`${path}/add`}>
         <SprintAddEdit />
       </ProtectRoute>
-      <ProtectRoute path={`${path}/edit`}>
+      <ProtectRoute path={`${path}/edit/:id`}>
         <SprintAddEdit />
       </ProtectRoute>
       <Redirect to="/404" />

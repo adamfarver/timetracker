@@ -3,6 +3,7 @@ const router = express.Router()
 const {
   getAllSprints,
   getSingleSprint,
+  getSprintNumber,
   createSprint,
   updateSprint,
   deleteSprint,
@@ -18,6 +19,11 @@ router.get('/list/:id', protect, getAllSprints)
 // @route GET /api/sprint/:id
 // @access Private
 router.get('/:id', protect, getSingleSprint)
+
+// @desc Get Single sprint
+// @route GET /api/sprint/number/:id
+// @access Private
+router.get('/number/:id', protect, getSprintNumber)
 
 // @desc Create sprint
 // @route POST /api/sprint/

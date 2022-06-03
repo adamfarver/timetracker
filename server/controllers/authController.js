@@ -4,7 +4,7 @@ const asyncHandler = require('express-async-handler')
 const User = require('../../models/User')
 
 const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_KEY, { expiresIn: '1m' })
+  return jwt.sign({ id }, process.env.JWT_KEY, { expiresIn: '3h' })
 }
 
 // @desc Auth User

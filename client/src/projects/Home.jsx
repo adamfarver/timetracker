@@ -24,8 +24,6 @@ function Home() {
   const [project, setProject, sprint, setSprint, user, setUser, task, setTask] =
     useContext(AppContext)
   const { token } = user
-  console.log("id: ", id)
-  console.log("token: ", token)
   // Setting Project ID in state/localStorage and removing sprint data
   useEffect(() => {
     setTask({
@@ -51,7 +49,6 @@ function Home() {
     })
     setSprint({ _id: '', number: '' })
     projectService.getById(id, token).then((data) => {
-      console.log(data)
       const { _id, projectName } = data
       const parsedData = { _id, projectName }
       setProject(parsedData)
@@ -112,7 +109,6 @@ function Home() {
     } else if (e.target.value === 'Choose...') {
       setSprint({})
     } else {
-      console.log(e.target.selectedOptions[0].innerText)
       let data = {
         _id: `${e.target.value}`,
         name: `${e.target.selectedOptions[0].innerText}`,

@@ -14,7 +14,6 @@ export const sprintService = {
 }
 
 function getAll(token) {
-  console.log(baseUrl)
   return fetchWrapper.get(baseUrl, token)
 }
 
