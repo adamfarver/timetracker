@@ -15,7 +15,6 @@ function AddEdit() {
   const [sprintNumber, setSprintNumber] = useState({})
   const [project, setProject, sprint, setSprint, user, setUser] =
     useContext(AppContext)
-  console.log(location)
   const { id } = match.params
   const isAddMode = !id
   const { token } = user
@@ -59,7 +58,7 @@ function AddEdit() {
       fields.sprint = filteredSprintNumber[0].sprintType + 1
     }
     sprintService
-      .create(fields)
+      .create(fields, token)
       .then(() => {
         alertService.success('Sprint added', { keepAfterRouteChange: true })
         localStorage.setItem('current_sprint', JSON.stringify(fields))
@@ -74,7 +73,7 @@ function AddEdit() {
 
   function updateSprint(id, fields, setSubmitting) {
     sprintService
-      .update(id, fields)
+      .update(id, fields, token)
       .then(() => {
         alertService.success('Sprint updated', { keepAfterRouteChange: true })
         history.goBack()
@@ -87,7 +86,7 @@ function AddEdit() {
 
   function deleteSprint(id) {
     sprintService
-      .delete(id)
+      .delete(id, token)
       .then(() => {
         alertService.success('Sprint Deleted', { keepAfterRouteChange: true })
         history.goBack()
@@ -110,7 +109,7 @@ function AddEdit() {
           if (!isAddMode) {
             // get sprint and set form fields
             sprintService
-              .getById(id)
+              .getById(id, token)
               .then((sprint) => {
                 let fields = [
                   'sprint',
@@ -127,6 +126,9 @@ function AddEdit() {
                 sprint.dateStart = dateSlice(sprint.dateStart)
                 sprint.dateEnd = dateSlice(sprint.dateEnd)
                 fields.forEach((field) => {
+                  if (field === null) {
+                    field = undefined
+                  }
                   // Makes sure the current user is put in userModified field.
                   sprint.userModified = user._id
                   setFieldValue(field, sprint[field], false)

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { AppContext } from './AppContext'
 import { Navbar, Nav, Container, NavDropdown, Dropdown } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 function NavComponent() {
   const [project, setProject, sprint, setSprint, user, setUser, task, setTask] =
     useContext(AppContext)
@@ -52,7 +52,7 @@ function NavComponent() {
                   <Nav.Link href="/login" className="nav-item mr-3">
                     Log In
                   </Nav.Link>
-                  <Nav.Link variant='dark' as={'button'} href='/registration' className='btn-white text-primary rounded'>
+                  <Nav.Link variant='dark' as={'a'} href='/registration' className='btn-white text-primary rounded'>
                     Try It Out
                   </Nav.Link>
                 </>

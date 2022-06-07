@@ -48,7 +48,7 @@ module.exports = merge(common, {
   externals: {
     // global app config object
     config: JSON.stringify({
-      apiUrl: 'https://dde4-2600-6c5e-177f-fb82-e17b-fa3d-9024-d8aa.ngrok.io/api',
+      apiUrl: 'https://d774-2600-6c5e-177f-fb82-419e-97c-b7c5-e81c.ngrok.io/api',
     }),
   },
 })
