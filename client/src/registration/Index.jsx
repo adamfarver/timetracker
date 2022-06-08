@@ -4,8 +4,9 @@ import { Link, useHistory } from 'react-router-dom'
 import { userService, alertService } from '@/_services'
 import * as Yup from 'yup'
 import ReCAPTCHA from 'react-google-recaptcha'
-import { Form as BSForm, Col, Button } from 'react-bootstrap'
+import { Form as BSForm, Row, Col, Button, Container } from 'react-bootstrap'
 import { AppContext } from '../_components/AppContext'
+import registration from '../img/registration.svg'
 
 // TODO: Add Illustration to right side of the form
 
@@ -87,15 +88,12 @@ function Registration() {
 				>
 					{({ errors, touched, isSubmitting, setFieldValue }) => {
 						return (
-							<>
-								<Form>
-									<BSForm.Row>
-										<Col>
+							<Container className="m-0 px-0">
+								<Row className=" d-flex align-items-center">
+									<Col lg={4} className={'mt-3 order-2 order-lg-1'}>
+										<Form>
 											<h1>Sign Up</h1>
-										</Col>
-									</BSForm.Row>
-									<BSForm.Row>
-										<Col md={4}>
+
 											<small>
 												This will give you a taste of the app and we reset all
 												data in the database at midnight of every day. If your
@@ -103,11 +101,8 @@ function Registration() {
 												because your user will no longer be in the database. By
 												default, you will be a manager of the data.
 											</small>
-										</Col>
-									</BSForm.Row>
-									<BSForm.Row className="mt-3">
-										<Col md={4}>
-											<BSForm.Group>
+
+											<BSForm.Group className="pt-3">
 												<BSForm.Label htmlFor="firstName">
 													First Name
 												</BSForm.Label>
@@ -126,10 +121,7 @@ function Registration() {
 											<BSForm.Group className=" text-danger">
 												<ErrorMessage name="firstName" />
 											</BSForm.Group>
-										</Col>
-									</BSForm.Row>
-									<BSForm.Row>
-										<Col md={4}>
+
 											<BSForm.Group>
 												<BSForm.Label htmlFor="lastName">
 													Last Name
@@ -149,10 +141,7 @@ function Registration() {
 											<BSForm.Group className=" text-danger">
 												<ErrorMessage name="lastName" />
 											</BSForm.Group>
-										</Col>
-									</BSForm.Row>
-									<BSForm.Row>
-										<Col md={4}>
+
 											<BSForm.Group>
 												<BSForm.Label htmlFor="email">Email</BSForm.Label>
 												<Field
@@ -170,10 +159,7 @@ function Registration() {
 											<BSForm.Group className=" text-danger">
 												<ErrorMessage name="email" />
 											</BSForm.Group>
-										</Col>
-									</BSForm.Row>
-									<BSForm.Row>
-										<Col md={4}>
+
 											<BSForm.Group>
 												<BSForm.Label htmlFor="password">Password</BSForm.Label>
 												<Field
@@ -191,10 +177,7 @@ function Registration() {
 											<BSForm.Group className=" text-danger">
 												<ErrorMessage name="password" />
 											</BSForm.Group>
-										</Col>
-									</BSForm.Row>
-									<BSForm.Row>
-										<Col md={4}>
+
 											<BSForm.Group>
 												<BSForm.Label htmlFor="verifyPassword">
 													Verify Password
@@ -214,19 +197,13 @@ function Registration() {
 											<BSForm.Group className=" text-danger">
 												<ErrorMessage name="verifyPassword" />
 											</BSForm.Group>
-										</Col>
-									</BSForm.Row>
-									<BSForm.Row className="mb-3">
-										<Col>
+
 											<ReCAPTCHA
 												sitekey="6LcjAEoaAAAAAOWjWJ0Q6TUd55nsRZr1UFTbDxDu"
 												onChange={onChange}
+												className={'pb-3'}
 											/>
-										</Col>
-									</BSForm.Row>
 
-									<BSForm.Row className="align-items-between">
-										<Col>
 											<Button
 												type="submit"
 												disabled={isSubmitting}
@@ -240,10 +217,13 @@ function Registration() {
 											<Link to={'/'} className="btn btn-link">
 												Cancel
 											</Link>
-										</Col>
-									</BSForm.Row>
-								</Form>
-							</>
+										</Form>
+									</Col>
+									<Col className="order-1 order-lg-2">
+										<img src={registration} alt="Image of people using app" />
+									</Col>
+								</Row>
+							</Container>
 						)
 					}}
 				</Formik>

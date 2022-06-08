@@ -49,10 +49,10 @@ function NavComponent() {
                   </NavDropdown></>
               ) : (
                 <>
-                  <Nav.Link href="/login" className="nav-item mr-3">
+                  <Nav.Link onClick={() => history.push("/login")} className="nav-item mr-3">
                     Log In
                   </Nav.Link>
-                  <Nav.Link variant='dark' as={'a'} href='/registration' className='btn-white text-primary rounded'>
+                  <Nav.Link variant='dark' as={'a'} onClick={() => history.push("/registration")} className='btn-white text-primary rounded'>
                     Try It Out
                   </Nav.Link>
                 </>

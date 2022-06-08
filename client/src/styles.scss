@@ -1,9 +1,13 @@
 // global styles
 @import './sass/main.scss';
+@import './custom.scss';
 a {
 	cursor: pointer;
 }
 
+h1 {
+	color: #222;
+}
 .app-container {
 	min-height: 350px;
 }

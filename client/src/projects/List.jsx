@@ -37,12 +37,12 @@ function List() {
   }, [])
 
   function deleteproject(id) {
-    projectService.delete(id).then(() => {
-      alertService()
+    projectService.delete(id, token).then((res) => {
+      alertService.success("Project Deleted.")
       setprojects((projects) =>
         projects.filter((project) => project._id !== id)
       )
-    }).catch((e) => { console.log(e) })
+    }).catch((e) => { alertService.error(e) })
   }
 
   return (

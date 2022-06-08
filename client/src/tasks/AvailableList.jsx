@@ -36,7 +36,7 @@ export function AvailableList() {
       'claimedBy.lastName': user.lastName,
     }
     await taskService
-      .update(id, change)
+      .update(id, change, token)
       .then((res) => {
         if (res.n) {
           setClaimed(claimed + 1)
