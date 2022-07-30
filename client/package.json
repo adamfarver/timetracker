@@ -30,7 +30,7 @@
 		"react-google-recaptcha": "^2.1.0",
 		"react-router-dom": "^5.1.2",
 		"rxjs": "^6.5.5",
-		"yup": "^0.28.1"
+		"yup": "^0.32.11"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.4.3",
