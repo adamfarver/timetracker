@@ -1,6 +1,14 @@
-// jest.config.js
 // Sync object
-module.exports = {
+/** @type {import('@jest/types').Config.InitialOptions} */
+const config = {
 	verbose: true,
-	rootDir: './',
+	collectCoverageFrom: [
+		'server/**/*.js',
+		'!server/seed/*.js',
+		'!server/dataReset.js',
+		'server.js',
+	],
+	testEnvironment: 'node',
 }
+
+module.exports = config
