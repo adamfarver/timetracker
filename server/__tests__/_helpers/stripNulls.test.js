@@ -1,4 +1,4 @@
-import { stripNulls } from './stripNulls'
+import { stripNulls } from '../../_helpers/stripNulls'
 
 const testObj = {
 	firstName: 'Steve',

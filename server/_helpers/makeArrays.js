@@ -9,6 +9,9 @@ const { DateTime } = require('luxon')
  * @author Adam Farver <adamfarver@gmail.com>
  */
 function makeSparseArrays(time, length) {
+	if (time === undefined || length === undefined) {
+		return []
+	}
 	let sparseArray = [time]
 	sparseArray[length - 1] = 0
 	return sparseArray
