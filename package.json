@@ -5,9 +5,10 @@
 	"main": "src/index.js",
 	"author": "Adam Farver <adamfarver@gmail.com>",
 	"scripts": {
-		"startserver": "nodemon server.js ",
+		"startserver": "nodemon ./server/utils/app.js ",
 		"seed": "node ./server/seed/seed.js",
 		"test": "jest --watch --detectOpenHandles --config='./jest.config.js'",
+		"coverage": "jest --coverage",
 		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
 	},
 	"dependencies": {
