@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
-const Role = require('../../models/Role')
+const Role = require('../models/Role')
 const asyncHandler = require('express-async-handler')
+const {} = require('../services/role.service')
 
 const getAllRoles = asyncHandler(async (req, res, next) => {
 	try {

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
-const Sprint = require('../../models/Sprint')
+const Sprint = require('../models/Sprint')
 const asyncHandler = require('express-async-handler')
+const {} = require('../services/sprint.service')
 const { ObjectId } = mongoose.Types
 // All routes added together
 

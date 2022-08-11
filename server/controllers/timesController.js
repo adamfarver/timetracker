@@ -1,6 +1,7 @@
-const Time = require('../../models/Time')
-const Task = require('../../models/Task')
+const Time = require('../models/Time')
+const Task = require('../models/Task')
 const asyncHandler = require('express-async-handler')
+const {} = require('../services/time.service')
 
 const getAllTimes = asyncHandler(async (req, res, next) => {
 	try {
