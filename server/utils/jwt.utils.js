@@ -9,7 +9,7 @@ const jwtSign = (id) => {
 // Verify jwt
 const jwtVerify = (token) => {
 	try {
-		const decoded = jwt.verify(token, publicKey)
+		const decoded = jwt.verify(token, jwt_key)
 		return {
 			valid: true,
 			expired: false,
