@@ -13,7 +13,7 @@ const jwtVerify = (token) => {
 		return {
 			valid: true,
 			expired: false,
-			decoded,
+			...decoded,
 		}
 	} catch (e) {
 		console.error(e)

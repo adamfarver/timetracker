@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 const User = require('../models/User')
-const {} = require('../services/user.service')
+const userService = require('../services/user.service')
 const { stripNulls } = require('../_helpers/stripNulls')
 
 const generateToken = (id) => {
@@ -15,27 +15,7 @@ const generateToken = (id) => {
 const getAllUsers = asyncHandler(async (req, res) => {
 	let allUsers
 	try {
-		// Why does this aggregation exist? Because roleName doesn't exist in the current collection, only objectId in role property. So, lookups are necessary.
-		allUsers = await User.aggregate([
-			{
-				$lookup: {
-					from: 'roles',
-					foreignField: '_id',
-					localField: 'role',
-					as: 'role',
-				},
-			},
-			{ $unwind: '$role' },
-			{
-				$project: {
-					_id: 1,
-					firstName: 1,
-					lastName: 1,
-					email: 1,
-					role: { _id: 1, roleName: 1 },
-				},
-			},
-		])
+		allUsers = await userService.listAllUsers()
 		res.status(200).send(allUsers)
 	} catch (e) {
 		res.status(500)
@@ -52,7 +32,7 @@ const getSingleUser = asyncHandler(async (req, res) => {
 	const { id } = req.params
 	let record
 	try {
-		record = await User.findById(id)
+		record = await userService.listOneUser(id)
 		delete record._doc.password
 	} catch (error) {
 		res.status(400)

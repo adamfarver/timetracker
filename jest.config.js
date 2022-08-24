@@ -2,13 +2,13 @@
 /** @type {import('@jest/types').Config.InitialOptions} */
 const config = {
 	verbose: true,
-	collectCoverageFrom: [
-		'server/**/*.js',
-		'!server/seed/*.js',
-		'!server/dataReset.js',
-		'server.js',
-	],
+	testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
+	collectCoverageFrom: ['server/**/*.js', '!server/__tests__/*.js'],
 	testEnvironment: 'node',
+	forceExit: true,
+	clearMocks: true,
+	resetMocks: true,
+	restoreMocks: true,
 }
 
 module.exports = config

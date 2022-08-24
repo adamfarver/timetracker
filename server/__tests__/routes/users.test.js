@@ -1,39 +1,41 @@
 import request from 'supertest'
 import createServer from '../../utils/server'
+import * as jwtUtil from '../../utils/jwt.utils'
 import { jwtSign } from '../../utils/jwt.utils'
+import { jwtVerify } from '../../utils/jwt.utils'
+import * as userService from '../../services/user.service'
+import {
+	createUserInput,
+	userAuthReturn,
+	userInput,
+	returnListOfUsers,
+} from '../../__globals/globalConfigs'
 
 const app = createServer()
 
 beforeAll(async () => {})
 
-describe('GET /api/user/', () => {
-	describe('given no authorization', () => {
-		it('returns 404', async () => {
-			await request(app)
-				.get('/api/user/')
-				.expect('Content-Type', /json/)
-				.expect(401)
+describe('Get /api/user', () => {
+	describe('given no token', () => {
+		it('should return error', async () => {
+			const { body, statusCode } = await request(app).get('/api/user')
+			expect(body).toStrictEqual({ message: 'Not authorized, no token' })
+			expect(statusCode).toBe(401)
 		})
 	})
-	describe('given no header', () => {
-		it('returns 404', async () => {
-			await request(app)
-				.get('/api/user/')
-				.expect('Content-Type', /json/)
-				.expect(401)
-		})
-	})
-	describe('given authorized user', () => {
-		it('returns list of users', async () => {
-			const user = '5fa447d6578d6b1b5f71d103'
-			const token = jwtSign(user)
-			const response = await request(app)
-				.get('/api/user/')
+	describe('given correct token', () => {
+		it('should return list of users', async () => {
+			const id = '5fa447d6578d6b1b5f71d103'
+			const token = jwtSign(id)
+			const mockListOneUser = jest.spyOn(userService, 'listOneUser')
+			mockListOneUser.mockResolvedValueOnce(userAuthReturn)
+			const mockListAllUsers = jest.spyOn(userService, 'listAllUsers')
+			mockListAllUsers.mockReturnValueOnce(returnListOfUsers)
+			const { body, statusCode } = await request(app)
+				.get('/api/user')
 				.set('Authorization', `Bearer ${token}`)
-				.send()
-				.expect('Content-Type', /json/)
-				.expect(200)
-			console.log(response)
+			expect(statusCode).toBe(200)
+			expect(body).toStrictEqual(returnListOfUsers)
 		})
 	})
 })

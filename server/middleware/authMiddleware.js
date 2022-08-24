@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler')
 const User = require('../models/User')
 const { jwt_key } = require('../../config.js')
 const { jwtVerify } = require('../utils/jwt.utils')
+const userService = require('../services/user.service')
 
 const protect = asyncHandler(async (req, res, next) => {
 	let token
@@ -18,7 +19,8 @@ const protect = asyncHandler(async (req, res, next) => {
 			decoded = jwtVerify(token)
 		}
 		if (decoded) {
-			req.user = await User.findById(decoded).select('-password')
+			const user = await userService.listOneUser(decoded)
+			req.params.id = user.id
 
 			next()
 		}
